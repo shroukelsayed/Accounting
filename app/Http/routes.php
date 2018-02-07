@@ -14,3 +14,23 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+
+Route::resource("users","UserController");
+
+Route::get('/home', "IndexController@index");
+
+Route::get('/allocation', "IndexController@allocation");
+Route::get('/custody-advances', "IndexController@custodyAdvances");
+Route::get('/treasury', "IndexController@treasury");
+Route::get('/accounting-tree', "IndexController@accountingTree");
+
+
+Route::get('/receipts', "IndexController@receipts");
+Route::post('/receipts', "IndexController@receipts")->name('store');
+
+
+
+// Route::get('/users', function () {
+//     return view('welcome');
+// });
