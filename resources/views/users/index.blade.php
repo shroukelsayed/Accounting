@@ -1,4 +1,4 @@
-@extends('layout')
+@extends('layouts.admin')
 
 @section('header')
     <div class="page-header clearfix">
@@ -11,6 +11,8 @@
 @endsection
 
 @section('content')
+
+    <br><br><br><br><br><br>
     <div class="row">
         <div class="col-md-12">
             @if($users->count())
@@ -18,6 +20,9 @@
                     <thead>
                         <tr>
                             <th>ID</th>
+                            <th>اسم المستخدم</th>
+                            <th>البريد اﻻلكترونى</th>
+                            <th>الصلاحية</th>
                             
                             <th class="text-right">OPTIONS</th>
                         </tr>
@@ -27,6 +32,9 @@
                         @foreach($users as $user)
                             <tr>
                                 <td>{{$user->id}}</td>
+                                <td>{{$user->name}}</td>
+                                <td>{{$user->email}}</td>
+                                <td>{{$user->role}}</td>
                                 
                                 <td class="text-right">
                                     <a class="btn btn-xs btn-primary" href="{{ route('users.show', $user->id) }}"><i class="glyphicon glyphicon-eye-open"></i> View</a>
@@ -34,7 +42,7 @@
                                     <form action="{{ route('users.destroy', $user->id) }}" method="POST" style="display: inline;" onsubmit="if(confirm('Delete? Are you sure?')) { return true } else {return false };">
                                         <input type="hidden" name="_method" value="DELETE">
                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                        <button type="submit" class="btn btn-xs btn-danger"><i class="glyphicon glyphicon-trash"></i> Delete</button>
+                                        <!-- <button type="submit" class="btn btn-xs btn-danger"><i class="glyphicon glyphicon-trash"></i> Delete</button> -->
                                     </form>
                                 </td>
                             </tr>

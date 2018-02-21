@@ -11,26 +11,49 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+
+Route::group(['middleware' => ['web']], function () {
+    Route::get('lang/{lang}', ['as' => 'lang.switch', 'uses' => 'LanguageController@switchLang']);
+
+    Route::auth();
+	Route::get('/','HomeController@index');
+	Route::get('/home', function () {
+	    return view('welcome');
+	});
+	Route::group(['middleware' => ['auth' ,'admin']], function () {
+		Route::get('/admin', function () {
+	    	return view('home');
+		});
+		Route::resource("users","UserController");
+
+	});
+
+
+	Route::group(['middleware' => ['auth']], function () {
+
+		Route::get('/allocation', "IndexController@allocation");
+		Route::get('/custody-advances', "IndexController@custodyAdvances");
+		Route::get('/treasury', "IndexController@treasury");
+		Route::get('/accounting-tree', "IndexController@accountingTree");
+
+
+		Route::get('/receipts', "IndexController@receipts");
+		Route::post('/receipts', "IndexController@receipts")->name('store');
+
+		Route::get('/cash-receipt', "IndexController@cashReceipt");
+
+	});
+
+
+
 });
 
 
-Route::resource("users","UserController");
-
-Route::get('/home', "IndexController@index");
-
-Route::get('/allocation', "IndexController@allocation");
-Route::get('/custody-advances', "IndexController@custodyAdvances");
-Route::get('/treasury', "IndexController@treasury");
-Route::get('/accounting-tree', "IndexController@accountingTree");
-
-
-Route::get('/receipts', "IndexController@receipts");
-Route::post('/receipts', "IndexController@receipts")->name('store');
 
 
 
-// Route::get('/users', function () {
-//     return view('welcome');
-// });
+
+
+
+
+

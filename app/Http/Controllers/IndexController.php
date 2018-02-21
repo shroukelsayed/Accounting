@@ -8,6 +8,13 @@ use App\Http\Requests;
 
 class IndexController extends Controller
 {
+	public function __construct()
+	{
+		// $this->middleware('auth');
+		$this->middleware('auth',['only' =>['receipts']]);
+	    
+	}
+
     /**
 	 * Display a listing of the resource.
 	 *
@@ -79,9 +86,20 @@ class IndexController extends Controller
 	{
 		// $users = User::orderBy('id', 'desc')->paginate(10);
 
-		return view('receipt');
+		return view('donation-receipt');
 	}
 
+	/**
+	 * Display a listing of the resource.
+	 *
+	 * @return Response
+	 */
+	public function cashReceipt()
+	{
+		// $users = User::orderBy('id', 'desc')->paginate(10);
+
+		return view('cash-receipt');
+	}
 	
 
 

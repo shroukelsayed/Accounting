@@ -12,7 +12,108 @@ return [
     | as the size rules. Feel free to tweak each of these messages here.
     |
     */
+    'Arabic'                     => 'اللغة العربية',
+    'English'                    => 'English',    
+    'login'                      => 'Login',
+    'register'                   => 'Register',
+    'logout'                     => 'Logout',
+    'home'                       => 'Home',
+    'Membersince'                => 'Member since',
+    'Administrator'              => 'Super Administrator',
+    'admin'                      => 'Administrator',
+    'other'                      => 'Other',
+    'location'                   => 'LOCATION:',
+    'description'                => 'DESCRIPTION:',
+    'aboutus'                    => 'About Us',
+    'contact'                    => 'Contact Us',
+    'profile'                    => 'Profile',
+    'approveMsg'                 => 'Plz , Wait Admin Approval on your request .',
+    'msgWhy'                     => 'We are sorry , There\'s a problem with your registeration information , Plz contact with Us to update your information on this E-mail ',
+    'changePassword'             => 'Change Password',
+    'users'                      => 'Users',
+    'welcome'                    => 'Welcome',
+    'addUser'                    => 'Add New User',
 
+    'ommar'                      => 'Ommar Elard',
+    'accountingSystem'           => 'Accounting System',
+    'slug'                       => 'Welcome to Accounting System Of Ommar Elard',
+
+
+    'assets'                     => 'Assets',
+    'liabilities'                => 'Liabilities',
+    'expenses'                   => 'Expenses',
+    'revenues'                   => 'Revenues',
+    'fixed_assets'               => 'Fixed Assets',
+    'current_assets'             => 'Current Assets',
+    'treasury'                   => 'Treasury',
+    'cash_in_bank'               => 'Cash In Bank',
+    'advanced_expenses'          => 'Advanced Expenses',
+    'deposits_with_others'       => 'Deposits With Others',
+    'custody_and_advances'       => 'Custody And Advances',
+    'accrued_revenues'           => 'Accrued Revenues',
+    'various_debtors'            => 'Various Debtors',
+    'other_debit_balances'       => 'Other Debit Balances',
+    'inventory'                  => 'Inventory',
+    'receivable_cheques'         => 'Receivable Cheques',
+    'fawry_company'              => 'Fawry Company',
+    'short_messages'             => 'Short Messages',
+    'cib_machine'                => 'CIB Machine',
+    'current_liabilities'        => 'Current Liabilities',
+    'suppliers'                  => 'Suppliers',
+    'accrued_expenses'           => 'Accrued Expenses',
+    'payable_cheques'            => 'Payable Cheques',
+    'taxes'                      => 'Taxes',
+    'social_insurance'           => 'Social Insurance',
+    'penalties_fund'             => 'Penalties Fund',
+    'amounts_under_adjustment'   => 'Amounts Under Adjustment',
+    'creditors'                  => 'Creditors',
+    'general_admin_expenses'     => 'General & Administrative  Expenses',
+    'operation_expenses'         => 'Operation Expenses',
+    'interests'                  => 'Interests',
+    'cash_in_treasury'           => 'Cash In Treasury',
+    'allocation'                 => 'Allocation',
+    'accounting_tree'            => 'Accounting Tree',
+    'receipts'                   => 'Receipts',
+    'donation_receipt'           => 'Donation Receipts',
+    'cash_receipt'               => 'Cash Receipts',
+
+    ''=>'',
+    ''=>'',
+    ''=>'',
+    ''=>'',
+    ''=>'',
+    ''=>'',
+    ''=>'',
+    ''=>'',
+    ''=>'',
+    ''=>'',
+    ''=>'',
+    ''=>'',
+    ''=>'',
+    ''=>'',
+    ''=>'',
+    ''=>'',
+    ''=>'',
+    ''=>'',
+    ''=>'',
+    ''=>'',
+    ''=>'',
+    ''=>'',
+    ''=>'',
+    ''=>'',
+    ''=>'',
+    ''=>'',
+    ''=>'',
+    ''=>'',
+    ''=>'',
+    ''=>'',
+    ''=>'',
+    ''=>'',
+
+
+
+
+    'validate'             =>'validate',
     'accepted'             => 'The :attribute must be accepted.',
     'active_url'           => 'The :attribute is not a valid URL.',
     'after'                => 'The :attribute must be a date after :date.',
@@ -34,6 +135,7 @@ return [
     'different'            => 'The :attribute and :other must be different.',
     'digits'               => 'The :attribute must be :digits digits.',
     'digits_between'       => 'The :attribute must be between :min and :max digits.',
+    'dimensions'           => 'The :attribute has invalid image dimensions.',
     'distinct'             => 'The :attribute field has a duplicate value.',
     'email'                => 'The :attribute must be a valid email address.',
     'exists'               => 'The selected :attribute is invalid.',
@@ -94,7 +196,35 @@ return [
     'custom' => [
         'attribute-name' => [
             'rule-name' => 'custom-message',
+        ],[
+        'email' => [
+            'required' => 'The :attribute field is required.',
+            'unique' => 'The :attribute has already been taken.',
+            ],
+        ],[
+        'password_confirm' => [
+            'same' => 'The :attribute and :other must match.',
+            ],
+        ],[
+        'phone' => array(
+            'regex' => 'The :attribute format is invalid.',
+            ),
+        ],[
+        'email' => [
+            'email' => 'The :attribute must be a valid email address.',
+            ],
+        ],[
+        'name' => array(
+            'required' => 'The :attribute field is required.',
+            'unique' => 'The :attribute has already been taken.',
+            ),
+        ],[
+        'password' => [
+            'required' => 'The :attribute field is required.',
+            ],
         ],
+        
+        
     ],
 
     /*
@@ -108,6 +238,40 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'email'                 =>'Email',
+        'name'                  => 'Name',
+        'username'              => 'Username',
+        'firstName'             => 'First Name',
+        'lastName'              => 'Last Name',
+        'password'              => 'Password',
+        'password_confirm'      => 'Password Confirmation',
+        'city'                  => 'City',
+        'country'               => 'Country',
+        'address'               => 'Address',
+        'phone'                 => 'Phone',
+        'mobile'                => 'Mobile',
+        'age'                   => 'Age',
+        'sex'                   => 'Sex',
+        'gender'                => 'Gender',
+        'day'                   => 'Day',
+        'month'                 => 'Month',
+        'year'                  => 'Year',
+        'hour'                  => 'Hour',
+        'minute'                => 'Minute',
+        'second'                => 'Second',
+        'title'                 => 'Title',
+        'content'               => 'Content',
+        'description'           => 'Description',
+        'excerpt'               => 'Excerpt',
+        'date'                  => 'Date',
+        'time'                  => 'Time',
+        'available'             => 'Available',
+        'size'                  => 'Size',
+        'nationalid'            => 'National ID',
+        'ForgotPassword'        => 'Forgot Your Password?',
+
+
+    ],
 
 ];

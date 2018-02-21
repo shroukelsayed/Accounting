@@ -9,20 +9,11 @@
     <meta name="author" content="">
     <link rel="icon" href="favicon.ico">
 
-    <title>نظام الحسابات - عمار اﻷرض</title>
+    <title> @lang('validation.accountingSystem')- @lang('validation.ommar') </title>
 
     <!-- Bootstrap core CSS -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Custom styles for this template -->
-    <!-- <link href="starter-template.css" rel="stylesheet"> -->
-
-
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
     @yield('css')
 </head>
 
@@ -37,23 +28,47 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="/home">نظام الحسابات</a>
+                <a class="navbar-brand" href="/home">@lang('validation.accountingSystem')</a>
             </div>
-            <div id="navbar" class="collapse navbar-collapse" style="float: right;">
-                <ul class="nav navbar-nav">
-                    <!-- <li class="active"><a href="#">المخصصات</a></li> -->
-                    <li><a href="/allocation">المخصصات</a></li>
-                    <li><a href="/custody-advances">العهد والسلف</a></li>
-                    <li><a href="/treasury">الخزينة</a></li>
-                    <li><a href="/receipts">ايصالات التبرع</a></li>
-                    <li><a href="/accounting-tree">شجرة الحسابات</a></li>
+            <div class="collapse navbar-collapse" id="app-navbar-collapse">
+                <!-- Left Side Of Navbar -->
+                <!-- <ul class="nav navbar-nav">
+                    <li><a href="{{ url('/home') }}">نظام الحسابات </a></li>
                 </ul>
-            </div><!--/.nav-collapse -->
+ -->
+                <!-- Right Side Of Navbar -->
+                <ul class="nav navbar-nav navbar" >
+                    <!-- Authentication Links -->
+                    <li class="dropdown">
+                   
+                    @if (Auth::guest())
+                        <li  ><a href="{{ url('/login') }}">@lang('validation.login')</a></li>
+                        <!-- <li><a href="{{ url('/register') }}">Register</a></li> -->
+                    @else
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" >
+                                {{ Auth::user()->name }} <span class="caret"></span>
+                            </a>
+
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out"></i>تسجيل الخروج</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="/allocation">ميزان المراجعة</a></li>
+                        <li><a href="/allocation">جرد الخزينة</a></li>
+                        <li><a href="/allocation">المخصصات</a></li>
+                        <li><a href="/custody-advances">العهد والسلف</a></li>
+                        <li><a href="/treasury">الخزينة</a></li>
+                        <li><a href="/receipts">ايصالات التبرع</a></li>
+                        <li><a href="/accounting-tree">شجرة الحسابات</a></li>
+                    @endif
+                </ul>
+            </div>
         </div>
     </nav>
 
     <div class="container">
-        @yield('header')
+        <!-- @yield('header') -->
         @yield('content')
     </div><!-- /.container -->
 
