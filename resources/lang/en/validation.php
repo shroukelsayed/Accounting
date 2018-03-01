@@ -75,6 +75,7 @@ return [
     'accounting_tree'            => 'Accounting Tree',
     'receipts'                   => 'Receipts',
     'donation_receipt'           => 'Donation Receipts',
+    'شيي_donation_receipt'       => 'Add Donation Receipt',
     'cash_receipt'               => 'Cash Receipts',
 
     ''=>'',

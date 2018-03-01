@@ -27,4 +27,19 @@ class User extends Authenticatable
     public function role(){
             return $this->belongsTo(Role::class);
     }
+
+    public function receipts()
+    {
+        return $this->hasMany(Receipt::class);
+    }
+
+    public function donationReceipts()
+    {
+        return $this->hasMany(DonationReceipt::class);
+    }
+    
+    public function accountSheets()
+    {
+        return $this->hasMany(AccountSheet::class);
+    }
 }

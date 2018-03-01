@@ -142,6 +142,16 @@
 
             @if( Auth::user()->role === 1)
              <li>
+                <a href="{{URL::to('/projects')}}">
+                  <i class="fa fa-users"></i> <span>@lang('validation.projects')</span> 
+                </a>
+              </li>
+               <li>
+                <a href="{{URL::to('/projects/create')}}">
+                  <i class="fa fa-user-plus"></i> <span>@lang('validation.addProject')</span> 
+                </a>
+              </li>
+             <li>
                 <a href="{{URL::to('/users')}}">
                   <i class="fa fa-users"></i> <span>@lang('validation.users')</span> 
                 </a>

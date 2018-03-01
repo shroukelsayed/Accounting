@@ -49,7 +49,7 @@ class UserController extends Controller {
 	public function store(Request $request)
 	{
 		$user = new User();
-		var_dump($request);die;
+		// var_dump($request);die;
 		
 
 		$user->save();

@@ -71,6 +71,7 @@ return [
     'accounting_tree'                 => 'شجرة الحسابات',
     'receipts'                        => 'الإيصالات',
     'donation_receipt'                => 'ايصالات التبرع',
+    'add_donation_receipt'            => 'إضافة إيصال تبرع',
     'cash_receipt'                    => 'إيصال إستلام نقدية',
 
 

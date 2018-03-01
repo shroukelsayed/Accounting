@@ -25,6 +25,7 @@ Route::group(['middleware' => ['web']], function () {
 	    	return view('home');
 		});
 		Route::resource("users","UserController");
+		Route::resource("projects","ProjectController");
 
 	});
 
@@ -38,9 +39,10 @@ Route::group(['middleware' => ['web']], function () {
 
 
 		Route::get('/receipts', "IndexController@receipts");
-		Route::post('/receipts', "IndexController@receipts")->name('store');
+		Route::post('/save-receipt', "IndexController@saveReceipt");
 
 		Route::get('/cash-receipt', "IndexController@cashReceipt");
+		Route::get('/all-receipts', "IndexController@index");
 
 	});
 

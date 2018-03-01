@@ -93,7 +93,10 @@
                            <span class="caret"></span></a>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a href="{{ url('/receipts') }}">@lang('validation.donation_receipt')</a>
+                                    <a href="{{ url('/all-receipts') }}">@lang('validation.donation_receipt')</a>
+                                </li>
+                                <li>
+                                    <a href="{{ url('/receipts') }}">@lang('validation.add_donation_receipt')</a>
                                 </li>
                                 <li>
                                     <a href="{{ url('/cash-receipt') }}">@lang('validation.cash_receipt')</a>
