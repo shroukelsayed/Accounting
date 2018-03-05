@@ -89,12 +89,16 @@ class IndexController extends Controller
 	 *
 	 * @return Response
 	 */
-	public function receipts()
+	public function receipts($id = null)
 	{
-				 
+		
+		if($id){
+			$receipt = DonationReceipt::findOrFail($id);
+		}
+
 		$projects = Project::lists('name','id');
-			// var_dump($projects);die;
-		return view('donation-receipt', compact('projects'));
+
+		return view('donation-receipt', compact('projects','receipt'));
 	}
 
 
@@ -103,26 +107,60 @@ class IndexController extends Controller
 	 *
 	 * @return Response
 	 */
-	public function saveReceipt(Request $request)
+	public function saveReceipt(Request $request,$id = null)
 	{
 		// var_dump($request->all());die();
-		 $validator = Validator::make($request->all(), [
-            'donator_name' => 'bail|required|max:255',
-            'donator_address' => 'required',
-        ]);
-// var_dump($validator->errors());die;
-        if ($validator->fails()) {
-            return  redirect('receipts')->withErrors($validator)->withInput();
-        }
+		var_dump($id);die();
 
-
+	
 		$receipt = new DonationReceipt();
-
 
 		$receipt->cash = $request->input('receipt_type') == '1' ? true : false;
 		if($request->input('receipt_type') == '1'){
+			$validator = Validator::make($request->all(), [
+            	'donator_name' => 'required|max:255',
+	            'donator_address' => 'required',
+	            'amount_alpha' => 'required',
+	            'notes' => 'required',
+	            'type' => 'required',
+	            'delivery_date' => 'required',
+	            'donator_phone' => 'required|numeric',
+	            'project_id' => 'required',
+	            'receipt_writter_id' => 'required',
+	            'receipt_delegate_id' => 'required',
+	            'receipt_notebook' => 'required',
+	            'receipt_for_month' => 'required',
+	        ]);
+	        if($validator->fails()) {
+		        return Redirect::back()
+		            ->withErrors($validator)
+		            ->WithInput();
+		    }
+
 			$receipt->alpha_amount = $request->input('amount_alpha');
 		}else{
+			$validator = Validator::make($request->all(), [
+	            'donator_name' => 'required|max:255',
+	            'donator_address' => 'required',
+	            'cheque_number' => 'required',
+	            'cheque_bank' => 'required',
+	            'cheque_date' => 'required',
+	            'notes' => 'required',
+	            'type' => 'required',
+	            'delivery_date' => 'required',
+	            'donator_phone' => 'required|numeric',
+	            'project_id' => 'required',
+	            'receipt_writter_id' => 'required',
+	            'receipt_delegate_id' => 'required',
+	            'receipt_notebook' => 'required',
+	            'receipt_for_month' => 'required',
+	        ]);
+	        if($validator->fails()) {
+		        return Redirect::back()
+		            ->withErrors($validator)
+		            ->WithInput();
+		    }
+
 			$receipt->cheque_number = $request->input('cheque_number');
 			$receipt->cheque_bank = $request->input('cheque_bank');
 			$receipt->cheque_date = $request->input('cheque_date');
@@ -133,7 +171,6 @@ class IndexController extends Controller
 		$receipt->type = $request->input('type');
 		$receipt->receipt_date = $request->input('delivery_date');
 
-		// $receipt->for_account = $request->input('');
 		$receipt->is_approved = false;
 
 		$receipt->donator_name = $request->input('donator_name');
@@ -153,9 +190,6 @@ class IndexController extends Controller
 
 		return redirect()->action('IndexController@receipts');
 
-		// $projects = Project::lists('name','id');
-		// 	// var_dump($projects);die;
-		// return view('donation-receipt', compact('projects'));
 	}
 
 	/**
@@ -163,8 +197,9 @@ class IndexController extends Controller
 	 *
 	 * @return Response
 	 */
-	public function cashReceipt()
+	public function cashReceipt(Request $request)
 	{
+		var_dump($request->all());die;
 		// $users = User::orderBy('id', 'desc')->paginate(10);
 
 		return view('cash-receipt');

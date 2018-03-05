@@ -29,6 +29,7 @@ return [
     'users'                           => 'المستخدمين',
     'welcome'                         => 'أهلاً بك ',
     'addUser'                         => 'إضافة مستخدم جديد',
+    'edit'                            => 'تعديل',
 
     'ommar'                           => 'عمار اﻷرض',
     'accountingSystem'                => 'نظام الحسابات',
@@ -73,6 +74,9 @@ return [
     'donation_receipt'                => 'ايصالات التبرع',
     'add_donation_receipt'            => 'إضافة إيصال تبرع',
     'cash_receipt'                    => 'إيصال إستلام نقدية',
+    'projects'                        => 'المشاريع',
+    'addProject'                      => 'إضافة مشروع جديد',
+    'createReceipt'                   => 'إنشاء ايصال إستلام نقدية',
 
 
 

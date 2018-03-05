@@ -48,7 +48,7 @@
 
       <header class="main-header">
         <!-- Logo -->
-        <a href="index2.html" class="logo">
+        <a href="{{ route('users.show',Auth::user()->id )}}" class="logo">
           <!-- mini logo for sidebar mini 50x50 pixels -->
           <span class="logo-mini"><i class="fa fa-tasks" aria-hidden="true"></i></span>
           <!-- logo for regular state and mobile devices -->
@@ -143,12 +143,12 @@
             @if( Auth::user()->role === 1)
              <li>
                 <a href="{{URL::to('/projects')}}">
-                  <i class="fa fa-users"></i> <span>@lang('validation.projects')</span> 
+                  <i class="fa fa-th-large"></i> <span>@lang('validation.projects')</span> 
                 </a>
               </li>
                <li>
                 <a href="{{URL::to('/projects/create')}}">
-                  <i class="fa fa-user-plus"></i> <span>@lang('validation.addProject')</span> 
+                  <i class="fa fa-plus"></i> <span>@lang('validation.addProject')</span> 
                 </a>
               </li>
              <li>

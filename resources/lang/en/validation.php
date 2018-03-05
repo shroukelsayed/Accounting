@@ -33,6 +33,7 @@ return [
     'users'                      => 'Users',
     'welcome'                    => 'Welcome',
     'addUser'                    => 'Add New User',
+    'edit'                       => 'Edit',
 
     'ommar'                      => 'Ommar Elard',
     'accountingSystem'           => 'Accounting System',
@@ -77,6 +78,9 @@ return [
     'donation_receipt'           => 'Donation Receipts',
     'شيي_donation_receipt'       => 'Add Donation Receipt',
     'cash_receipt'               => 'Cash Receipts',
+    'projects'                   => 'Projects',
+    'addProject'                 => 'Add Project',
+    'createReceipt'              => 'Create Receipt',
 
     ''=>'',
     ''=>'',

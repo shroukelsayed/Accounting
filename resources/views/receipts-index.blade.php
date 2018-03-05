@@ -17,6 +17,7 @@
         <div class="col-md-1"></div>
         <div class="col-md-10">
             @if($receipts->count())
+                {!! Form::open(['url' => 'cash-receipt' , 'class' => 'form']) !!}
                 <table class="table table-condensed table-striped">
                     <thead>
                         <tr>
@@ -36,9 +37,8 @@
                             <tr>
                                  <td class="text-right">
                                     
-                                    <a class="btn btn-xs btn-primary" href="{{ route('projects.show', $receipt->id) }}"><i class="glyphicon glyphicon-eye-open"></i> View</a>
-                                   &nbsp&nbsp <a class="btn btn-xs btn-warning" href="{{ route('projects.edit', $receipt->id) }}"><i class="glyphicon glyphicon-edit"></i> Edit</a>
-                                   &nbsp&nbsp<input name="agree" type="checkbox" value="yes">
+                                   &nbsp&nbsp <a class="btn btn-xs btn-warning" href="{{ url('receipts', $receipt->id) }}"><i class="glyphicon glyphicon-edit"></i>@lang('validation.edit')</a>
+                                   &nbsp&nbsp<input name="checked[]" type="checkbox" value="{{$receipt->id}}">
                                 </td>
                                 <td>{{$receipt->donator_address}}</td>
                                 <td>{{$receipt->donator_name}}</td>
@@ -57,13 +57,13 @@
                                 <td>{{$receipt->id}}</td>
                                 
                                 <!-- <td>{{$receipt->donator_mobile}}</td> -->
-                                
-
 
                             </tr>
                         @endforeach
                     </tbody>
                 </table>
+                {!! Form::submit('Submit', ['class' => 'btn btn-info']) !!}
+                {!! Form::close() !!}
             @else
                 <h3 class="text-center alert alert-info">Empty!</h3>
             @endif
