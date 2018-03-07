@@ -38,6 +38,10 @@
 				}
 		    });
 
+		    var is_approved = $('input:checkbox[name="is_approved"]:checked').val();
+		    if(is_approved == '1'){
+		        $('#collecting').show();
+		    }
    		});
   	</script>
 <?php
@@ -47,7 +51,7 @@
     <!-- @include('error') -->
         <div class="container">
                 <!-- <div class="title" style="padding:50px;font-size: 60px;text-align: center;display: inline-block;">ايصال استلام تبرع</div> -->
-            	<div class="content" style="border-style: solid; border-color:black; margin: 5px;padding: 25px; height: 850px;">
+            <div class="content" style="border-style: solid; border-color:black; margin: 5px;padding: 25px; height: 850px;">
 
             @if(isset($receipt) and $receipt->id != null)
             	{!! Form::open(['url' => 'save-receipt/'.$receipt->id , 'class' => 'form']) !!}
@@ -55,15 +59,26 @@
             	<div class="row">
             		<div class="col-sm-3">
 		            	<label> تم التحصيل  </label>
-		            	<input name="is_approved" type="checkbox" value="{{$receipt->id}}">
+		            	@if($receipt->is_approved)
+		            		<input name="is_approved" type="checkbox" value="{{$receipt->id}}" checked="checked">
+		            	@else
+		            		<input name="is_approved" type="checkbox" value="{{$receipt->id}}">
+		            	@endif
 	            	</div>
 	            </div>
             	<div class="row" id="collecting" style="display: none;">
             		<div class="col-sm-3">
-	            		{!! Form::label('collecting_type', 'بنك') !!}
-		        		{!! Form::radio('collecting_type', '2') !!}
-					    {!! Form::label('collecting_type', 'مؤسسة') !!}
-						{!! Form::radio('collecting_type', '1',true) !!}
+            			@if($receipt->collecting_type == '2')
+		            		{!! Form::label('collecting_type', 'بنك') !!}
+			        		{!! Form::radio('collecting_type', '2',true) !!}
+						    {!! Form::label('collecting_type', 'مؤسسة') !!}
+							{!! Form::radio('collecting_type', '1') !!}
+						@else
+							{!! Form::label('collecting_type', 'بنك') !!}
+			        		{!! Form::radio('collecting_type', '2') !!}
+						    {!! Form::label('collecting_type', 'مؤسسة') !!}
+							{!! Form::radio('collecting_type', '1',true) !!}
+						@endif
 	            		<label> نوع التحصيل  </label>
 					</div>
 	            </div>
@@ -120,7 +135,7 @@
                 			@if(isset($receipt) and $receipt->type == 1)
                 				{!! Form::radio('type', '1',true) !!}
                 			@else
-                				{!! Form::radio('type', '1') !!}
+                				{!! Form::radio('type', '1',true) !!}
                 			@endif
 						</div>
 					</div>
@@ -333,10 +348,7 @@
 					<div class="form-group" style="text-align: right;">
 						<div class="row">
 							<div class="col-sm-3">
-@if(isset($receipt) and $receipt->donator_address)
 							    {!! Form::select('receipt_writter_id', ['Under 18', '19 to 30', 'Over 30'],null,['class' => 'form-control']) !!}
-@else
-							    @endif
 							    @if ($errors->has('receipt_writter_id'))
                                     <span class="alert-danger">
                                         <strong>{{ $errors->first('receipt_writter_id') }}</strong>
@@ -352,10 +364,7 @@
 					<div class="form-group" style="text-align: right;">
 						<div class="row">
 							<div class="col-sm-3">
-@if(isset($receipt) and $receipt->donator_address)
 							    {!! Form::select('receipt_delegate_id', ['Under 18', '19 to 30', 'Over 30'],null,['class' => 'form-control']) !!}
-@else
-							    @endif
 							    @if ($errors->has('receipt_delegate_id'))
                                     <span class="alert-danger">
                                         <strong>{{ $errors->first('receipt_delegate_id') }}</strong>
@@ -373,11 +382,10 @@
 							<div class="col-sm-3">
 								<!--  {!! Form::select('project', ['نهر الخير', 'ﻻ للجوع', 'نفسى اتعلم','مشروعى الصغير','ستر وغطا'],null,['class' => 'form-control']) !!}
 					    {!! Form::select('project_item', ['فورى', 'رسائل قصيرة', 'ماكينة CIB ','مولات ','اخرى'],null,['class' => 'form-control']) !!} -->
-@if(isset($receipt) and $receipt->donator_address)
-
-								{{ Form::select('project_id', $projects,null,['class' => 'form-control' , 'placeholder' => 'اختر بند المشروع'])  }}
-@else
-
+                                @if(isset($receipt) and $receipt->project_id)
+									{{ Form::select('project_id', $projects,$receipt->project_id,['class' => 'form-control' , 'placeholder' => 'اختر بند المشروع'])  }}
+								@else
+									{{ Form::select('project_id', $projects,null,['class' => 'form-control' , 'placeholder' => 'اختر بند المشروع'])  }}
 								@endif
 								@if ($errors->has('project_id'))
                                     <span class="alert-danger">
@@ -398,7 +406,6 @@
 						<div class="row">
 							<div class="col-sm-6"></div>
 							<div class="col-sm-6">
-						    	{!! Form::label('delivery_date', 'وتحرر هذا ايصالاً باﻻستلام ') !!}<br>
 						    	@if ($errors->has('delivery_date'))
                                     <span class="alert-danger">
                                         <strong>{{ $errors->first('delivery_date') }}</strong>
@@ -409,6 +416,7 @@
 								@else
 									{!! Form::date('delivery_date', \Carbon\Carbon::now()) !!}
 						    	@endif
+						    	{!! Form::label('delivery_date', 'وتحرر هذا ايصالاً باﻻستلام ') !!}
 								
 							</div>
 						</div>

@@ -21,18 +21,52 @@
                 <table class="table table-condensed table-striped">
                     <thead>
                         <tr>
-                            <th class="text-right">OPTIONS</th>
-                            <th>عونان المتبرع</th>
+                            <th class="text-right"></th>
+                            <th>عنوان المتبرع</th>
                             <th>اسم المتبرع</th>
                             <th>تاريخ اﻹيصال</th>
                             <th>النوع</th>
-                            <th>ملاحظات</th>
                             <th>المبلغ</th>
+                            <th>نقاً / شيكات</th>                            
                             <th>رقم اﻹيصال</th>                            
                         </tr>
                     </thead>
 
                     <tbody>
+                        <tr>
+                            <td></td>
+                            <td>
+                                <input  placeholder="عنوان المتبرع" type="textbox" dir="rtl" name="receipt_id">
+                            </td>
+                            <td>
+                                <input  placeholder="اسم المتبرع" type="textbox" dir="rtl" name="receipt_id">
+                            </td>
+                            <td>
+                                <input  placeholder="" type="date" name="receipt_id">
+                            </td>
+                            <td>
+                                <select name="type">
+                                    <option value="0"> all</option>
+                                    <option value="1">مستغل </option>
+                                    <option value="2">غير مستغل</option>
+                                    <option value="3">ﻻغى</option>
+                                    <option value="4">مشطوب</option>
+                                </select>
+                            </td>
+                            <td>
+                                <input  placeholder="المبلغ" type="textbox" dir="rtl" name="receipt_id">
+                            </td>
+                            <td>
+                                <select name="cash">
+                                    <option value="0"> all</option>
+                                    <option value="1">نقاً </option>
+                                    <option value="2">شيكات</option>
+                                </select> 
+                            </td>
+                            <td>
+                                <input  placeholder="رقم اﻹيصال" type="textbox" dir="rtl" name="receipt_id">
+                            </td>
+                        </tr>
                         @foreach($receipts as $receipt)
                             <tr>
                                  <td class="text-right">
@@ -52,12 +86,13 @@
                                 @else
                                     <td>مستغل</td>
                                 @endif
-                                <td>{{$receipt->notes}}</td>
                                 <td>{{$receipt->amount}}</td>
+                                @if($receipt->cash == '1')
+                                    <td>نقاً </td>
+                                @else
+                                    <td>شيكات</td>
+                                @endif
                                 <td>{{$receipt->id}}</td>
-                                
-                                <!-- <td>{{$receipt->donator_mobile}}</td> -->
-
                             </tr>
                         @endforeach
                     </tbody>

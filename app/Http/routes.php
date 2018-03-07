@@ -38,10 +38,10 @@ Route::group(['middleware' => ['web']], function () {
 		Route::get('/accounting-tree', "IndexController@accountingTree");
 
 
-		Route::get('/receipts', "IndexController@receipts");
-		Route::get('/receipts/{id}', "IndexController@receipts");
-		Route::post('/save-receipt', "IndexController@saveReceipt");
-		Route::post('/save-receipt/{id}', "IndexController@saveReceipt");
+		// Route::get('/receipts', "IndexController@receipts");
+		Route::get('/receipts/{id?}', "IndexController@receipts");
+		// Route::post('/save-receipt', "IndexController@saveReceipt");
+		Route::post('/save-receipt/{id?}', "IndexController@saveReceipt");
 
 		Route::post('/cash-receipt', "IndexController@cashReceipt");
 		Route::get('/cash-receipt', "IndexController@cashReceipt");

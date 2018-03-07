@@ -110,10 +110,19 @@ class IndexController extends Controller
 	public function saveReceipt(Request $request,$id = null)
 	{
 		// var_dump($request->all());die();
-		var_dump($id);die();
+		// var_dump($id);die();
+		if(is_null($id)){
+			$receipt = new DonationReceipt();
+			$receipt->is_approved = false;
+		}
+		else{
+			$receipt = DonationReceipt::findOrFail($id);
+			if(!is_null($request->input('is_approved')) && $request->input('is_approved') == '1'){
+				$receipt->is_approved = true;
+				$receipt->collecting_type = $request->input('collecting_type');
+			}
 
-	
-		$receipt = new DonationReceipt();
+		}
 
 		$receipt->cash = $request->input('receipt_type') == '1' ? true : false;
 		if($request->input('receipt_type') == '1'){
@@ -170,20 +179,15 @@ class IndexController extends Controller
 		$receipt->notes = $request->input('notes');
 		$receipt->type = $request->input('type');
 		$receipt->receipt_date = $request->input('delivery_date');
-
-		$receipt->is_approved = false;
-
 		$receipt->donator_name = $request->input('donator_name');
 		$receipt->donator_address = $request->input('donator_address');
 		$receipt->donator_mobile = $request->input('donator_phone');
-
 		$receipt->project_id = $request->input('project_id');
 		$receipt->receipt_writter_id = $request->input('receipt_writter_id');
 		$receipt->receipt_delegate_id = $request->input('receipt_delegate_id');
 		$receipt->receipt_notebook =$request->input('receipt_notebook') ;
 		$receipt->receipt_for_month = $request->input('receipt_for_month');
 		// $receipt->donation_section = $request->input('');
-		// $receipt->collecting_type = $request->input('');
 
 
 		$receipt->save();
