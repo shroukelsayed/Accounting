@@ -155,10 +155,7 @@ return [
         App\Providers\AuthServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-
-          // Scaffolding 
-        // Laralib\L5scaffold\GeneratorsServiceProvider::class,
-
+        
         //Html forms 
         Collective\Html\HtmlServiceProvider::class,
 
