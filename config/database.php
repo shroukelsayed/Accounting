@@ -1,10 +1,10 @@
 <?php
-$url = parse_url(getenv("CLEARDB_DATABASE_URL"));
+// $url = parse_url(getenv("CLEARDB_DATABASE_URL"));
 
-$host = $url["host"];
-$username = $url["user"];
-$password = $url["pass"];
-$database = substr($url["path"], 1);
+// $host = $url["host"];
+// $username = $url["user"];
+// $password = $url["pass"];
+// $database = substr($url["path"], 1);
 
 return [
 
@@ -32,7 +32,7 @@ return [
     |
     */
 
-    'default' => env('DB_CONNECTION', 'mysql'),
+    'default' => env('DB_CONNECTION', 'pgsql'),
 
     /*
     |--------------------------------------------------------------------------
@@ -49,6 +49,7 @@ return [
     | choice installed on your machine before you begin development.
     |
     */
+    // postgres://qvczsyentisaeb:391cbe6e6b03fb43176c8059532a3ecc7fcb44143fe712bb5abb853068b42a66@ec2-174-129-221-240.compute-1.amazonaws.com:5432/dcvgkbaaoapi9o
 
     'connections' => [
 
@@ -60,11 +61,11 @@ return [
 
         'mysql' => [
             'driver' => 'mysql',
-            'host' => env('DB_HOST', $host),
+            'host' => env('DB_HOST', 'localhost'),
             'port' => env('DB_PORT', '3306'),
-            'database' => env('DB_DATABASE', $database),
-            'username' => env('DB_USERNAME', $username),
-            'password' => env('DB_PASSWORD', $password),
+            'database' => env('DB_DATABASE', 'forge'),
+            'username' => env('DB_USERNAME', 'forge'),
+            'password' => env('DB_PASSWORD', ''),
             'charset' => 'utf8',
             'collation' => 'utf8_unicode_ci',
             'prefix' => '',
@@ -74,11 +75,11 @@ return [
 
         'pgsql' => [
             'driver' => 'pgsql',
-            'host' => env('DB_HOST', 'localhost'),
+            'host' => env('DB_HOST', 'ec2-174-129-221-240.compute-1.amazonaws.com'),
             'port' => env('DB_PORT', '5432'),
-            'database' => env('DB_DATABASE', 'forge'),
-            'username' => env('DB_USERNAME', 'forge'),
-            'password' => env('DB_PASSWORD', ''),
+            'database' => env('DB_DATABASE', 'dcvgkbaaoapi9o'),
+            'username' => env('DB_USERNAME', 'qvczsyentisaeb'),
+            'password' => env('DB_PASSWORD', '391cbe6e6b03fb43176c8059532a3ecc7fcb44143fe712bb5abb853068b42a66'),
             'charset' => 'utf8',
             'prefix' => '',
             'schema' => 'public',
