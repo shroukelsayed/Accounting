@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 use DB;
 use Validator;
+use Auth;
 
 use App\Http\Requests;
 use App\Project;
