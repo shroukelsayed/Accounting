@@ -114,6 +114,7 @@ class IndexController extends Controller
 		if(is_null($id)){
 			$receipt = new DonationReceipt();
 			$receipt->is_approved = false;
+			$receipt->collecting_type = "";
 		}
 		else{
 			$receipt = DonationReceipt::findOrFail($id);
@@ -190,7 +191,7 @@ class IndexController extends Controller
 		$receipt->receipt_delegate_id = $request->input('receipt_delegate_id');
 		$receipt->receipt_notebook =$request->input('receipt_notebook') ;
 		$receipt->receipt_for_month = $request->input('receipt_for_month');
-		// $receipt->donation_section = $request->input('');
+		$receipt->donation_section = 1;
 
 
 		$receipt->save();
