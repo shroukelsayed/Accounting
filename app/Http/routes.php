@@ -16,19 +16,19 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('lang/{lang}', ['as' => 'lang.switch', 'uses' => 'LanguageController@switchLang']);
 		Route::resource("users","UserController");
 
-    Route::auth();
+    // Route::auth();
 	Route::get('/','HomeController@index');
 	Route::get('/home', function () {
 	    return view('welcome');
 	});
-	Route::group(['middleware' => ['auth' ,'admin']], function () {
-		Route::get('/admin', function () {
-	    	return view('home');
-		});
-		Route::resource("users","UserController");
-		Route::resource("projects","ProjectController");
+	// Route::group(['middleware' => ['auth' ,'admin']], function () {
+	// 	Route::get('/admin', function () {
+	//     	return view('home');
+	// 	});
+	// 	Route::resource("users","UserController");
+	// 	Route::resource("projects","ProjectController");
 
-	});
+	// });
 
 
 	// Route::group(['middleware' => ['auth']], function () {
