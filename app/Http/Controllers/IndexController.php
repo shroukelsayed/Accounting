@@ -145,7 +145,8 @@ class IndexController extends Controller
 		            ->withErrors($validator)
 		            ->WithInput();
 		    }
-
+		    $receipt->cheque_number = 0;
+			$receipt->cheque_bank = "";
 			$receipt->alpha_amount = $request->input('amount_alpha');
 		}else{
 			$validator = Validator::make($request->all(), [
@@ -175,6 +176,7 @@ class IndexController extends Controller
 			$receipt->cheque_date = $request->input('cheque_date');
 		}
 
+		$receipt->alpha_amount = $request->input('amount_alpha');
 		$receipt->amount = $request->input('amount_alpha');
 		$receipt->notes = $request->input('notes');
 		$receipt->type = $request->input('type');
