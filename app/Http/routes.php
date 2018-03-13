@@ -14,7 +14,7 @@
 
 Route::group(['middleware' => ['web']], function () {
     Route::get('lang/{lang}', ['as' => 'lang.switch', 'uses' => 'LanguageController@switchLang']);
-		Route::resource("users","UserController");
+		// Route::resource("users","UserController");
 
     // Route::auth();
 	Route::get('/','HomeController@index');
