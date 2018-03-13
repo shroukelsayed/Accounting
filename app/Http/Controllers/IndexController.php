@@ -192,6 +192,7 @@ class IndexController extends Controller
 		$receipt->receipt_notebook =$request->input('receipt_notebook') ;
 		$receipt->receipt_for_month = $request->input('receipt_for_month');
 		$receipt->donation_section = 1;
+		$receipt->user_id = Auth::user()->id;
 
 
 		$receipt->save();
