@@ -17,10 +17,10 @@ class RoleTableSeeder extends Seeder
             'role_name' => 'Admin',
             'role' => 1,
         ]);
-        DB::table('roles')->insert([
-            'id' => 2,
-            'role_name' => 'Data Entry',
-            'role' => 2,
-        ]);
+        // DB::table('roles')->insert([
+        //     'id' => 2,
+        //     'role_name' => 'Data Entry',
+        //     'role' => 2,
+        // ]);
     }
 }
