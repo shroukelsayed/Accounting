@@ -46,6 +46,8 @@ Route::group(['middleware' => ['web']], function () {
 		Route::post('/cash-receipt', "IndexController@cashReceipt");
 		Route::get('/cash-receipt', "IndexController@cashReceipt");
 		Route::get('/all-receipts', "IndexController@index");
+		Route::post('/receipts/search','IndexController@search');
+
 
 	});
 

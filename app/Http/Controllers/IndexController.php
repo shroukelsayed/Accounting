@@ -196,6 +196,22 @@ class IndexController extends Controller
 
 	}
 
+	// function seacrh for existing person in system to add new case for him --> by shrouk
+	public function search(Request $request)
+	{
+		// var_dump($request->all());die;
+		$receipts = DonationReceipt::findOrFail($request->input("receipt_id"));
+
+		// if ($request->input("action")=="person_name")
+		// {	
+		// 	$name=PersonInfo::where('nationalid','LIKE', '%' . $request->input("person_name"). '%')->orWhere('name','LIKE', '%' . $request->input("person_name"). '%')->get();
+	
+			return $receipts;
+		// }
+	}
+
+
+
 	/**
 	 * Display a listing of the resource.
 	 *
@@ -203,7 +219,7 @@ class IndexController extends Controller
 	 */
 	public function cashReceipt(Request $request)
 	{
-		var_dump($request->all());die;
+		// var_dump($request->all());die;
 		// $users = User::orderBy('id', 'desc')->paginate(10);
 
 		return view('cash-receipt');

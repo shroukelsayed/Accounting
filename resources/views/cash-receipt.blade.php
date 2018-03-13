@@ -8,7 +8,7 @@
         <div class="container">
                 <!-- <div class="title" style="padding:50px;font-size: 60px;text-align: center;display: inline-block;">ايصال استلام تبرع</div> -->
 
-            {!! Form::open(['route' => 'store' , 'class' => 'form']) !!}
+            {!! Form::open(['url' => 'cash-receipt' , 'class' => 'form']) !!}
             	<div class="content" style="border-style: solid; border-color:black; margin: 5px;padding: 25px; height: 510px;">
 
                	 	<div class="title" style="font-size:36px;text-align: center;">@lang('validation.cash_receipt')</div>

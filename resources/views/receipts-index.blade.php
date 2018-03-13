@@ -1,5 +1,8 @@
 
 @extends('layouts.app')
+@section('css')
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/css/bootstrap-datepicker.css" rel="stylesheet">  
+@endsection
 
 @section('header')
     <div class="page-header clearfix">
@@ -12,12 +15,53 @@
 @endsection
 
 @section('content')
+ <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/fancybox/1.3.4/jquery.fancybox-1.3.4.pack.min.js"></script>
+<script type="text/javascript">
+   
+        // $(function($){
+            
+            // person_search = document.getElementById("person_search");
+ //            $(":input[name='receipt_id']").blur( function () {
+ //                            // console.log("Not Found");
+
+ //                // if( $(":input[name='receipt_id']").val() == ""){
+ //                //     person_search.innerHTML == "";
+ //                // }
+ //                $.ajax({
+ //                    url: '/receipts/search',
+ //                    type: "POST",
+ //                    data: {'receipt_id': $(":input[name='receipt_id']").val(), '_token': $('input[name=_token]').val()},
+
+ //                    success: function (data) {
+ //                        if(data.length==0 || $(":input[name='receipt_id']").val() == "" ){
+ //                            console.log("Not Found");
+ //                            person_search.innerHTML = "";
+ //                        }else{
+
+ //                        }
+ //                    }
+ //                });
+ //            });
+       
+ //        // $("#receipt_id").blur(function(){
+ //        //     alert("This input field has lost its focus.");
+ //        // });
+
+ // });
+
+
+    </script>
+
 <br><br><br><br><br><br><br>
     <div class="row">
         <div class="col-md-1"></div>
         <div class="col-md-10">
             @if($receipts->count())
                 {!! Form::open(['url' => 'cash-receipt' , 'class' => 'form']) !!}
+                {!! csrf_field() !!}
+                
                 <table class="table table-condensed table-striped">
                     <thead>
                         <tr>
@@ -33,16 +77,16 @@
                     </thead>
 
                     <tbody>
-                        <tr>
+                      <!--   <tr>
                             <td></td>
                             <td>
-                                <input  placeholder="عنوان المتبرع" type="textbox" dir="rtl" name="receipt_id">
+                                <input  placeholder="عنوان المتبرع" type="textbox" dir="rtl" name="donator_address">
                             </td>
                             <td>
-                                <input  placeholder="اسم المتبرع" type="textbox" dir="rtl" name="receipt_id">
+                                <input  placeholder="اسم المتبرع" type="textbox" dir="rtl" name="donator_name">
                             </td>
                             <td>
-                                <input  placeholder="" type="date" name="receipt_id">
+                                <input  placeholder="" type="date" name="receipt_date">
                             </td>
                             <td>
                                 <select name="type">
@@ -54,7 +98,7 @@
                                 </select>
                             </td>
                             <td>
-                                <input  placeholder="المبلغ" type="textbox" dir="rtl" name="receipt_id">
+                                <input  placeholder="المبلغ" type="textbox" dir="rtl" name="amount">
                             </td>
                             <td>
                                 <select name="cash">
@@ -64,9 +108,9 @@
                                 </select> 
                             </td>
                             <td>
-                                <input  placeholder="رقم اﻹيصال" type="textbox" dir="rtl" name="receipt_id">
+                                <input  placeholder="رقم اﻹيصال" type="search" dir="rtl" name="receipt_id" id="receipt_id">
                             </td>
-                        </tr>
+                        </tr> -->
                         @foreach($receipts as $receipt)
                             <tr>
                                  <td class="text-right">
