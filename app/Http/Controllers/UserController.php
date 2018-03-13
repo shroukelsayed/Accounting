@@ -51,7 +51,7 @@ class UserController extends Controller {
 		$user = new User();
 		// var_dump($request);die;
 		
-
+		$user->role = 2;
 		$user->save();
 
 		return redirect()->route('users.index')->with('message', 'Item created successfully.');
