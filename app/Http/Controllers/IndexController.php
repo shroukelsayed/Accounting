@@ -147,6 +147,7 @@ class IndexController extends Controller
 		    }
 		    $receipt->cheque_number = 0;
 			$receipt->cheque_bank = "";
+			$receipt->cheque_date = '0000-00-00 00:00:00';
 			$receipt->alpha_amount = $request->input('amount_alpha');
 		}else{
 			$validator = Validator::make($request->all(), [
