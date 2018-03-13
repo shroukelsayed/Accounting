@@ -31,7 +31,7 @@ Route::group(['middleware' => ['web']], function () {
 	});
 
 
-	Route::group(['middleware' => ['auth']], function () {
+	// Route::group(['middleware' => ['auth']], function () {
 
 		Route::get('/allocation', "IndexController@allocation");
 		Route::get('/custody-advances', "IndexController@custodyAdvances");
@@ -50,7 +50,7 @@ Route::group(['middleware' => ['web']], function () {
 		Route::post('/receipts/search','IndexController@search');
 
 
-	});
+	// });
 
 
 
