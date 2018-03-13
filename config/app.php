@@ -157,7 +157,7 @@ return [
         App\Providers\RouteServiceProvider::class,
 
           // Scaffolding 
-        Laralib\L5scaffold\GeneratorsServiceProvider::class,
+        // Laralib\L5scaffold\GeneratorsServiceProvider::class,
 
         //Html forms 
         Collective\Html\HtmlServiceProvider::class,
