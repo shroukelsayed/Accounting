@@ -205,15 +205,62 @@ class IndexController extends Controller
 	// function seacrh for existing person in system to add new case for him --> by shrouk
 	public function search(Request $request)
 	{
-		// var_dump($request->all());die;
-		$receipts = DonationReceipt::findOrFail($request->input("receipt_id"));
+		
 
-		// if ($request->input("action")=="person_name")
-		// {	
-		// 	$name=PersonInfo::where('nationalid','LIKE', '%' . $request->input("person_name"). '%')->orWhere('name','LIKE', '%' . $request->input("person_name"). '%')->get();
-	
-			return $receipts;
-		// }
+		// var_dump($request->all());die;
+		$where = " where ";
+		$query = "";
+		if($request->input('receipt_id') != ''){
+			$query = $where . 'id = '.$request->input('receipt_id');
+		}
+		if($request->input('donator_address') != ''){
+			if($query != '')
+				$query .= ' and ';
+			else
+				$query .= $where;
+			$query .= "donator_address LIKE  '%" .$request->input('donator_address') ."'";
+		}
+		if($request->input('donator_name') != ''){
+			if($query != '')
+				$query .= ' and ';
+			else
+				$query .= $where;
+			$query .= "donator_name LIKE  '%" .$request->input('donator_name') ."'";
+		}
+		if($request->input('receipt_date') != ''){
+			if($query != '')
+				$query .= ' and ';
+			else
+				$query .= $where;
+			$query .= "DATE(receipt_date) = '" .$request->input('receipt_date')."'";
+		}
+		if($request->input('amount') != ''){
+			if($query != '')
+				$query .= ' and ';
+			else
+				$query .= $where;
+			$query .= "amount = " .$request->input('amount');
+		}
+		if($request->input('type') != '0'){
+			if($query != '')
+				$query .= ' and ';
+			else
+				$query .= $where;
+			$query .= "type = " .$request->input('type');
+		}
+		if($request->input('cash') != '0'){
+			if($query != '')
+				$query .= ' and ';
+			else
+				$query .= $where;
+			$query .= "cash = " .  $request->input('cash');
+		}
+// var_dump($query);die;
+
+		$receipts =  DB::select("SELECT * FROM donation_receipts ". $query);
+
+		return view('table',compact('receipts'))->render();
+
 	}
 
 

@@ -20,36 +20,27 @@
 <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/fancybox/1.3.4/jquery.fancybox-1.3.4.pack.min.js"></script>
 <script type="text/javascript">
    
-        // $(function($){
+    $(function($){
             
-            // person_search = document.getElementById("person_search");
- //            $(":input[name='receipt_id']").blur( function () {
- //                            // console.log("Not Found");
+        $(":input[name='search']").blur( function () {
+            $.ajax({
+                url: '/receipts/search',
+                type: "POST",
+                data: {'receipt_id': $(":input[id='receipt_id']").val(),
+                        'donator_address': $(":input[id='donator_address']").val(),
+                        'donator_name': $(":input[id='donator_name']").val(),
+                        'receipt_date': $(":input[id='receipt_date']").val(),
+                        'amount': $(":input[id='amount']").val(),
+                        'type': $(":input[id='type']").val(),
+                        'cash': $(":input[id='cash']").val(), '_token': $('input[name=_token]').val()},
 
- //                // if( $(":input[name='receipt_id']").val() == ""){
- //                //     person_search.innerHTML == "";
- //                // }
- //                $.ajax({
- //                    url: '/receipts/search',
- //                    type: "POST",
- //                    data: {'receipt_id': $(":input[name='receipt_id']").val(), '_token': $('input[name=_token]').val()},
-
- //                    success: function (data) {
- //                        if(data.length==0 || $(":input[name='receipt_id']").val() == "" ){
- //                            console.log("Not Found");
- //                            person_search.innerHTML = "";
- //                        }else{
-
- //                        }
- //                    }
- //                });
- //            });
+                success:function(html) {                 
+                    $("#receipts_table").html(html).show('slow');
+                }
+            });
+        });
        
- //        // $("#receipt_id").blur(function(){
- //        //     alert("This input field has lost its focus.");
- //        // });
-
- // });
+    });
 
 
     </script>
@@ -77,19 +68,19 @@
                     </thead>
 
                     <tbody>
-                      <!--   <tr>
+                        <tr>
                             <td></td>
                             <td>
-                                <input  placeholder="عنوان المتبرع" type="textbox" dir="rtl" name="donator_address">
+                                <input  placeholder="عنوان المتبرع" type="textbox" dir="rtl" name="search" id="donator_address">
                             </td>
                             <td>
-                                <input  placeholder="اسم المتبرع" type="textbox" dir="rtl" name="donator_name">
+                                <input  placeholder="اسم المتبرع" type="textbox" dir="rtl" name="search" id="donator_name">
                             </td>
                             <td>
-                                <input  placeholder="" type="date" name="receipt_date">
+                                <input  placeholder="" type="date" name="search" id="receipt_date">
                             </td>
                             <td>
-                                <select name="type">
+                                <select name="search" id="type">
                                     <option value="0"> all</option>
                                     <option value="1">مستغل </option>
                                     <option value="2">غير مستغل</option>
@@ -98,49 +89,23 @@
                                 </select>
                             </td>
                             <td>
-                                <input  placeholder="المبلغ" type="textbox" dir="rtl" name="amount">
+                                <input  placeholder="المبلغ" type="textbox" dir="rtl" name="search" id="amount">
                             </td>
                             <td>
-                                <select name="cash">
+                                <select name="search" id="cash">
                                     <option value="0"> all</option>
                                     <option value="1">نقاً </option>
                                     <option value="2">شيكات</option>
                                 </select> 
                             </td>
                             <td>
-                                <input  placeholder="رقم اﻹيصال" type="search" dir="rtl" name="receipt_id" id="receipt_id">
+                                <input  placeholder="رقم اﻹيصال" type="search" dir="rtl" name="search" id="receipt_id">
                             </td>
-                        </tr> -->
-                        @foreach($receipts as $receipt)
-                            <tr>
-                                 <td class="text-right">
-                                    
-                                   &nbsp&nbsp <a class="btn btn-xs btn-warning" href="{{ url('receipts', $receipt->id) }}"><i class="glyphicon glyphicon-edit"></i>@lang('validation.edit')</a>
-                                   &nbsp&nbsp<input name="checked[]" type="checkbox" value="{{$receipt->id}}">
-                                </td>
-                                <td>{{$receipt->donator_address}}</td>
-                                <td>{{$receipt->donator_name}}</td>
-                                <td>{{ Carbon\Carbon::parse($receipt->receipt_date)->format('d-m-Y')}}</td>
-                                @if($receipt->type ==4 )
-                                    <td>مشطوب</td>
-                                @elseif($receipt->type ==3)
-                                    <td>ﻻغى</td>
-                                @elseif($receipt->type ==2)
-                                    <td>غير مستغل</td>
-                                @else
-                                    <td>مستغل</td>
-                                @endif
-                                <td>{{$receipt->amount}}</td>
-                                @if($receipt->cash == '1')
-                                    <td>نقاً </td>
-                                @else
-                                    <td>شيكات</td>
-                                @endif
-                                <td>{{$receipt->id}}</td>
-                            </tr>
-                        @endforeach
+                        </tr>
+                       
                     </tbody>
                 </table>
+                @include('table')
                 {!! Form::submit('Submit', ['class' => 'btn btn-info']) !!}
                 {!! Form::close() !!}
             @else
