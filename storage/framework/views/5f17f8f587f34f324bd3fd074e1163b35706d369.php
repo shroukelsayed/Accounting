@@ -12,20 +12,20 @@
 			
    			$('input:radio[name="receipt_type"]').change(function(){
 		        if ($(this).is(':checked') && $(this).val() == '2') {
-					$('#cash').hide();
+					// $('#cash').hide();
 		           	$('#cheque').show();
 				}else{
-		           	$('#cash').show();
+		           	// $('#cash').show();
 					$('#cheque').hide();
 				}
 		    });
 
 		    var receipt_type = $('input:radio[name="receipt_type"]:checked').val();
 		    if(receipt_type == '2'){
-	    		$('#cash').hide();
+	    		// $('#cash').hide();
 	           	$('#cheque').show();
 			}else{
-	           	$('#cash').show();
+	           	// $('#cash').show();
 				$('#cheque').hide();
 			}
 		    // console.log(receipt_type);
@@ -50,7 +50,7 @@
     <!-- <?php echo $__env->make('error', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?> -->
         <div class="container">
                 <!-- <div class="title" style="padding:50px;font-size: 60px;text-align: center;display: inline-block;">ايصال استلام تبرع</div> -->
-            <div class="content" style="border-style: solid; border-color:black; margin: 5px;padding: 25px; height: 850px;">
+            <div class="content" style="border-style: solid; border-color:black; margin: 5px;padding: 25px; height: 900px;">
 
             <?php if(isset($receipt) and $receipt->id != null): ?>
             	<?php echo Form::open(['url' => 'save-receipt/'.$receipt->id , 'class' => 'form']); ?>
