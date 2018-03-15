@@ -3,10 +3,15 @@
 
     @foreach($receipts as $receipt)
         <tr>
-             <td class="text-right">
+            <td>
                 
                &nbsp&nbsp <a class="btn btn-xs btn-warning" href="{{ url('receipts', $receipt->id) }}"><i class="glyphicon glyphicon-edit"></i>@lang('validation.edit')</a>
-               &nbsp&nbsp<input name="checked[]" type="checkbox" value="{{$receipt->id}}">
+               &nbsp&nbsp
+                @if($receipt->cash == '1')
+                    <input name="checked[]" id="checked" class="checked" type="checkbox" data-attr="cash" value="{{$receipt->id}}">
+                @else
+                    <input name="checked[]" id="checked2" class="checked" type="checkbox" data-attr="cheque" value="{{$receipt->id}}">
+                @endif
             </td>
             <td>{{$receipt->donator_address}}</td>
             <td>{{$receipt->donator_name}}</td>

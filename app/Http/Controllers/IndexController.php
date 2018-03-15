@@ -202,7 +202,7 @@ class IndexController extends Controller
 
 	}
 
-	// function seacrh for existing person in system to add new case for him --> by shrouk
+	// function seacrh for existing receipt in system 
 	public function search(Request $request)
 	{
 		
@@ -218,14 +218,14 @@ class IndexController extends Controller
 				$query .= ' and ';
 			else
 				$query .= $where;
-			$query .= "donator_address LIKE  '%" .$request->input('donator_address') ."'";
+			$query .= "donator_address LIKE  '%" .$request->input('donator_address') ."%'";
 		}
 		if($request->input('donator_name') != ''){
 			if($query != '')
 				$query .= ' and ';
 			else
 				$query .= $where;
-			$query .= "donator_name LIKE  '%" .$request->input('donator_name') ."'";
+			$query .= "donator_name LIKE  '%" .$request->input('donator_name') ."%'";
 		}
 		if($request->input('receipt_date') != ''){
 			if($query != '')
@@ -255,7 +255,6 @@ class IndexController extends Controller
 				$query .= $where;
 			$query .= "cash = " .  $request->input('cash');
 		}
-// var_dump($query);die;
 
 		$receipts =  DB::select("SELECT * FROM donation_receipts ". $query);
 
@@ -273,6 +272,15 @@ class IndexController extends Controller
 	public function cashReceipt(Request $request)
 	{
 		// var_dump($request->all());die;
+		$receipts = DonationReceipt::whereIn('id',array(2,3,4))->get();
+		$amount = 0;
+		foreach ($receipts as $key => $receipt) {
+			$amount += $receipt->amount;
+			var_dump($receipt->id);
+		}
+		die;
+		// var_dump($receipts);die;
+
 		// $users = User::orderBy('id', 'desc')->paginate(10);
 
 		return view('cash-receipt');

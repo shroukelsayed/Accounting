@@ -39,7 +39,29 @@
                 }
             });
         });
-       
+       $('.checked').change(function(){
+            if($(this).is(':checked')) {
+                if($(this)[0].dataset.attr == 'cheque'){
+                    $("#checked").each(function () {
+                        $(this).attr('disabled',true)
+                    });
+                    // document.getElementById("checked").disabled = true;
+                    console.log("jh");
+                    // $('.chk').attr('disabled', true);
+                }else{
+                    $("#checked2").each(function () {
+                        $(this).attr('disabled',true)
+                    });
+                    // $('#checked2').attr('disabled',true);
+                //     $('#collecting').hide();
+                }
+            }else{
+                $("#checked").attr('disabled',false);
+                $("#checked2").attr('disabled',false);
+            }
+        });
+
+
     });
 
 
@@ -56,31 +78,33 @@
                 <table class="table table-condensed table-striped">
                     <thead>
                         <tr>
-                            <th class="text-right"></th>
-                            <th>عنوان المتبرع</th>
-                            <th>اسم المتبرع</th>
-                            <th>تاريخ اﻹيصال</th>
-                            <th>النوع</th>
-                            <th>المبلغ</th>
-                            <th>نقاً / شيكات</th>                            
-                            <th>رقم اﻹيصال</th>                            
+                            <th class="text-center">اختر</th>
+                            <th class="text-center">عنوان المتبرع</th>
+                            <th class="text-center">اسم المتبرع</th>
+                            <th class="text-center">تاريخ اﻹيصال</th>
+                            <th class="text-center">النوع</th>
+                            <th class="text-center">المبلغ</th>
+                            <th class="text-center">نقاً / شيكات</th>                            
+                            <th class="text-center">رقم اﻹيصال</th>                            
                         </tr>
                     </thead>
 
                     <tbody>
                         <tr>
-                            <td></td>
                             <td>
-                                <input  placeholder="عنوان المتبرع" type="textbox" dir="rtl" name="search" id="donator_address">
+                                <a class="btn btn-danger" href="#" name="clear"><i class="glyphicon glyphicon-edit"></i>@lang('validation.edit')</a>
                             </td>
                             <td>
-                                <input  placeholder="اسم المتبرع" type="textbox" dir="rtl" name="search" id="donator_name">
+                                <input class="form-control" placeholder="عنوان المتبرع" type="textbox" dir="rtl" name="search" id="donator_address">
                             </td>
                             <td>
-                                <input  placeholder="" type="date" name="search" id="receipt_date">
+                                <input class="form-control" placeholder="اسم المتبرع" type="textbox" dir="rtl" name="search" id="donator_name">
                             </td>
                             <td>
-                                <select name="search" id="type">
+                                <input class="form-control" placeholder="" type="date" name="search" id="receipt_date">
+                            </td>
+                            <td>
+                                <select name="search" id="type" class="form-control">
                                     <option value="0"> all</option>
                                     <option value="1">مستغل </option>
                                     <option value="2">غير مستغل</option>
@@ -89,24 +113,24 @@
                                 </select>
                             </td>
                             <td>
-                                <input  placeholder="المبلغ" type="textbox" dir="rtl" name="search" id="amount">
+                                <input class="form-control" placeholder="المبلغ" type="textbox" dir="rtl" name="search" id="amount" maxlength="10" size="10">
                             </td>
                             <td>
-                                <select name="search" id="cash">
+                                <select name="search" id="cash" class="form-control">
                                     <option value="0"> all</option>
                                     <option value="1">نقاً </option>
                                     <option value="2">شيكات</option>
                                 </select> 
                             </td>
                             <td>
-                                <input  placeholder="رقم اﻹيصال" type="search" dir="rtl" name="search" id="receipt_id">
+                                <input class="form-control" placeholder="رقم اﻹيصال" type="search" dir="rtl" name="search" id="receipt_id"  maxlength="10" size="10">
                             </td>
                         </tr>
                        
                     </tbody>
                 </table>
                 @include('table')
-                {!! Form::submit('Submit', ['class' => 'btn btn-info']) !!}
+                {!! Form::submit('إنشاء ايصال استلام نقدية', ['class' => 'btn btn-info']) !!}
                 {!! Form::close() !!}
             @else
                 <h3 class="text-center alert alert-info">Empty!</h3>
