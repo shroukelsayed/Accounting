@@ -3,6 +3,16 @@
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('content'); ?>
+<style>
+ 	#profile{
+		border:2px solid white;
+		width:150px;
+		height:150px;
+		margin-top:-8px;
+  	}
+</style>
+
+
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
 <script type="text/javascript" src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/fancybox/1.3.4/jquery.fancybox-1.3.4.pack.min.js"></script>
@@ -41,8 +51,23 @@
 		    if(is_approved == '1'){
 		        $('#collecting').show();
 		    }
+
+
+		    $(":input[name='amount']").blur( function () {
+	     //        $.ajax({
+	     //            url: '/convert-number',
+	     //            type: "POST",
+	     //            data: {'number': $(":input[name='amount']").val(),
+	     //                   '_token': $('input[name=_token]').val()},
+
+	     //            success:function(data) {                 
+	                    $(":input[name='amount_alpha']").val(data);
+	     //            }
+	     //        });
+	        });
    		});
   	</script>
+  	 
 <?php
 	// var_dump(isset($receipt) and $receipt->id != null);die();
 	// var_dump( $receipt->cash);die();
@@ -50,11 +75,10 @@
     <!-- <?php echo $__env->make('error', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?> -->
         <div class="container">
                 <!-- <div class="title" style="padding:50px;font-size: 60px;text-align: center;display: inline-block;">ايصال استلام تبرع</div> -->
-            <div class="content" style="border-style: solid; border-color:black; margin: 5px;padding: 25px; height: 900px;">
+            <div class="content" style="border-style: solid; border-color:black; margin: 5px;padding: 25px; height: 1200px;">
 
             <?php if(isset($receipt) and $receipt->id != null): ?>
             	<?php echo Form::open(['url' => 'save-receipt/'.$receipt->id , 'class' => 'form']); ?>
-
 
             	<div class="row">
             		<div class="col-sm-3">
@@ -96,31 +120,60 @@
             <?php endif; ?>
             	<?php echo csrf_field(); ?>
 
-               	 	<div class="title" style="font-size:36px;text-align: center;">ايصال استلام تبرع</div>
-		        	
-		        	<div class="form-group" style="text-align: center;">
-		        		<?php if(isset($receipt) and $receipt->cash == 2): ?>
-			        		<?php echo Form::label('receipt_type', 'شيكات'); ?>
+            		<div style="text-align: right;">
+            			<label>مؤسسة عمار اﻻرض</label><br>
+               			<label> المشهرة برقم ٤٥٦٦ لسنة ٢٠١٢ </label>
+            		</div>
+            		<div class="row">
+            			<div class="col-sm-3">
+            				<img id="profile" src="<?php echo e(asset('img/2.jpg')); ?>"  class="user-image" alt="User Image">
+            			</div>
+            			<div class="col-sm-6">
+		            		<div style="text-align: center;font-size:36px;">
+		            			<label><?php echo e($last_id); ?></label><br>
+		            		</div>
+		               	 	<div class="title" style="font-size:36px;text-align: center;">ايصال استلام تبرعات</div>
+		               	</div>
+		               	<div class="col-sm-3"></div>
+		            </div>
+               	 	<br>
+               	 	<div class="row">
+						<div class="col-sm-3">
+							<div>
+		               	 		<label>جنيه</label>&nbsp&nbsp&nbsp&nbsp<label>قرش</label><br>
+		               	 		<?php if(isset($receipt) and $receipt->amount): ?>
+		               	 			<input type="text" name="amount" size="7" value="<?php echo e($receipt->amount); ?>">
+		               	 		<?php else: ?>
+		               	 			<input type="text" name="amount" size="7">
+		               	 		<?php endif; ?>
+		               	 		<!-- <input type="text" name="amount" size="7"> -->
+		               	 	</div>
+		               	</div>
+		               	<div class="col-sm-6">
+				        	<div class="form-group" style="text-align: center;">
+				        		<?php if(isset($receipt) and $receipt->cash == 2): ?>
+					        		<?php echo Form::label('receipt_type', 'شيكات'); ?>
 
-	                		<?php echo Form::radio('receipt_type', '2',true); ?>
+			                		<?php echo Form::radio('receipt_type', '2',true); ?>
 
-						    <?php echo Form::label('receipt_type', 'نقداً'); ?>
+								    <?php echo Form::label('receipt_type', 'نقداً'); ?>
 
-							<?php echo Form::radio('receipt_type', '1'); ?>
+									<?php echo Form::radio('receipt_type', '1'); ?>
 
-						<?php else: ?>
-							<?php echo Form::label('receipt_type', 'شيكات'); ?>
+								<?php else: ?>
+									<?php echo Form::label('receipt_type', 'شيكات'); ?>
 
-	                		<?php echo Form::radio('receipt_type', '2'); ?>
+			                		<?php echo Form::radio('receipt_type', '2'); ?>
 
-						    <?php echo Form::label('receipt_type', 'نقداً'); ?>
+								    <?php echo Form::label('receipt_type', 'نقداً'); ?>
 
-							<?php echo Form::radio('receipt_type', '1', true); ?>
+									<?php echo Form::radio('receipt_type', '1', true); ?>
 
-						<?php endif; ?>
-
-					</div>
-
+								<?php endif; ?>
+							</div>
+						</div>
+						<div class="col-sm-3"></div>
+	               	</div>
 					<br>
 		        	<div class="form-group" style="text-align: right;">
 						<div class="col-sm-4"></div>
@@ -169,7 +222,7 @@
                 			<?php endif; ?>
 						</div>
 					</div>
-					<br><br><br>
+					<br>
 					<div class="form-group" style="text-align: right;">
 						<div class="row">
 							<div class="col-sm-9">
@@ -243,10 +296,10 @@
 							<div class="row">
 								<div class="col-sm-9">
 									<?php if(isset($receipt) and $receipt->alpha_amount): ?>
-								    	<?php echo Form::text('amount_alpha', $receipt->alpha_amount, ['class' => 'form-control', 'dir'=> "rtl"]); ?>
+								    	<?php echo Form::text('amount_alpha', $receipt->alpha_amount, ['class' => 'form-control', 'dir'=> "rtl", 'readonly' => "true"]); ?>
 
 									<?php else: ?>
-								    	<?php echo Form::text('amount_alpha', null, ['class' => 'form-control', 'dir'=> "rtl"]); ?>
+								    	<?php echo Form::text('amount_alpha', null, ['class' => 'form-control', 'dir'=> "rtl", 'readonly' => "true"]); ?>
 
 								    <?php endif; ?>
 									 <?php if($errors->has('amount_alpha')): ?>
@@ -352,13 +405,7 @@
 							</div>
 						</div>
 					</div>
-
-
-
-
-
 					<br>
-
 					<div class="form-group" style="text-align: right;">
 						<div class="row">
 							<div class="col-sm-3">
@@ -386,10 +433,10 @@
 						<div class="row">
 							<div class="col-sm-3">
 								<?php if(isset($receipt) and $receipt->receipt_notebook): ?>
-					    			<?php echo Form::text('receipt_notebook', $receipt->receipt_notebook, ['class' => 'form-control', 'dir'=> "rtl"]); ?>
+					    			<?php echo Form::text('receipt_notebook', $notebook, ['class' => 'form-control', 'dir'=> "rtl"]); ?>
 
 								<?php else: ?>
-					    			<?php echo Form::text('receipt_notebook', null, ['class' => 'form-control', 'dir'=> "rtl"]); ?>
+					    			<?php echo Form::text('receipt_notebook', $notebook , ['class' => 'form-control', 'dir'=> "rtl"]); ?>
 
 					    		<?php endif; ?>
 					    		<?php if($errors->has('receipt_notebook')): ?>
@@ -467,9 +514,6 @@
 							<div class="col-sm-6"></div>
 						</div>
 					</div>
-
-
-				
 					<div class="form-group" style="text-align: right;">
 						<div class="row">
 							<div class="col-sm-6"></div>
@@ -492,9 +536,14 @@
 							</div>
 						</div>
 					</div>
+					<hr style="height:1px;border:none;color:#333;background-color:#333;" />
+					<div style="text-align: center;">
+						<label> كل ايصال غير مختوم بختم الؤسسة يعتبر ﻻغى </label><br>
+						<label> ت: ١٩٠٥٤ </label>
+					</div>
 					<br>
 
-            	<?php echo e(Form::reset('Clear form', ['class' => 'btn btn-reset'])); ?>
+            		<?php echo e(Form::reset('Clear form', ['class' => 'btn btn-reset'])); ?>
 
 					<?php echo Form::submit('Submit', ['class' => 'btn btn-info']); ?>
 

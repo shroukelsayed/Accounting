@@ -95,11 +95,17 @@ class IndexController extends Controller
 		
 		if($id){
 			$receipt = DonationReceipt::findOrFail($id);
+			$last_id = $receipt->id;
+			$notebook = $receipt->receipt_notebook;
+		}else{
+			$last_receipt = DonationReceipt::orderby('id', 'desc')->first();
+			$last_id = $last_receipt->id + 1 ;
+			$notebook = $last_receipt->receipt_notebook;
 		}
 
 		$projects = Project::lists('name','id');
 
-		return view('donation-receipt', compact('projects','receipt'));
+		return view('donation-receipt', compact('projects','receipt','last_id','notebook'));
 	}
 
 
@@ -131,7 +137,7 @@ class IndexController extends Controller
 			$validator = Validator::make($request->all(), [
             	'donator_name' => 'required|max:255',
 	            'donator_address' => 'required',
-	            'amount_alpha' => 'required',
+	            'amount' => 'required',
 	            'notes' => 'required',
 	            'type' => 'required',
 	            'delivery_date' => 'required',
@@ -139,8 +145,8 @@ class IndexController extends Controller
 	            'project_id' => 'required',
 	            'receipt_writter_id' => 'required',
 	            'receipt_delegate_id' => 'required',
-	            'receipt_notebook' => 'required',
 	            'receipt_for_month' => 'required',
+	            'receipt_notebook' => 'required',
 	        ]);
 	        if($validator->fails()) {
 		        return Redirect::back()
@@ -158,6 +164,7 @@ class IndexController extends Controller
 	            'cheque_number' => 'required',
 	            'cheque_bank' => 'required',
 	            'cheque_date' => 'required',
+	            'amount' => 'required',
 	            'notes' => 'required',
 	            'type' => 'required',
 	            'delivery_date' => 'required',
@@ -165,8 +172,8 @@ class IndexController extends Controller
 	            'project_id' => 'required',
 	            'receipt_writter_id' => 'required',
 	            'receipt_delegate_id' => 'required',
-	            'receipt_notebook' => 'required',
 	            'receipt_for_month' => 'required',
+	            'receipt_notebook' => 'required',
 	        ]);
 	        if($validator->fails()) {
 		        return Redirect::back()
@@ -180,7 +187,7 @@ class IndexController extends Controller
 		}
 
 		$receipt->alpha_amount = $request->input('amount_alpha');
-		$receipt->amount = $request->input('amount_alpha');
+		$receipt->amount = $request->input('amount');
 		$receipt->notes = $request->input('notes');
 		$receipt->type = $request->input('type');
 		$receipt->receipt_date = $request->input('delivery_date');
@@ -287,5 +294,234 @@ class IndexController extends Controller
 	}
 	
 
+	public function convertNumber(Request $request)
+	{
+		$number = $request->input('number');
+
+	    list($integer, $fraction) = explode(".", (string) $number);
+
+	    $output = "";
+
+	    if ($integer{0} == "-")
+	    {
+	        $output = "negative ";
+	        $integer    = ltrim($integer, "-");
+	    }
+	    else if ($integer{0} == "+")
+	    {
+	        $output = "positive ";
+	        $integer    = ltrim($integer, "+");
+	    }
+
+	    if ($integer{0} == "0")
+	    {
+	        $output .= "صفر";
+	    }
+	    else
+	    {
+	        $integer = str_pad($integer, 36, "0", STR_PAD_LEFT);
+	        $group   = rtrim(chunk_split($integer, 3, " "), " ");
+	        $groups  = explode(" ", $group);
+
+	        $groups2 = array();
+	        foreach ($groups as $g)
+	        {
+	            $groups2[] = $this->convertThreeDigit($g{0}, $g{1}, $g{2});
+	        }
+
+	        for ($z = 0; $z < count($groups2); $z++)
+	        {
+	            if ($groups2[$z] != "")
+	            {
+	                $output .= $groups2[$z] . $this->convertGroup(11 - $z) . (
+	                        $z < 11
+	                        && !array_search('', array_slice($groups2, $z + 1, -1))
+	                        && $groups2[11] != ''
+	                        && $groups[11]{0} == '0'
+	                            ? " و "
+	                            : ", "
+	                    );
+	            }
+	        }
+
+	        $output = rtrim($output, ", ");
+	    }
+
+	    if ($fraction > 0)
+	    {
+	        $output .= " ,";
+	        for ($i = 0; $i < strlen($fraction); $i++)
+	        {
+	            $output .= " " . $this->convertDigit($fraction{$i});
+	        }
+	    }
+
+	    return $output;
+	}
+
+	function convertGroup($index)
+	{
+	    switch ($index)
+	    {
+	        case 11:
+	            return " decillion";
+	        case 10:
+	            return " nonillion";
+	        case 9:
+	            return " octillion";
+	        case 8:
+	            return " septillion";
+	        case 7:
+	            return " sextillion";
+	        case 6:
+	            return " quintrillion";
+	        case 5:
+	            return " quadrillion";
+	        case 4:
+	            return " تريليون";
+	        case 3:
+	            return " [ليون]";
+	        case 2:
+	            return " مليون";
+	        case 1:
+	            return " ألف";
+	        case 0:
+	            return "";
+	    }
+	}
+
+	function convertThreeDigit($digit1, $digit2, $digit3)
+	{
+	    $buffer = "";
+
+	    if ($digit1 == "0" && $digit2 == "0" && $digit3 == "0")
+	    {
+	        return "";
+	    }
+
+	    if ($digit1 != "0")
+	    {
+	    	// var_dump($digit1);die;
+	    	if($digit1 == "2")
+	    		$buffer = "مائتين";
+	    	else
+	        	$buffer .= $this->convertDigit($digit1) . " مائة";
+	        if ($digit2 != "0" || $digit3 != "0")
+	        {
+	            $buffer .= " و ";
+	        }
+	    }
+
+	    if ($digit2 != "0")
+	    {
+	        $buffer .= $this->convertTwoDigit($digit2, $digit3);
+	    }
+	    else if ($digit3 != "0")
+	    {
+	        $buffer .= $this->convertDigit($digit3);
+	    }
+
+	    return $buffer;
+	}
+
+	function convertTwoDigit($digit1, $digit2)
+	{
+	    if ($digit2 == "0")
+	    {
+	        switch ($digit1)
+	        {
+	            case "1":
+	                return "عشرة";
+	            case "2":
+	                return "عشرون";
+	            case "3":
+	                return "ثلاثون";
+	            case "4":
+	                return "أربعون";
+	            case "5":
+	                return "خمسون";
+	            case "6":
+	                return "ستون";
+	            case "7":
+	                return "سبعون";
+	            case "8":
+	                return "ثمانون";
+	            case "9":
+	                return "تسعون";
+	        }
+	    } else if ($digit1 == "1")
+	    {
+	        switch ($digit2)
+	        {
+	            case "1":
+	                return "إحدى عشر";
+	            case "2":
+	                return "إثنى عشر";
+	            case "3":
+	                return "ثلاث عشر";
+	            case "4":
+	                return "أربع عشر";
+	            case "5":
+	                return "خمس عشر";
+	            case "6":
+	                return "ست عشر";
+	            case "7":
+	                return "سبع عشر";
+	            case "8":
+	                return "ثمان عشر";
+	            case "9":
+	                return "تسع عشر ";
+	        }
+	    } else
+	    {
+	        $temp = $this->convertDigit($digit2);
+	        switch ($digit1)
+	        {
+	            case "2":
+	                return "عشرون-$temp";
+	            case "3":
+	                return "ثلاثون-$temp";
+	            case "4":
+	                return "أربعون-$temp";
+	            case "5":
+	                return "خمسون-$temp";
+	            case "6":
+	                return "ستون-$temp";
+	            case "7":
+	                return "سبعون-$temp";
+	            case "8":
+	                return "ثمانون-$temp";
+	            case "9":
+	                return "تسعون-$temp";
+	        }
+	    }
+	}
+
+	function convertDigit($digit)
+	{
+	    switch ($digit)
+	    {
+	        case "0":
+	            return "صفر";
+	        case "1":
+	            return "واحد";
+	        case "2":
+	            return "اثنين";
+	        case "3":
+	            return "ثلاث";
+	        case "4":
+	            return "أربع";
+	        case "5":
+	            return "خمس";
+	        case "6":
+	            return "ست";
+	        case "7":
+	            return "سبع";
+	        case "8":
+	            return "ثمان";
+	        case "9":
+	            return "تسع";
+	    }
+	}
 
 }

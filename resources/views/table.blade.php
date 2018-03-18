@@ -6,6 +6,7 @@
             <td>
                 
                &nbsp&nbsp <a class="btn btn-xs btn-warning" href="{{ url('receipts', $receipt->id) }}"><i class="glyphicon glyphicon-edit"></i>@lang('validation.edit')</a>
+               &nbsp&nbsp <a class="btn btn-xs btn-warning" href="{{ url('receipts', $receipt->id) }}"><i class="glyphicon glyphicon-edit"></i>@lang('validation.view')</a>
                &nbsp&nbsp
                 @if($receipt->cash == '1')
                     <input name="checked[]" id="checked" class="checked" type="checkbox" data-attr="cash" value="{{$receipt->id}}">
