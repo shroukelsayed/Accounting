@@ -61,7 +61,7 @@
 	     //                   '_token': $('input[name=_token]').val()},
 
 	     //            success:function(data) {                 
-	                    $(":input[name='amount_alpha']").val(data);
+	                    $(":input[name='amount_alpha']").val($(":input[name='amount']").val());
 	     //            }
 	     //        });
 	        });
