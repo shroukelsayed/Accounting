@@ -34,6 +34,7 @@ return [
     'welcome'                    => 'Welcome',
     'addUser'                    => 'Add New User',
     'edit'                       => 'Edit',
+    'view'                       => 'View',
 
     'ommar'                      => 'Ommar Elard',
     'accountingSystem'           => 'Accounting System',

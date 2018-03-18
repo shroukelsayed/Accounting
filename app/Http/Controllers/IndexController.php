@@ -146,7 +146,6 @@ class IndexController extends Controller
 	            'receipt_writter_id' => 'required',
 	            'receipt_delegate_id' => 'required',
 	            'receipt_for_month' => 'required',
-	            'receipt_notebook' => 'required',
 	        ]);
 	        if($validator->fails()) {
 		        return Redirect::back()
@@ -173,7 +172,6 @@ class IndexController extends Controller
 	            'receipt_writter_id' => 'required',
 	            'receipt_delegate_id' => 'required',
 	            'receipt_for_month' => 'required',
-	            'receipt_notebook' => 'required',
 	        ]);
 	        if($validator->fails()) {
 		        return Redirect::back()

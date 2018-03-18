@@ -30,6 +30,7 @@ return [
     'welcome'                         => 'أهلاً بك ',
     'addUser'                         => 'إضافة مستخدم جديد',
     'edit'                            => 'تعديل',
+    'view'                            => 'عرض',
 
     'ommar'                           => 'عمار اﻷرض',
     'accountingSystem'                => 'نظام الحسابات',
