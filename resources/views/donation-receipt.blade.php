@@ -22,24 +22,19 @@
 		$(function($){
 			
    			$('input:radio[name="receipt_type"]').change(function(){
-		        if ($(this).is(':checked') && $(this).val() == '2') {
-					// $('#cash').hide();
+		        if ($(this).is(':checked') && $(this).val() == '0') {
 		           	$('#cheque').show();
 				}else{
-		           	// $('#cash').show();
 					$('#cheque').hide();
 				}
 		    });
 
 		    var receipt_type = $('input:radio[name="receipt_type"]:checked').val();
-		    if(receipt_type == '2'){
-	    		// $('#cash').hide();
+		    if(receipt_type == '0'){
 	           	$('#cheque').show();
 			}else{
-	           	// $('#cash').show();
 				$('#cheque').hide();
 			}
-		    // console.log(receipt_type);
 		    $('input:checkbox[name="is_approved"]').change(function(){
 		        if ($(this).is(':checked')) {
 		           	$('#collecting').show();
@@ -118,10 +113,23 @@
             				<img id="profile" src="{{ asset('img/2.jpg') }}"  class="user-image" alt="User Image">
             			</div>
             			<div class="col-sm-6">
-		            		<div style="text-align: center;font-size:36px;">
-		            			<label>{{$last_id}}</label><br>
-		            		</div>
 		               	 	<div class="title" style="font-size:36px;text-align: center;">ايصال استلام تبرعات</div>
+				        	<div class="form-group" style="text-align: center;">
+				        		@if(isset($receipt) and $receipt->cash == 0)
+					        		{!! Form::label('receipt_type', 'شيكات') !!}
+			                		{!! Form::radio('receipt_type', '0',true) !!}
+								    {!! Form::label('receipt_type', 'نقداً') !!}
+									{!! Form::radio('receipt_type', '1') !!}
+								@else
+									{!! Form::label('receipt_type', 'شيكات') !!}
+			                		{!! Form::radio('receipt_type', '0') !!}
+								    {!! Form::label('receipt_type', 'نقداً') !!}
+									{!! Form::radio('receipt_type', '1', true) !!}
+								@endif
+							</div>
+							<div style="text-align: center;font-size:18px;">
+		            			<label>{{$last_id}} &nbsp&nbsp&nbsp رقم</label><br>
+		            		</div>
 		               	</div>
 		               	<div class="col-sm-3"></div>
 		            </div>
@@ -137,21 +145,7 @@
 		               	 		@endif
 		               	 	</div>
 		               	</div>
-		               	<div class="col-sm-6">
-				        	<div class="form-group" style="text-align: center;">
-				        		@if(isset($receipt) and $receipt->cash == 0)
-					        		{!! Form::label('receipt_type', 'شيكات') !!}
-			                		{!! Form::radio('receipt_type', '2',true) !!}
-								    {!! Form::label('receipt_type', 'نقداً') !!}
-									{!! Form::radio('receipt_type', '1') !!}
-								@else
-									{!! Form::label('receipt_type', 'شيكات') !!}
-			                		{!! Form::radio('receipt_type', '2') !!}
-								    {!! Form::label('receipt_type', 'نقداً') !!}
-									{!! Form::radio('receipt_type', '1', true) !!}
-								@endif
-							</div>
-						</div>
+		               	<div class="col-sm-6"></div>
 						<div class="col-sm-3"></div>
 	               	</div>
 					<br>
@@ -471,7 +465,7 @@
 					<br>
 
             		{{ Form::reset('Clear form', ['class' => 'btn btn-reset']) }}
-					{!! Form::submit('Submit', ['class' => 'btn btn-info']) !!}
+					{!! Form::submit(trans('validation.submit'), ['class' => 'btn btn-info']) !!}
 
             	</div>
 			{!! Form::close() !!}

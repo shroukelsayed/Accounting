@@ -36,6 +36,7 @@ class CreateDonationReceiptsTable extends Migration
             $table->integer('donation_section');
             $table->string('collecting_type');
             $table->integer('user_id');
+            $table->integer('receipt_id');
 
 
             $table->timestamps();

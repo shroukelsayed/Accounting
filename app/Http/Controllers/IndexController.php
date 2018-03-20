@@ -12,6 +12,7 @@ use App;
 use App\Http\Requests;
 use App\Project;
 use App\DonationReceipt;
+use App\Receipt;
 use Illuminate\Support\Facades\Redirect;
 
 class IndexController extends Controller
@@ -210,8 +211,6 @@ class IndexController extends Controller
 	// function seacrh for existing receipt in system 
 	public function search(Request $request)
 	{
-		
-
 		// var_dump($request->all());die;
 		$where = " where ";
 		$query = "";
@@ -253,12 +252,12 @@ class IndexController extends Controller
 				$query .= $where;
 			$query .= "type = " .$request->input('type');
 		}
-		if($request->input('cash') != '0'){
+		if($request->input('cash') != '2'){
 			if($query != '')
 				$query .= ' and ';
 			else
 				$query .= $where;
-			$query .= "cash = " .  $request->input('cash');
+			$query .= "cash = " .  (int)$request->input('cash');
 		}
 
 		$receipts =  DB::select("SELECT * FROM donation_receipts ". $query);
@@ -277,18 +276,87 @@ class IndexController extends Controller
 	public function cashReceipt(Request $request)
 	{
 		// var_dump($request->all());die;
-		$receipts = DonationReceipt::whereIn('id',array(2,3,4))->get();
-		$amount = 0;
-		foreach ($receipts as $key => $receipt) {
-			$amount += $receipt->amount;
-			var_dump($receipt->id);
+		if($request->input('checked') !== null && is_array($request->input('checked'))){
+			$ids = implode(',',$request->input('checked'));
+			$receipts = DonationReceipt::whereIn('id',$request->input('checked'))->get();
+			$last_receipt = Receipt::orderby('id', 'desc')->first();
+			$last_id = ($last_receipt)? $last_receipt->id +1 : 1;
+
+			$amount = 0;
+			$receipt_type = $receipts[0]->cash;
+			$projects_amount = array();
+			foreach ($receipts as $key => $receipt) {
+				$amount += $receipt->amount;
+				if(isset($projects_amount[$receipt->project->name]))
+					$projects_amount[$receipt->project->name] += $receipt->amount;
+				else
+					$projects_amount[$receipt->project->name] = $receipt->amount;
+			}
+
+			// return view('cash-receipt',compact('amount','receipt_type','last_id','projects_amount','ids'));
 		}
-		die;
-		// var_dump($receipts);die;
+		
+		
+		return view('cash-receipt',compact('amount','receipt_type','last_id','projects_amount','ids'));
+	}
 
-		// $users = User::orderBy('id', 'desc')->paginate(10);
 
-		return view('cash-receipt');
+	public function saveCash(Request $request)
+	{
+		// var_dump($request->all());die;
+		$receipt = new Receipt();
+		if($request->input('receipt_type') == '1'){
+			$validator = Validator::make($request->all(), [
+	            'delivered_by' => 'required|max:255',
+	            'delivery_date' => 'required',
+	            'notes' => 'required',
+	            
+	        ]);
+	        if($validator->fails()) {
+		        return Redirect::back()
+		            ->withErrors($validator)
+		            ->WithInput();
+		    }
+		}else{
+			$validator = Validator::make($request->all(), [
+	            'delivered_by' => 'required|max:255',
+	            'delivery_date' => 'required',
+	            'cheque_number' => 'required',
+	            'cheque_bank' => 'required',
+	            'cheque_date' => 'required',
+	            'notes' => 'required',
+	            
+	        ]);
+	        if($validator->fails()) {
+		        return Redirect::back()
+		            ->withErrors($validator)
+		            ->WithInput();
+		    }
+		    $receipt->cheque_number = $request->input('cheque_number');
+			$receipt->cheque_bank = $request->input('cheque_bank');
+		    $receipt->cheque_date = $request->input('cheque_date');
+		}
+		$receipt->receipt_date = $request->input('delivery_date');
+		$receipt->delivered_by = $request->input('delivered_by');
+		$receipt->notes = $request->input('notes');
+		$receipt->cash = $request->input('receipt_type');
+		$receipt->amount = $request->input('amount');
+		$receipt->alpha_amount = $request->input('amount_alpha');
+		$receipt->notes = $request->input('notes');
+		$receipt->save();
+		$old_ids = explode(',', $request->input('ids'));
+		// var_dump($ids);die;
+		$donation_receipts = DonationReceipt::whereIn('id',$old_ids)->get();
+
+		foreach ($donation_receipts as $key => $donation_receipt) {
+			$donation_receipt->receipt_id = $receipt->id;
+			$donation_receipt->save();
+		}
+
+		// var_dump($receipt->id);die;
+		return redirect()->action('IndexController@index');
+		
+
 	}
 	
 

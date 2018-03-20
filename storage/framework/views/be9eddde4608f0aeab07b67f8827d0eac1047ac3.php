@@ -114,13 +114,13 @@
                             </td>
                             <td>
                                 <select name="search" id="cash" class="form-control">
-                                    <option value="0"> all</option>
+                                    <option value="2"> all</option>
                                     <option value="1">نقاً </option>
-                                    <option value="2">شيكات</option>
+                                    <option value="0">شيكات</option>
                                 </select> 
                             </td>
                             <td>
-                                <input class="form-control" placeholder="رقم اﻹيصال" type="search" dir="rtl" name="search" id="receipt_id"  maxlength="3" size="3">
+                                <input class="form-control" placeholder="رقم اﻹيصال" type="search" dir="rtl" name="search" id="receipt_id" size="5">
                             </td>
                         </tr>
                        

@@ -21,24 +21,19 @@
 		$(function($){
 			
    			$('input:radio[name="receipt_type"]').change(function(){
-		        if ($(this).is(':checked') && $(this).val() == '2') {
-					// $('#cash').hide();
+		        if ($(this).is(':checked') && $(this).val() == '0') {
 		           	$('#cheque').show();
 				}else{
-		           	// $('#cash').show();
 					$('#cheque').hide();
 				}
 		    });
 
 		    var receipt_type = $('input:radio[name="receipt_type"]:checked').val();
-		    if(receipt_type == '2'){
-	    		// $('#cash').hide();
+		    if(receipt_type == '0'){
 	           	$('#cheque').show();
 			}else{
-	           	// $('#cash').show();
 				$('#cheque').hide();
 			}
-		    // console.log(receipt_type);
 		    $('input:checkbox[name="is_approved"]').change(function(){
 		        if ($(this).is(':checked')) {
 		           	$('#collecting').show();
@@ -74,7 +69,6 @@
  ?>
     <!-- <?php echo $__env->make('error', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?> -->
         <div class="container">
-                <!-- <div class="title" style="padding:50px;font-size: 60px;text-align: center;display: inline-block;">ايصال استلام تبرع</div> -->
             <div class="content" style="border-style: solid; border-color:black; margin: 5px;padding: 25px; height: 1200px;">
 
             <?php if(isset($receipt) and $receipt->id != null): ?>
@@ -129,10 +123,31 @@
             				<img id="profile" src="<?php echo e(asset('img/2.jpg')); ?>"  class="user-image" alt="User Image">
             			</div>
             			<div class="col-sm-6">
-		            		<div style="text-align: center;font-size:36px;">
-		            			<label><?php echo e($last_id); ?></label><br>
-		            		</div>
 		               	 	<div class="title" style="font-size:36px;text-align: center;">ايصال استلام تبرعات</div>
+				        	<div class="form-group" style="text-align: center;">
+				        		<?php if(isset($receipt) and $receipt->cash == 0): ?>
+					        		<?php echo Form::label('receipt_type', 'شيكات'); ?>
+
+			                		<?php echo Form::radio('receipt_type', '0',true); ?>
+
+								    <?php echo Form::label('receipt_type', 'نقداً'); ?>
+
+									<?php echo Form::radio('receipt_type', '1'); ?>
+
+								<?php else: ?>
+									<?php echo Form::label('receipt_type', 'شيكات'); ?>
+
+			                		<?php echo Form::radio('receipt_type', '0'); ?>
+
+								    <?php echo Form::label('receipt_type', 'نقداً'); ?>
+
+									<?php echo Form::radio('receipt_type', '1', true); ?>
+
+								<?php endif; ?>
+							</div>
+							<div style="text-align: center;font-size:18px;">
+		            			<label><?php echo e($last_id); ?> &nbsp&nbsp&nbsp رقم</label><br>
+		            		</div>
 		               	</div>
 		               	<div class="col-sm-3"></div>
 		            </div>
@@ -146,32 +161,9 @@
 		               	 		<?php else: ?>
 		               	 			<input type="text" name="amount" size="7">
 		               	 		<?php endif; ?>
-		               	 		<!-- <input type="text" name="amount" size="7"> -->
 		               	 	</div>
 		               	</div>
-		               	<div class="col-sm-6">
-				        	<div class="form-group" style="text-align: center;">
-				        		<?php if(isset($receipt) and $receipt->cash == 0): ?>
-					        		<?php echo Form::label('receipt_type', 'شيكات'); ?>
-
-			                		<?php echo Form::radio('receipt_type', '2',true); ?>
-
-								    <?php echo Form::label('receipt_type', 'نقداً'); ?>
-
-									<?php echo Form::radio('receipt_type', '1'); ?>
-
-								<?php else: ?>
-									<?php echo Form::label('receipt_type', 'شيكات'); ?>
-
-			                		<?php echo Form::radio('receipt_type', '2'); ?>
-
-								    <?php echo Form::label('receipt_type', 'نقداً'); ?>
-
-									<?php echo Form::radio('receipt_type', '1', true); ?>
-
-								<?php endif; ?>
-							</div>
-						</div>
+		               	<div class="col-sm-6"></div>
 						<div class="col-sm-3"></div>
 	               	</div>
 					<br>
@@ -545,13 +537,12 @@
 
             		<?php echo e(Form::reset('Clear form', ['class' => 'btn btn-reset'])); ?>
 
-					<?php echo Form::submit('Submit', ['class' => 'btn btn-info']); ?>
+					<?php echo Form::submit(trans('validation.submit'), ['class' => 'btn btn-info']); ?>
 
 
             	</div>
 			<?php echo Form::close(); ?>
 
-			<!-- </form> -->
         </div>
   
 <?php $__env->stopSection(); ?>

@@ -16,5 +16,8 @@ class Project extends Model
         'name', 'code', 'published_at'
     ];
 
-
+    public function donationReceipts()
+    {
+        return $this->hasMany(DonationReceipt::class);
+    }
 }

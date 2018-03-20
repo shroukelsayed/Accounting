@@ -13,10 +13,14 @@ class DonationReceipt extends Model
      * @var array
      */
     protected $fillable = [
-    	'cash','amount','alpha_amount','notes','type','receipt_date','cheque_number','cheque_bank','cheque_date','donator_name','donator_address','donator_mobile','is_approved','project_id','receipt_writter_id','receipt_delegate_id','receipt_notebook','receipt_for_month','donation_section','collecting_type','user_id'
+    	'cash','amount','alpha_amount','notes','type','receipt_date','cheque_number','cheque_bank','cheque_date','donator_name','donator_address','donator_mobile','is_approved','project_id','receipt_writter_id','receipt_delegate_id','receipt_notebook','receipt_for_month','donation_section','collecting_type','user_id','receipt_id'
     ];
 
     public function user(){
         return $this->belongsTo(User::class);
+    }
+
+    public function project(){
+        return $this->belongsTo(Project::class);
     }
 }

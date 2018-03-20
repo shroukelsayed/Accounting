@@ -35,6 +35,7 @@ return [
     'addUser'                    => 'Add New User',
     'edit'                       => 'Edit',
     'view'                       => 'View',
+    'submit'                     => 'Submit',
 
 
 

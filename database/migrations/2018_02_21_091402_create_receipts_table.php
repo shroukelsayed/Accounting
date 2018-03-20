@@ -26,6 +26,7 @@ class CreateReceiptsTable extends Migration
             $table->dateTime('cheque_date');
             $table->string('for_account');
             $table->integer('user_id');
+            $table->string('delivered_by');
             
             $table->timestamps();
         });

@@ -43,6 +43,7 @@ Route::group(['middleware' => ['web']], function () {
 		// Route::post('/save-receipt', "IndexController@saveReceipt");
 		Route::post('/save-receipt/{id?}', "IndexController@saveReceipt");
 
+		Route::post('/save-cash', "IndexController@saveCash");
 		Route::post('/cash-receipt', "IndexController@cashReceipt");
 		Route::get('/cash-receipt', "IndexController@cashReceipt");
 		Route::get('/all-receipts', "IndexController@index");

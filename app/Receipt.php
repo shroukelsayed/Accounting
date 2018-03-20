@@ -13,7 +13,7 @@ class Receipt extends Model
      * @var array
      */
     protected $fillable = [
-        'cash','amount','alpha_amount','notes','type','receipt_date','cheque_number','cheque_bank','cheque_date','for_account','user_id'
+        'cash','amount','alpha_amount','notes','type','receipt_date','cheque_number','cheque_bank','cheque_date','for_account','user_id','delivered_by'
     ];
 
     public function user(){
