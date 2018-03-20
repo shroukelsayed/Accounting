@@ -36,6 +36,59 @@ return [
     'edit'                       => 'Edit',
     'view'                       => 'View',
 
+
+
+
+
+
+    'zero'                       => 'Zero',
+    'one'                        => 'One',
+    'two'                        => 'Two',
+    'three'                      => 'Three',
+    'four'                       => 'Four',
+    'five'                       => 'Five',
+    'six'                        => 'Six',
+    'seven'                      => 'Seven',
+    'eight'                      => 'Eight',
+    'nine'                       => 'Nine',
+    'eleven'                     => 'Eleven',
+    'twelve'                     => 'Twelve',
+    'thirteen'                   => 'Thirteen',
+    'fourteen'                   => 'Fourteen',
+    'fifteen'                    => 'Fifteen',
+    'sixteen'                    => 'Sixteen',
+    'seventeen'                  => 'Seventeen',
+    'eighteen'                   => 'Eighteen',
+    'nineteen'                   => 'Nineteen',
+    'ten'                        => 'Ten',
+    'twenty'                     => 'Twenty',
+    'thirty'                     => 'Thirty',
+    'forty'                      => 'Forty',
+    'fifty'                      => 'Fifty',
+    'sixty'                      => 'Sixty',
+    'seventy'                    => 'Seventy',
+    'eighty'                     => 'Eighty',
+    'ninety'                     => 'Ninety',
+    'hundred'                    => 'Hundred',
+    'thousand'                   => 'Thousand',
+    'million'                    => 'Million',
+    'billion'                    => 'Billion',
+    'trillion'                   => 'Trillion',
+    'quadrillion'                => 'Quadrillion',
+    'quintrillion'               => 'Quintrillion',
+    'sextillion'                 => 'Sextillion',
+    'septillion'                 => 'Septillion',
+    'octillion'                  => 'Octillion',
+    'nonillion'                  => 'Nonillion',
+    'decillion'                  => 'Decillion',
+
+
+
+
+
+
+
+
     'ommar'                      => 'Ommar Elard',
     'accountingSystem'           => 'Accounting System',
     'slug'                       => 'Welcome to Accounting System Of Ommar Elard',

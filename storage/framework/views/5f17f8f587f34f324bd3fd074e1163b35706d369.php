@@ -54,16 +54,16 @@
 
 
 		    $(":input[name='amount']").blur( function () {
-	     //        $.ajax({
-	     //            url: '/convert-number',
-	     //            type: "POST",
-	     //            data: {'number': $(":input[name='amount']").val(),
-	     //                   '_token': $('input[name=_token]').val()},
+	            $.ajax({
+	                url: '/convert-number',
+	                type: "POST",
+	                data: {'number': $(":input[name='amount']").val(),
+	                       '_token': $('input[name=_token]').val()},
 
-	     //            success:function(data) {                 
-	                    $(":input[name='amount_alpha']").val($(":input[name='amount']").val());
-	     //            }
-	     //        });
+	                success:function(data) {                 
+	                    $(":input[name='amount_alpha']").val(data);
+	                }
+	            });
 	        });
    		});
   	</script>
@@ -151,7 +151,7 @@
 		               	</div>
 		               	<div class="col-sm-6">
 				        	<div class="form-group" style="text-align: center;">
-				        		<?php if(isset($receipt) and $receipt->cash == 2): ?>
+				        		<?php if(isset($receipt) and $receipt->cash == 0): ?>
 					        		<?php echo Form::label('receipt_type', 'شيكات'); ?>
 
 			                		<?php echo Form::radio('receipt_type', '2',true); ?>
@@ -433,10 +433,10 @@
 						<div class="row">
 							<div class="col-sm-3">
 								<?php if(isset($receipt) and $receipt->receipt_notebook): ?>
-					    			<?php echo Form::text('receipt_notebook', $notebook, ['class' => 'form-control', 'dir'=> "rtl"]); ?>
+					    			<?php echo Form::text('receipt_notebook', $notebook, ['class' => 'form-control', 'dir'=> "rtl", 'readonly' => "true"]); ?>
 
 								<?php else: ?>
-					    			<?php echo Form::text('receipt_notebook', $notebook , ['class' => 'form-control', 'dir'=> "rtl"]); ?>
+					    			<?php echo Form::text('receipt_notebook', $notebook , ['class' => 'form-control', 'dir'=> "rtl", 'readonly' => "true"]); ?>
 
 					    		<?php endif; ?>
 					    		<?php if($errors->has('receipt_notebook')): ?>

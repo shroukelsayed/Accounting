@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use DB;
 use Validator;
 use Auth;
-
+use App;
 use App\Http\Requests;
 use App\Project;
 use App\DonationReceipt;
@@ -295,8 +295,19 @@ class IndexController extends Controller
 	public function convertNumber(Request $request)
 	{
 		$number = $request->input('number');
-
-	    list($integer, $fraction) = explode(".", (string) $number);
+		if(strpos((string) $number, '.')){
+	    	list($integer, $fraction) = explode(".", (string) $number);
+	    	// if ($fraction > 0)
+		    // {
+		    //     $outputf .= " ,";
+		    //     for ($i = 0; $i < strlen($fraction); $i++)
+		    //     {
+		    //         $outputf .= " " . $this->convertDigit($fraction{$i});
+		    //     }
+		    // }
+		}else{
+            $integer = (string)$number;
+		}
 
 	    $output = "";
 
@@ -313,7 +324,7 @@ class IndexController extends Controller
 
 	    if ($integer{0} == "0")
 	    {
-	        $output .= "صفر";
+	        $output .= " " . trans('validation.zero');
 	    }
 	    else
 	    {
@@ -330,66 +341,72 @@ class IndexController extends Controller
 	        for ($z = 0; $z < count($groups2); $z++)
 	        {
 	            if ($groups2[$z] != "")
-	            {
-	                $output .= $groups2[$z] . $this->convertGroup(11 - $z) . (
-	                        $z < 11
-	                        && !array_search('', array_slice($groups2, $z + 1, -1))
-	                        && $groups2[11] != ''
-	                        && $groups[11]{0} == '0'
-	                            ? " و "
-	                            : ", "
-	                    );
-	            }
+                {
+                	// var_dump($groups2[$z]);die;
+                    if($groups2[$z] == " واحد")
+                    {
+                        $output .=  $this->convertGroup(11 - $z);
+                    }elseif($groups2[$z] == " اثنين")
+                    {
+                        if((11 - $z) == 1)
+                        {
+                            $output .= "ألفين";
+                        }
+                    }else
+                    {
+                        $output .= $groups2[$z] . $this->convertGroup(11 - $z);
+                    }
+
+                   
+                    $output .= (
+                            $z < 11
+                            && !array_search('', array_slice($groups2, $z + 1, -1))
+                            && $groups2[11] != ''
+                            && $groups[11]{0} == '0'
+                                ? " و "
+                                : " , "
+                        );
+                   
+                }
 	        }
 
 	        $output = rtrim($output, ", ");
 	    }
 
-	    if ($fraction > 0)
-	    {
-	        $output .= " ,";
-	        for ($i = 0; $i < strlen($fraction); $i++)
-	        {
-	            $output .= " " . $this->convertDigit($fraction{$i});
-	        }
-	    }
-
-	    return $output;
+	    return $output . " جنيه";
 	}
 
-	function convertGroup($index)
-	{
+	function convertGroup($index){
 	    switch ($index)
 	    {
 	        case 11:
-	            return " decillion";
+	            return " " . trans('validation.decillion');
 	        case 10:
-	            return " nonillion";
+	            return " " . trans('validation.nonillion');
 	        case 9:
-	            return " octillion";
+	            return " " . trans('validation.octillion');
 	        case 8:
-	            return " septillion";
+	            return " " . trans('validation.septillion');
 	        case 7:
-	            return " sextillion";
+	            return " " . trans('validation.sextillion');
 	        case 6:
-	            return " quintrillion";
+	            return " " . trans('validation.quintrillion');
 	        case 5:
-	            return " quadrillion";
+	            return " " . trans('validation.quadrillion');
 	        case 4:
-	            return " تريليون";
+	            return " " . trans('validation.trillion');
 	        case 3:
-	            return " [ليون]";
+	            return " " . trans('validation.billion');
 	        case 2:
-	            return " مليون";
+	            return " " . trans('validation.million');
 	        case 1:
-	            return " ألف";
+	            return " " . trans('validation.thousand');
 	        case 0:
 	            return "";
 	    }
 	}
 
-	function convertThreeDigit($digit1, $digit2, $digit3)
-	{
+	function convertThreeDigit($digit1, $digit2, $digit3){
 	    $buffer = "";
 
 	    if ($digit1 == "0" && $digit2 == "0" && $digit3 == "0")
@@ -399,11 +416,14 @@ class IndexController extends Controller
 
 	    if ($digit1 != "0")
 	    {
-	    	// var_dump($digit1);die;
-	    	if($digit1 == "2")
-	    		$buffer = "مائتين";
+	    	if($digit1 == "2" && App::isLocale('ar')){
+	    		$buffer = " مائتين";
+	    	}
+	    	elseif($digit1 == "1" && App::isLocale('ar')){
+	    		$buffer = " مائة";
+	    	}
 	    	else
-	        	$buffer .= $this->convertDigit($digit1) . " مائة";
+	        	$buffer .= $this->convertDigit($digit1) . " " . trans('validation.hundred');
 	        if ($digit2 != "0" || $digit3 != "0")
 	        {
 	            $buffer .= " و ";
@@ -416,59 +436,58 @@ class IndexController extends Controller
 	    }
 	    else if ($digit3 != "0")
 	    {
-	        $buffer .= $this->convertDigit($digit3);
+	    	$buffer .= $this->convertDigit($digit3);
 	    }
 
 	    return $buffer;
 	}
 
-	function convertTwoDigit($digit1, $digit2)
-	{
+	function convertTwoDigit($digit1, $digit2){
 	    if ($digit2 == "0")
 	    {
 	        switch ($digit1)
 	        {
 	            case "1":
-	                return "عشرة";
+	                return " " . trans('validation.ten');
 	            case "2":
-	                return "عشرون";
+	                return " " . trans('validation.twenty');
 	            case "3":
-	                return "ثلاثون";
+	                return " " . trans('validation.thirty');
 	            case "4":
-	                return "أربعون";
+	                return " " . trans('validation.forty');
 	            case "5":
-	                return "خمسون";
+	                return " " . trans('validation.fifty');
 	            case "6":
-	                return "ستون";
+	                return " " . trans('validation.sixty');
 	            case "7":
-	                return "سبعون";
+	                return " " . trans('validation.seventy');
 	            case "8":
-	                return "ثمانون";
+	                return " " . trans('validation.eighty');
 	            case "9":
-	                return "تسعون";
+	                return " " . trans('validation.ninety');
 	        }
 	    } else if ($digit1 == "1")
 	    {
 	        switch ($digit2)
 	        {
 	            case "1":
-	                return "إحدى عشر";
+	                return  " " . trans('validation.eleven');
 	            case "2":
-	                return "إثنى عشر";
+	                return  " " . trans('validation.twelve');
 	            case "3":
-	                return "ثلاث عشر";
+	                return  " " . trans('validation.thirteen');
 	            case "4":
-	                return "أربع عشر";
+	                return  " " . trans('validation.fourteen');
 	            case "5":
-	                return "خمس عشر";
+	                return  " " . trans('validation.fifteen');
 	            case "6":
-	                return "ست عشر";
+	                return  " " . trans('validation.sixteen');
 	            case "7":
-	                return "سبع عشر";
+	                return  " " . trans('validation.seventeen');
 	            case "8":
-	                return "ثمان عشر";
+	                return  " " . trans('validation.eighteen');
 	            case "9":
-	                return "تسع عشر ";
+	                return  " " . trans('validation.nineteen');
 	        }
 	    } else
 	    {
@@ -476,49 +495,48 @@ class IndexController extends Controller
 	        switch ($digit1)
 	        {
 	            case "2":
-	                return "عشرون-$temp";
+	                return $temp . " " . trans('validation.twenty');
 	            case "3":
-	                return "ثلاثون-$temp";
+	                return $temp . " " . trans('validation.thirty');
 	            case "4":
-	                return "أربعون-$temp";
+	                return $temp . " " . trans('validation.forty');
 	            case "5":
-	                return "خمسون-$temp";
+	                return $temp . " " . trans('validation.fifty');
 	            case "6":
-	                return "ستون-$temp";
+	                return $temp . " " . trans('validation.sixty');
 	            case "7":
-	                return "سبعون-$temp";
+	                return $temp . " " . trans('validation.seventy');
 	            case "8":
-	                return "ثمانون-$temp";
+	                return $temp . " " . trans('validation.eighty');
 	            case "9":
-	                return "تسعون-$temp";
+	                return $temp . " " . trans('validation.ninety');
 	        }
 	    }
 	}
 
-	function convertDigit($digit)
-	{
+	function convertDigit($digit){
 	    switch ($digit)
 	    {
 	        case "0":
-	            return "صفر";
+	            return " " . trans('validation.zero');
 	        case "1":
-	            return "واحد";
+	            return " " . trans('validation.one');
 	        case "2":
-	            return "اثنين";
+	            return " " . trans('validation.two');
 	        case "3":
-	            return "ثلاث";
+	            return " " . trans('validation.three');
 	        case "4":
-	            return "أربع";
+	            return " " . trans('validation.four');
 	        case "5":
-	            return "خمس";
+	            return " " . trans('validation.five');
 	        case "6":
-	            return "ست";
+	            return " " . trans('validation.six');
 	        case "7":
-	            return "سبع";
+	            return " " . trans('validation.seven');
 	        case "8":
-	            return "ثمان";
+	            return " " . trans('validation.eight');
 	        case "9":
-	            return "تسع";
+	            return " " . trans('validation.nine');
 	    }
 	}
 

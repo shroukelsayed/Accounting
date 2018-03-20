@@ -38,32 +38,29 @@
             });
         });
        $('.checked').change(function(){
+            var cheque = $('.checked');
             if($(this).is(':checked')) {
-                if($(this)[0].dataset.attr == 'cheque'){
-                    $("#checked").each(function () {
-                        $(this).attr('disabled',true)
+                if($(this).attr('data-attr') == 'cheque'){
+                    $.each(cheque,function () {
+                        if($(this).attr('data-attr') == 'cash')
+                            $(this).attr('disabled',true)
                     });
-                    // document.getElementById("checked").disabled = true;
-                    console.log("jh");
-                    // $('.chk').attr('disabled', true);
                 }else{
-                    $("#checked2").each(function () {
-                        $(this).attr('disabled',true)
+                     $.each(cheque,function () {
+                        if($(this).attr('data-attr') == 'cheque')
+                            $(this).attr('disabled',true)
                     });
-                    // $('#checked2').attr('disabled',true);
-                //     $('#collecting').hide();
                 }
             }else{
-                $("#checked").attr('disabled',false);
-                $("#checked2").attr('disabled',false);
+                if($('.checked:checked').length == 0){
+                    $(".checked").attr('disabled',false);
+                }
             }
         });
 
 
     });
-
-
-    </script>
+</script>
 
 <br><br><br><br><br><br><br>
     <div class="row">
@@ -92,7 +89,7 @@
                     <tbody>
                         <tr>
                             <td>
-                                <a class="btn btn-danger" href="#" name="clear"><i class="glyphicon glyphicon-edit"></i><?php echo app('translator')->get('validation.edit'); ?></a>
+                                &nbsp&nbsp &nbsp&nbsp &nbsp&nbsp &nbsp&nbsp &nbsp&nbsp &nbsp&nbsp <a class="btn btn-danger" href="#" name="clear"><i class="glyphicon glyphicon-edit"></i><?php echo app('translator')->get('validation.edit'); ?></a>
                             </td>
                             <td>
                                 <input class="form-control" placeholder="عنوان المتبرع" type="textbox" dir="rtl" name="search" id="donator_address">
@@ -123,7 +120,7 @@
                                 </select> 
                             </td>
                             <td>
-                                <input class="form-control" placeholder="رقم اﻹيصال" type="search" dir="rtl" name="search" id="receipt_id"  maxlength="10" size="10">
+                                <input class="form-control" placeholder="رقم اﻹيصال" type="search" dir="rtl" name="search" id="receipt_id"  maxlength="3" size="3">
                             </td>
                         </tr>
                        

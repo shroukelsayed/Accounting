@@ -55,17 +55,16 @@
 
 
 		    $(":input[name='amount']").blur( function () {
-	     //        $.ajax({
-	     //            url: '/convert-number',
-	     //            type: "POST",
-	     //            data: {'number': $(":input[name='amount']").val(),
-	     //                   '_token': $('input[name=_token]').val()},
+	            $.ajax({
+	                url: '/convert-number',
+	                type: "POST",
+	                data: {'number': $(":input[name='amount']").val(),
+	                       '_token': $('input[name=_token]').val()},
 
-	     //            success:function(data) {                 
-	                    // $(":input[name='amount_alpha']").val(data);
-	                    $(":input[name='amount_alpha']").val($(":input[name='amount']").val());
-	     //            }
-	     //        });
+	                success:function(data) {                 
+	                    $(":input[name='amount_alpha']").val(data);
+	                }
+	            });
 	        });
    		});
   	</script>
@@ -76,7 +75,6 @@
  ?>
     <!-- @include('error') -->
         <div class="container">
-                <!-- <div class="title" style="padding:50px;font-size: 60px;text-align: center;display: inline-block;">ايصال استلام تبرع</div> -->
             <div class="content" style="border-style: solid; border-color:black; margin: 5px;padding: 25px; height: 1200px;">
 
             @if(isset($receipt) and $receipt->id != null)
@@ -137,12 +135,11 @@
 		               	 		@else
 		               	 			<input type="text" name="amount" size="7">
 		               	 		@endif
-		               	 		<!-- <input type="text" name="amount" size="7"> -->
 		               	 	</div>
 		               	</div>
 		               	<div class="col-sm-6">
 				        	<div class="form-group" style="text-align: center;">
-				        		@if(isset($receipt) and $receipt->cash == 2)
+				        		@if(isset($receipt) and $receipt->cash == 0)
 					        		{!! Form::label('receipt_type', 'شيكات') !!}
 			                		{!! Form::radio('receipt_type', '2',true) !!}
 								    {!! Form::label('receipt_type', 'نقداً') !!}
@@ -377,9 +374,9 @@
 						<div class="row">
 							<div class="col-sm-3">
 								@if(isset($receipt) and $receipt->receipt_notebook)
-					    			{!! Form::text('receipt_notebook', $notebook, ['class' => 'form-control', 'dir'=> "rtl"]) !!}
+					    			{!! Form::text('receipt_notebook', $notebook, ['class' => 'form-control', 'dir'=> "rtl", 'readonly' => "true"]) !!}
 								@else
-					    			{!! Form::text('receipt_notebook', $notebook , ['class' => 'form-control', 'dir'=> "rtl"]) !!}
+					    			{!! Form::text('receipt_notebook', $notebook , ['class' => 'form-control', 'dir'=> "rtl", 'readonly' => "true"]) !!}
 					    		@endif
 					    		@if ($errors->has('receipt_notebook'))
                                     <span class="alert-danger">
@@ -478,7 +475,6 @@
 
             	</div>
 			{!! Form::close() !!}
-			<!-- </form> -->
         </div>
   
 @endsection
