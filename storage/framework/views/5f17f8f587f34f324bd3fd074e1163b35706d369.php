@@ -65,7 +65,7 @@
   	 
 <?php
 	// var_dump(isset($receipt) and $receipt->id != null);die();
-	// var_dump( $receipt->cash);die();
+	// var_dump( isset($receipt) and $receipt->type == 2);die();
  ?>
     <!-- <?php echo $__env->make('error', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?> -->
         <div class="container">
@@ -209,7 +209,7 @@
                 				<?php echo Form::radio('type', '1',true); ?>
 
                 			<?php else: ?>
-                				<?php echo Form::radio('type', '1',true); ?>
+                				<?php echo Form::radio('type', '1'); ?>
 
                 			<?php endif; ?>
 						</div>

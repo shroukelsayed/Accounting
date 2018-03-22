@@ -211,7 +211,6 @@ class IndexController extends Controller
 	// function seacrh for existing receipt in system 
 	public function search(Request $request)
 	{
-		// var_dump($request->all());die;
 		$where = " where ";
 		$query = "";
 		if($request->input('receipt_id') != ''){

@@ -66,7 +66,7 @@
   	 
 <?php
 	// var_dump(isset($receipt) and $receipt->id != null);die();
-	// var_dump( $receipt->cash);die();
+	// var_dump( isset($receipt) and $receipt->type == 2);die();
  ?>
     <!-- @include('error') -->
         <div class="container">
@@ -180,7 +180,7 @@
                 			@if(isset($receipt) and $receipt->type == 1)
                 				{!! Form::radio('type', '1',true) !!}
                 			@else
-                				{!! Form::radio('type', '1',true) !!}
+                				{!! Form::radio('type', '1') !!}
                 			@endif
 						</div>
 					</div>
