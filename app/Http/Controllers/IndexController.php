@@ -334,16 +334,17 @@ class IndexController extends Controller
 	public function convertNumber(Request $request)
 	{
 		$number = $request->input('number');
+		$outputf  = "";
 		if(strpos((string) $number, '.')){
 	    	list($integer, $fraction) = explode(".", (string) $number);
-	    	// if ($fraction > 0)
-		    // {
-		    //     $outputf .= " ,";
-		    //     for ($i = 0; $i < strlen($fraction); $i++)
-		    //     {
-		    //         $outputf .= " " . $this->convertDigit($fraction{$i});
-		    //     }
-		    // }
+	    	if ($fraction > 0)
+		    {
+		        $outputf .=  " و" . $fraction;
+		        // for ($i = 0; $i < strlen($fraction); $i++)
+		        // {
+		        //     $outputf .= " " . $this->convertDigit($fraction{$i});
+		        // }
+		    }
 		}else{
             $integer = (string)$number;
 		}
@@ -376,14 +377,13 @@ class IndexController extends Controller
 	        {
 	            $groups2[] = $this->convertThreeDigit($g{0}, $g{1}, $g{2});
 	        }
-
 	        for ($z = 0; $z < count($groups2); $z++)
 	        {
 	            if ($groups2[$z] != "")
                 {
                     if($groups2[$z] == " واحد")
                     {
-                    	if((11 - $z) == 1)
+                    	if((11 - $z) == 1 )
                             $output .= "ألف";
                         else
                         	$output .=  $this->convertGroup(11 - $z);
@@ -395,7 +395,10 @@ class IndexController extends Controller
                         }
                     }else
                     {
-                        $output .= $groups2[$z] . $this->convertGroup(11 - $z);
+                    	if((11 - $z) == 1 && strlen($groups2[$z]) > 11)
+                            $output .= $groups2[$z] . " ألف";
+                        else
+                        	$output .= $groups2[$z] . $this->convertGroup(11 - $z);
                     }
 
                     $output .= (
@@ -412,7 +415,7 @@ class IndexController extends Controller
 	        $output = rtrim($output, ", ");
 	    }
 
-	    return $output . " جنيه";
+	    return $output . " جنيه" . $outputf;
 	}
 
 	function convertGroup($index){
