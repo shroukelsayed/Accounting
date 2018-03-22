@@ -125,8 +125,7 @@
 					<div class="form-group" style="text-align: right;">
 						<div class="row">
 							<div class="col-sm-9">
-					    		<?php echo Form::text('delivered_by', null, ['class' => 'form-control', 'dir'=> "rtl"]); ?>
-
+					    		<input type="text" name="delivered_by" class="form-control" dir="rtl" required oninvalid="this.setCustomValidity('هذا الحقل مطلوب ')"  oninput="setCustomValidity('')" >
 							</div>
 							<div class="col-sm-3">
 					    		<?php echo Form::label('delivered_by', 'استلمت انا من السيد'); ?>
@@ -137,8 +136,7 @@
 					<div class="form-group" style="text-align: right;">
 						<div class="row">
 							<div class="col-sm-9">
-							    <?php echo Form::text('amount_alpha', null, ['class' => 'form-control', 'dir'=> "rtl",'disabled' => 'disabled']); ?>
-
+		               	 		<input type="text" name="amount_alpha" dir="rtl" class="form-control" readonly>
 							</div>
 							<div class="col-sm-3">
 							    <?php echo Form::label('amount_alpha', 'مبلغ وقدره '); ?>
@@ -151,18 +149,7 @@
 						<div class="form-group" style="text-align: right;">
 							<div class="row">
 								<div class="col-sm-9">
-									<?php if(isset($receipt) and $receipt->cheque_number): ?>
-								    	<?php echo Form::text('cheque_number', $receipt->cheque_number, ['class' => 'form-control', 'dir'=> "rtl"]); ?>
-
-									<?php else: ?>
-								    	<?php echo Form::text('cheque_number', null, ['class' => 'form-control', 'dir'=> "rtl"]); ?>
-
-								    <?php endif; ?>
-								    <?php if($errors->has('cheque_number')): ?>
-	                                    <span class="alert-danger">
-	                                        <strong><?php echo e($errors->first('cheque_number')); ?></strong>
-	                                    </span>
-	                                <?php endif; ?>
+					    			<input type="text" name="cheque_number" class="form-control" dir="rtl" required >
 								</div>
 								<div class="col-sm-3">
 								    <?php echo Form::label('cheque_number', 'شيك رقم '); ?>
@@ -173,36 +160,14 @@
 						<div class="form-group" style="text-align: right;">
 							<div class="row">
 								<div class="col-sm-3">
-									<?php if(isset($receipt) and $receipt->cheque_bank): ?>
-								    	<?php echo Form::text('cheque_bank', $receipt->cheque_bank, ['class' => 'form-control', 'dir'=> "rtl"]); ?>
-
-								    <?php else: ?>
-								    	<?php echo Form::text('cheque_bank', null, ['class' => 'form-control', 'dir'=> "rtl"]); ?>
-
-								    <?php endif; ?>
-								    <?php if($errors->has('cheque_bank')): ?>
-	                                    <span class="alert-danger">
-	                                        <strong><?php echo e($errors->first('cheque_bank')); ?></strong>
-	                                    </span>
-	                                <?php endif; ?>
+					    			<input type="text" name="cheque_bank" class="form-control" dir="rtl" required >
 								</div>
 								<div class="col-sm-3">
 								    <?php echo Form::label('cheque_bank', 'مسحوب على بنك '); ?>
 
 								</div>
 								<div class="col-sm-3">
-									<?php if(isset($receipt) and $receipt->cheque_date): ?>
-										<?php echo Form::date('cheque_date', \Carbon\Carbon::parse($receipt->cheque_date)); ?>
-
-									<?php else: ?>
-										<?php echo Form::date('cheque_date', \Carbon\Carbon::now()); ?>
-
-									<?php endif; ?>
-									<?php if($errors->has('cheque_date')): ?>
-	                                    <span class="alert-danger">
-	                                        <strong><?php echo e($errors->first('cheque_date')); ?></strong>
-	                                    </span>
-	                                <?php endif; ?>
+					    			<input type="date" name="cheque_date" class="form-control" dir="rtl" required >
 								</div>
 								<div class="col-sm-3">
 								    <?php echo Form::label('cheque_date', 'تاريخ الشيك '); ?>
@@ -215,8 +180,7 @@
 					<div class="form-group" style="text-align: right;">
 						<div class="row">
 							<div class="col-sm-9">
-					    		<?php echo Form::text('notes', null, ['class' => 'form-control', 'dir'=> "rtl"]); ?>
-
+					    		<input type="text" name="notes" class="form-control" dir="rtl" required oninvalid="this.setCustomValidity('هذا الحقل مطلوب ')"  oninput="setCustomValidity('')" >
 							</div>
 							<div class="col-sm-3">
 							    <?php echo Form::label('notes', 'وذلك عن '); ?>

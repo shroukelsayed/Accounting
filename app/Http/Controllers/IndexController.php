@@ -296,42 +296,17 @@ class IndexController extends Controller
 			// return view('cash-receipt',compact('amount','receipt_type','last_id','projects_amount','ids'));
 		}
 		
-		
 		return view('cash-receipt',compact('amount','receipt_type','last_id','projects_amount','ids'));
 	}
 
 
 	public function saveCash(Request $request)
 	{
-		// var_dump($request->all());die;
+		var_dump($request->all());die;
 		$receipt = new Receipt();
-		if($request->input('receipt_type') == '1'){
-			$validator = Validator::make($request->all(), [
-	            'delivered_by' => 'required|max:255',
-	            'delivery_date' => 'required',
-	            'notes' => 'required',
-	            
-	        ]);
-	        if($validator->fails()) {
-		        return Redirect::back()
-		            ->withErrors($validator)
-		            ->WithInput();
-		    }
-		}else{
-			$validator = Validator::make($request->all(), [
-	            'delivered_by' => 'required|max:255',
-	            'delivery_date' => 'required',
-	            'cheque_number' => 'required',
-	            'cheque_bank' => 'required',
-	            'cheque_date' => 'required',
-	            'notes' => 'required',
-	            
-	        ]);
-	        if($validator->fails()) {
-		        return Redirect::back()
-		            ->withErrors($validator)
-		            ->WithInput();
-		    }
+		$ids = explode(',', $request->input('ids'));
+
+		if($request->input('receipt_type') != '1'){
 		    $receipt->cheque_number = $request->input('cheque_number');
 			$receipt->cheque_bank = $request->input('cheque_bank');
 		    $receipt->cheque_date = $request->input('cheque_date');
@@ -344,9 +319,8 @@ class IndexController extends Controller
 		$receipt->alpha_amount = $request->input('amount_alpha');
 		$receipt->notes = $request->input('notes');
 		$receipt->save();
-		$old_ids = explode(',', $request->input('ids'));
 		// var_dump($ids);die;
-		$donation_receipts = DonationReceipt::whereIn('id',$old_ids)->get();
+		$donation_receipts = DonationReceipt::whereIn('id',$ids)->get();
 
 		foreach ($donation_receipts as $key => $donation_receipt) {
 			$donation_receipt->receipt_id = $receipt->id;
@@ -354,9 +328,7 @@ class IndexController extends Controller
 		}
 
 		// var_dump($receipt->id);die;
-		return redirect()->action('IndexController@index');
-		
-
+		return redirect()->action('IndexController@index');	
 	}
 	
 
@@ -410,10 +382,12 @@ class IndexController extends Controller
 	        {
 	            if ($groups2[$z] != "")
                 {
-                	// var_dump($groups2[$z]);die;
                     if($groups2[$z] == " واحد")
                     {
-                        $output .=  $this->convertGroup(11 - $z);
+                    	if((11 - $z) == 1)
+                            $output .= "ألف";
+                        else
+                        	$output .=  $this->convertGroup(11 - $z);
                     }elseif($groups2[$z] == " اثنين")
                     {
                         if((11 - $z) == 1)
@@ -425,7 +399,6 @@ class IndexController extends Controller
                         $output .= $groups2[$z] . $this->convertGroup(11 - $z);
                     }
 
-                   
                     $output .= (
                             $z < 11
                             && !array_search('', array_slice($groups2, $z + 1, -1))
@@ -434,7 +407,6 @@ class IndexController extends Controller
                                 ? " و "
                                 : " , "
                         );
-                   
                 }
 	        }
 

@@ -114,7 +114,7 @@
 					<div class="form-group" style="text-align: right;">
 						<div class="row">
 							<div class="col-sm-9">
-					    		{!! Form::text('delivered_by', null, ['class' => 'form-control', 'dir'=> "rtl"]) !!}
+					    		<input type="text" name="delivered_by" class="form-control" dir="rtl" required oninvalid="this.setCustomValidity('هذا الحقل مطلوب ')"  oninput="setCustomValidity('')" >
 							</div>
 							<div class="col-sm-3">
 					    		{!! Form::label('delivered_by', 'استلمت انا من السيد') !!}
@@ -124,7 +124,7 @@
 					<div class="form-group" style="text-align: right;">
 						<div class="row">
 							<div class="col-sm-9">
-							    {!! Form::text('amount_alpha', null, ['class' => 'form-control', 'dir'=> "rtl",'disabled' => 'disabled']) !!}
+		               	 		<input type="text" name="amount_alpha" dir="rtl" class="form-control" readonly>
 							</div>
 							<div class="col-sm-3">
 							    {!! Form::label('amount_alpha', 'مبلغ وقدره ') !!}
@@ -136,16 +136,7 @@
 						<div class="form-group" style="text-align: right;">
 							<div class="row">
 								<div class="col-sm-9">
-									@if(isset($receipt) and $receipt->cheque_number)
-								    	{!! Form::text('cheque_number', $receipt->cheque_number, ['class' => 'form-control', 'dir'=> "rtl"]) !!}
-									@else
-								    	{!! Form::text('cheque_number', null, ['class' => 'form-control', 'dir'=> "rtl"]) !!}
-								    @endif
-								    @if ($errors->has('cheque_number'))
-	                                    <span class="alert-danger">
-	                                        <strong>{{ $errors->first('cheque_number') }}</strong>
-	                                    </span>
-	                                @endif
+					    			<input type="text" name="cheque_number" class="form-control" dir="rtl" required >
 								</div>
 								<div class="col-sm-3">
 								    {!! Form::label('cheque_number', 'شيك رقم ') !!}
@@ -155,31 +146,13 @@
 						<div class="form-group" style="text-align: right;">
 							<div class="row">
 								<div class="col-sm-3">
-									@if(isset($receipt) and $receipt->cheque_bank)
-								    	{!! Form::text('cheque_bank', $receipt->cheque_bank, ['class' => 'form-control', 'dir'=> "rtl"]) !!}
-								    @else
-								    	{!! Form::text('cheque_bank', null, ['class' => 'form-control', 'dir'=> "rtl"]) !!}
-								    @endif
-								    @if ($errors->has('cheque_bank'))
-	                                    <span class="alert-danger">
-	                                        <strong>{{ $errors->first('cheque_bank') }}</strong>
-	                                    </span>
-	                                @endif
+					    			<input type="text" name="cheque_bank" class="form-control" dir="rtl" required >
 								</div>
 								<div class="col-sm-3">
 								    {!! Form::label('cheque_bank', 'مسحوب على بنك ') !!}
 								</div>
 								<div class="col-sm-3">
-									@if(isset($receipt) and $receipt->cheque_date)
-										{!! Form::date('cheque_date', \Carbon\Carbon::parse($receipt->cheque_date)) !!}
-									@else
-										{!! Form::date('cheque_date', \Carbon\Carbon::now()) !!}
-									@endif
-									@if ($errors->has('cheque_date'))
-	                                    <span class="alert-danger">
-	                                        <strong>{{ $errors->first('cheque_date') }}</strong>
-	                                    </span>
-	                                @endif
+					    			<input type="date" name="cheque_date" class="form-control" dir="rtl" required >
 								</div>
 								<div class="col-sm-3">
 								    {!! Form::label('cheque_date', 'تاريخ الشيك ') !!}
@@ -191,7 +164,7 @@
 					<div class="form-group" style="text-align: right;">
 						<div class="row">
 							<div class="col-sm-9">
-					    		{!! Form::text('notes', null, ['class' => 'form-control', 'dir'=> "rtl"]) !!}
+					    		<input type="text" name="notes" class="form-control" dir="rtl" required oninvalid="this.setCustomValidity('هذا الحقل مطلوب ')"  oninput="setCustomValidity('')" >
 							</div>
 							<div class="col-sm-3">
 							    {!! Form::label('notes', 'وذلك عن ') !!}
