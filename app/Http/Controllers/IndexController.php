@@ -381,25 +381,20 @@ class IndexController extends Controller
 	        {
 	            if ($groups2[$z] != "")
                 {
-                    if($groups2[$z] == " واحد")
-                    {
-                    	if((11 - $z) == 1 )
+                	 if((11 - $z) == 1 ){
+
+	                    if($groups2[$z] == " واحد")
                             $output .= "ألف";
-                        else
-                        	$output .=  $this->convertGroup(11 - $z);
-                    }elseif($groups2[$z] == " اثنين")
-                    {
-                        if((11 - $z) == 1)
-                        {
+                        elseif ($groups2[$z] == " اثنين")
                             $output .= "ألفين";
-                        }
-                    }else
-                    {
-                    	if((11 - $z) == 1 && strlen($groups2[$z]) > 11)
+                        elseif (strlen($groups2[$z]) > 11) 
                             $output .= $groups2[$z] . " ألف";
                         else
-                        	$output .= $groups2[$z] . $this->convertGroup(11 - $z);
-                    }
+                        	$output .=  $groups2[$z] . $this->convertGroup(11 - $z);
+                   
+                    }else                    	
+                      	$output .= $groups2[$z] . $this->convertGroup(11 - $z);
+
 
                     $output .= (
                             $z < 11

@@ -247,7 +247,10 @@
 					<div id="cash">
 						<div class="form-group" style="text-align: right;">
 							<div class="row">
-								<div class="col-sm-9">
+								<div class="col-sm-2">
+									<label> ( فقط ﻻ غير )</label>
+								</div>
+								<div class="col-sm-7">
 									@if(isset($receipt) and $receipt->alpha_amount)
 								    	{!! Form::text('amount_alpha', $receipt->alpha_amount, ['class' => 'form-control', 'dir'=> "rtl", 'readonly' => "true"]) !!}
 									@else
