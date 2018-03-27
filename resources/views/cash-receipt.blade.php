@@ -12,6 +12,24 @@
 			margin-top:-8px;
 	  	}
 	</style>
+	<style type="text/css" media="print">
+	    @page 
+	    {
+	        size:  auto;   /* auto is the initial value */
+	        margin: 0mm;  /* this affects the margin in the printer settings */
+	    }
+
+	    html
+	    {
+	        background-color: #FFFFFF; 
+	        margin: 0px;  /* this affects the margin on the html before sending to printer */
+	    }
+
+	    body
+	    {
+	        margin: 10mm 15mm 10mm 15mm; /* margin you want for the content */
+	    }
+	</style>
 	<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
 	<script type="text/javascript" src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 	<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/fancybox/1.3.4/jquery.fancybox-1.3.4.pack.min.js"></script>
@@ -44,10 +62,18 @@
 			}else{
 				$('#cheque').hide();
 			}
+
+			$('.print-window').click(function() {
+	        	$('#submitForm').hide();
+	        	$('#resetForm').hide();
+
+	        	$('.print-window').hide();
+
+			    window.print();
+			})
 		    
    		});
 	</script>
-    @include('error')
         <div class="container">
                 <!-- <div class="title" style="padding:50px;font-size: 60px;text-align: center;display: inline-block;">ايصال استلام تبرع</div> -->
 
@@ -80,6 +106,7 @@
 								@endif
 							</div>
 							<div style="text-align: center;font-size:18px;">
+								<input type="hidden" name="last_id" value="{{$last_id}}">
 		            			<label>{{$last_id}} &nbsp&nbsp&nbsp رقم</label><br>
 		            		</div>
 		               	</div>
@@ -114,8 +141,13 @@
 					<div class="form-group" style="text-align: right;">
 						<div class="row">
 							<div class="col-sm-9">
-					    		<input type="text" name="delivered_by" class="form-control" dir="rtl" required oninvalid="this.setCustomValidity('هذا الحقل مطلوب ')"  oninput="setCustomValidity('')" >
-							</div>
+					    		<input type="text" name="delivered_by" class="form-control" dir="rtl" >
+								@if ($errors->has('delivered_by'))
+		                            <span class="alert-danger">
+		                                <strong>{{ $errors->first('delivered_by') }}</strong>
+		                            </span>
+		                        @endif
+		                    </div>
 							<div class="col-sm-3">
 					    		{!! Form::label('delivered_by', 'استلمت انا من السيد') !!}
 							</div>
@@ -136,8 +168,13 @@
 						<div class="form-group" style="text-align: right;">
 							<div class="row">
 								<div class="col-sm-9">
-					    			<input type="text" name="cheque_number" class="form-control" dir="rtl" required >
-								</div>
+					    			<input type="text" name="cheque_number" class="form-control" dir="rtl" >
+									@if ($errors->has('cheque_number'))
+			                            <span class="alert-danger">
+			                                <strong>{{ $errors->first('cheque_number') }}</strong>
+			                            </span>
+			                        @endif
+			                    </div>
 								<div class="col-sm-3">
 								    {!! Form::label('cheque_number', 'شيك رقم ') !!}
 								</div>
@@ -146,14 +183,24 @@
 						<div class="form-group" style="text-align: right;">
 							<div class="row">
 								<div class="col-sm-3">
-					    			<input type="text" name="cheque_bank" class="form-control" dir="rtl" required >
-								</div>
+					    			<input type="text" name="cheque_bank" class="form-control" dir="rtl" >
+									@if ($errors->has('cheque_bank'))
+			                            <span class="alert-danger">
+			                                <strong>{{ $errors->first('cheque_bank') }}</strong>
+			                            </span>
+			                        @endif
+			                    </div>
 								<div class="col-sm-3">
 								    {!! Form::label('cheque_bank', 'مسحوب على بنك ') !!}
 								</div>
 								<div class="col-sm-3">
-					    			<input type="date" name="cheque_date" class="form-control" dir="rtl" required >
-								</div>
+					    			<input type="date" name="cheque_date" class="form-control" dir="rtl" >
+									@if ($errors->has('cheque_date'))
+			                            <span class="alert-danger">
+			                                <strong>{{ $errors->first('cheque_date') }}</strong>
+			                            </span>
+			                        @endif
+			                    </div>
 								<div class="col-sm-3">
 								    {!! Form::label('cheque_date', 'تاريخ الشيك ') !!}
 								</div>
@@ -164,7 +211,12 @@
 					<div class="form-group" style="text-align: right;">
 						<div class="row">
 							<div class="col-sm-9">
-					    		<input type="text" name="notes" class="form-control" dir="rtl" required oninvalid="this.setCustomValidity('هذا الحقل مطلوب ')"  oninput="setCustomValidity('')" >
+					    		<input type="text" name="notes" class="form-control" dir="rtl" >
+					    		@if ($errors->has('notes'))
+		                            <span class="alert-danger">
+		                                <strong>{{ $errors->first('notes') }}</strong>
+		                            </span>
+		                        @endif
 							</div>
 							<div class="col-sm-3">
 							    {!! Form::label('notes', 'وذلك عن ') !!}
@@ -177,19 +229,21 @@
 							<div class="col-sm-3"></div>
 							<div class="col-sm-3"></div>
 							<div class="col-sm-6">
-				            	<label style="color: darkblue;">وذلك عن مشروع</label><br>
-				            	<table class="table table-bordered table-striped table-hover">
-				            		<tr>
-				            			<td style="color: darkblue;"> المبلغ</td>
-				            			<td style="color: darkblue;"> المشروع</td>
-				            		</tr>
-									@foreach($projects_amount as $project => $amount)
-										<tr>
-					            			<td> {{$amount}} </td>
-					            			<td> {{$project}} </td>
+								@if(isset($projects_amount))
+					            	<label style="color: darkblue;">وذلك عن مشروع</label><br>
+					            	<table class="table table-bordered table-striped table-hover">
+					            		<tr>
+					            			<td style="color: darkblue;"> المبلغ</td>
+					            			<td style="color: darkblue;"> المشروع</td>
 					            		</tr>
-									@endforeach
-								</table>
+										@foreach($projects_amount as $project => $amount)
+											<tr>
+						            			<td> {{$amount}} </td>
+						            			<td> {{$project}} </td>
+						            		</tr>
+										@endforeach
+									</table>
+								@endif
 							</div>
 						</div>
 					</div>
@@ -215,9 +269,10 @@
 					</div>
 					<br> -->
 					<br><br><br>
-					{!! Form::submit(trans('validation.submit'), ['class' => 'btn btn-info']) !!}
+					{!! Form::submit(trans('validation.submit'), ['class' => 'btn btn-info','id' => 'submitForm']) !!}
             	</div>
 			{!! Form::close() !!}
-        </div>
-    
+        
+			<button class="print-window"> Print</button>
+    	</div>
 @endsection

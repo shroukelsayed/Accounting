@@ -1,9 +1,31 @@
 @extends('layouts.app')
+@section('header')
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+@endsection
 @section('css')
   <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/css/bootstrap-datepicker.css" rel="stylesheet">
 @endsection
 
 @section('content')
+ <style type="text/css" media="print">
+    @page 
+    {
+        size:  auto;   /* auto is the initial value */
+        margin: 0mm;  /* this affects the margin in the printer settings */
+    }
+
+    html
+    {
+        background-color: #FFFFFF; 
+        margin: 0px;  /* this affects the margin on the html before sending to printer */
+    }
+
+    body
+    {
+        margin: 10mm 15mm 10mm 15mm; /* margin you want for the content */
+    }
+</style>
 <style>
  	#profile{
 		border:2px solid white;
@@ -61,7 +83,18 @@
 	                }
 	            });
 	        });
+
+	        $('.print-window').click(function() {
+	        	$('#submitForm').hide();
+	        	$('#resetForm').hide();
+
+	        	$('.print-window').hide();
+
+			    window.print();
+			});
    		});
+   		
+
   	</script>
   	 
 <?php
@@ -135,17 +168,22 @@
 		            </div>
                	 	<br>
                	 	<div class="row">
-						<div class="col-sm-3">
+						<div class="col-sm-2">
 							<div>
 		               	 		<label>جنيه</label>&nbsp&nbsp&nbsp&nbsp<label>قرش</label><br>
 		               	 		@if(isset($receipt) and $receipt->amount)
-		               	 			<input type="text" name="amount" size="7" value="{{$receipt->amount}}">
+						    		{!! Form::text('amount', $receipt->amount, ['class' => 'form-control', 'dir'=> "rtl",'size' =>"7"]) !!}
 		               	 		@else
-		               	 			<input type="text" name="amount" size="7">
+						    		{!! Form::text('amount', null, ['class' => 'form-control', 'dir'=> "rtl",'size' => "7"]) !!}
 		               	 		@endif
+		               	 		@if ($errors->has('amount'))
+		                            <span class="alert-danger">
+		                                <strong>{{ $errors->first('amount') }}</strong>
+		                            </span>
+		                        @endif
 		               	 	</div>
 		               	</div>
-		               	<div class="col-sm-6"></div>
+		               	<div class="col-sm-7"></div>
 						<div class="col-sm-3"></div>
 	               	</div>
 					<br>
@@ -183,6 +221,11 @@
                 				{!! Form::radio('type', '1') !!}
                 			@endif
 						</div>
+						@if ($errors->has('type'))
+                            <span class="alert-danger">
+                                <strong>{{ $errors->first('type') }}</strong>
+                            </span>
+                        @endif
 					</div>
 					<br>
 					<div class="form-group" style="text-align: right;">
@@ -467,11 +510,12 @@
 					</div>
 					<br>
 
-            		{{ Form::reset('Clear form', ['class' => 'btn btn-reset']) }}
-					{!! Form::submit(trans('validation.submit'), ['class' => 'btn btn-info']) !!}
+            		{{ Form::reset('Clear form', ['class' => 'btn btn-reset','id' => 'resetForm']) }}
+					{!! Form::submit(trans('validation.submit'), ['class' => 'btn btn-info' ,'id' => 'submitForm']) !!}
 
             	</div>
 			{!! Form::close() !!}
+			<button class="print-window"> Print</button>
         </div>
   
 @endsection

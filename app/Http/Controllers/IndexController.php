@@ -4,11 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-
+use DateTime;
 use DB;
 use Validator;
 use Auth;
 use App;
+use  PDF;
 use App\Http\Requests;
 use App\Project;
 use App\DonationReceipt;
@@ -32,6 +33,7 @@ class IndexController extends Controller
 	public function index()
 	{
 		$receipts = DonationReceipt::all();
+		// $receipts = Receipt::all();
 
 		return view('receipts-index',compact('receipts'));
 	}
@@ -101,7 +103,13 @@ class IndexController extends Controller
 		}else{
 			$last_receipt = DonationReceipt::orderby('id', 'desc')->first();
 			$last_id = $last_receipt->id + 1 ;
-			$notebook = $last_receipt->receipt_notebook;
+			
+			$receiptsCount =  DB::select("SELECT count(id) as count FROM donation_receipts WHERE  receipt_notebook = ". $last_receipt->receipt_notebook);
+			$datetime = new DateTime($last_receipt->receipt_date);
+			if(($receiptsCount[0]->count >= 50) || (date('m') > $datetime->format('m')))
+				$notebook = $last_receipt->receipt_notebook + 1 ;
+			else
+				$notebook = $last_receipt->receipt_notebook;
 		}
 
 		$projects = Project::lists('name','id');
@@ -117,8 +125,7 @@ class IndexController extends Controller
 	 */
 	public function saveReceipt(Request $request,$id = null)
 	{
-		// var_dump($request->all());die();
-		// var_dump($id);die();
+
 		if(is_null($id)){
 			$receipt = new DonationReceipt();
 			$receipt->is_approved = false;
@@ -201,7 +208,6 @@ class IndexController extends Controller
 		$receipt->donation_section = 1;
 		$receipt->user_id = Auth::user()->id;
 
-
 		$receipt->save();
 
 		return redirect()->action('IndexController@receipts');
@@ -262,7 +268,6 @@ class IndexController extends Controller
 		$receipts =  DB::select("SELECT * FROM donation_receipts ". $query);
 
 		return view('table',compact('receipts'))->render();
-
 	}
 
 
@@ -275,6 +280,10 @@ class IndexController extends Controller
 	public function cashReceipt(Request $request)
 	{
 		// var_dump($request->all());die;
+		$ids = null;
+		$last_receipt = Receipt::orderby('id', 'desc')->first();
+		$last_id = ($last_receipt)? $last_receipt->id +1 : 1;
+
 		if($request->input('checked') !== null && is_array($request->input('checked'))){
 			$ids = implode(',',$request->input('checked'));
 			$receipts = DonationReceipt::whereIn('id',$request->input('checked'))->get();
@@ -291,17 +300,51 @@ class IndexController extends Controller
 				else
 					$projects_amount[$receipt->project->name] = $receipt->amount;
 			}
-
-			// return view('cash-receipt',compact('amount','receipt_type','last_id','projects_amount','ids'));
+			return view('cash-receipt',compact('amount','receipt_type','last_id','projects_amount','ids'));
 		}
 		
-		return view('cash-receipt',compact('amount','receipt_type','last_id','projects_amount','ids'));
+		return view('cash-receipt',compact('ids','last_id'));
 	}
 
 
 	public function saveCash(Request $request)
 	{
-		var_dump($request->all());die;
+		// var_dump($request->all());die;
+		$ids =  $request->input('ids');
+		$receipt_type = $request->input('receipt_type');
+		$last_id =  $request->input('last_id');
+		$amount =  $request->input('amount');
+		$receipts = DonationReceipt::whereIn('id',explode(',', $request->input('ids')))->get();
+		$projects_amount = array();
+		foreach ($receipts as $key => $receipt) {
+			if(isset($projects_amount[$receipt->project->name]))
+				$projects_amount[$receipt->project->name] += $receipt->amount;
+			else
+				$projects_amount[$receipt->project->name] = $receipt->amount;
+		}
+
+
+		if($request->input('receipt_type') == '1'){
+			$validator = Validator::make($request->all(), [
+            	'delivered_by' => 'required|max:255',
+	            'notes' => 'required',
+	        ]);
+	        if($validator->fails()) {
+		        return view('cash-receipt')->withErrors($validator)->with(compact('amount','receipt_type','last_id','projects_amount','ids'));
+		    }
+		}else{
+			$validator = Validator::make($request->all(), [
+            	'delivered_by' => 'required|max:255',
+	            'notes' => 'required',
+	            'cheque_number' => 'required',
+	            'cheque_bank' => 'required',
+	            'cheque_date' => 'required',
+	        ]);
+	        if($validator->fails()) {
+		        return view('cash-receipt')->withErrors($validator)->with(compact('amount','receipt_type','last_id','projects_amount','ids'));
+		    }
+		}
+
 		$receipt = new Receipt();
 		$ids = explode(',', $request->input('ids'));
 
@@ -318,7 +361,6 @@ class IndexController extends Controller
 		$receipt->alpha_amount = $request->input('amount_alpha');
 		$receipt->notes = $request->input('notes');
 		$receipt->save();
-		// var_dump($ids);die;
 		$donation_receipts = DonationReceipt::whereIn('id',$ids)->get();
 
 		foreach ($donation_receipts as $key => $donation_receipt) {
@@ -326,10 +368,33 @@ class IndexController extends Controller
 			$donation_receipt->save();
 		}
 
-		// var_dump($receipt->id);die;
 		return redirect()->action('IndexController@index');	
 	}
 	
+
+	/**
+	 * Display a listing of the resource.
+	 *
+	 * @return Response
+	 */
+	public function licenseReceipts($id = null)
+	{
+		
+		if($id){
+			$receipt = DonationReceipt::findOrFail($id);
+			$last_id = $receipt->id;
+			$notebook = $receipt->receipt_notebook;
+		}else{
+			$last_receipt = DonationReceipt::orderby('id', 'desc')->first();
+			$last_id = $last_receipt->id + 1 ;
+			$notebook = $last_receipt->receipt_notebook;
+		}
+
+		$projects = Project::lists('name','id');
+
+		return view('donation-receipt-license', compact('projects','receipt','last_id','notebook'));
+	}
+
 
 	public function convertNumber(Request $request)
 	{
