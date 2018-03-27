@@ -268,11 +268,11 @@
 					<div class="form-group" style="text-align: center;">
 						<div class="row">
 							<div class="col-sm-6">
-					    		<label> إعتماد  </label><br>
+					    		<label> إعتماد  </label><br><br>
 				            	<label> ---------------------</label>
 							</div>
 							<div class="col-sm-6">
-					    		<label>   أمين الخزينة </label><br>
+					    		<label>   أمين الخزينة </label><br><br>
 				            	<label> ---------------------</label><br>
 							</div>
 						</div>
