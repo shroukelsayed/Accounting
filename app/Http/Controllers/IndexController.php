@@ -134,6 +134,7 @@ class IndexController extends Controller
 			$receipt = new DonationReceipt();
 			$receipt->is_approved = false;
 			$receipt->collecting_type = "";
+			$receipt->receipt_id = 0;
 		}
 		else{
 			$receipt = DonationReceipt::findOrFail($id);
@@ -402,7 +403,7 @@ class IndexController extends Controller
 			}else
 				$notebook = 1;
 		}
-		
+
 		$projects = Project::lists('name','id');
 
 		return view('donation-receipt-license', compact('projects','receipt','last_id','notebook'));
