@@ -98,9 +98,9 @@
                                 <li>
                                     <a href="{{ url('/license-receipts') }}">@lang('validation.add_donation_receipt_license')</a>
                                 </li>
-                                <li>
+                                <!-- <li>
                                     <a href="{{ url('/cash-receipt') }}">@lang('validation.cash_receipt')</a>
-                                </li>
+                                </li> -->
                             </ul>
                         </li>
 

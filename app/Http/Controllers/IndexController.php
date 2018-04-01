@@ -102,14 +102,18 @@ class IndexController extends Controller
 			$notebook = $receipt->receipt_notebook;
 		}else{
 			$last_receipt = DonationReceipt::orderby('id', 'desc')->first();
-			$last_id = ($last_receipt->id +1)? ($last_receipt->id +1) : 1;
+			$last_id = ($last_receipt)? ($last_receipt->id +1) : 1;
 			
-			$receiptsCount =  DB::select("SELECT count(id) as count FROM donation_receipts WHERE  receipt_notebook = ". $last_receipt->receipt_notebook);
-			$datetime = new DateTime($last_receipt->receipt_date);
-			if(($receiptsCount[0]->count >= 50) || (date('m') > $datetime->format('m')))
-				$notebook = $last_receipt->receipt_notebook + 1 ;
-			else
-				$notebook = $last_receipt->receipt_notebook;
+			if($last_receipt){
+				$receiptsCount =  DB::select("SELECT count(id) as count FROM donation_receipts WHERE  receipt_notebook = ". $last_receipt->receipt_notebook);
+				$datetime = new DateTime($last_receipt->receipt_date);
+				if(($receiptsCount[0]->count >= 50) || (date('m') > $datetime->format('m')))
+					$notebook = $last_receipt->receipt_notebook + 1 ;
+				else
+					$notebook = $last_receipt->receipt_notebook;	
+			}else
+				$notebook = 1;
+			
 		}
 
 		$projects = Project::lists('name','id');
@@ -386,10 +390,19 @@ class IndexController extends Controller
 			$notebook = $receipt->receipt_notebook;
 		}else{
 			$last_receipt = DonationReceipt::orderby('id', 'desc')->first();
-			$last_id = $last_receipt->id + 1 ;
-			$notebook = $last_receipt->receipt_notebook;
+			$last_id = ($last_receipt)? ($last_receipt->id +1) : 1;
+			
+			if($last_receipt){
+				$receiptsCount =  DB::select("SELECT count(id) as count FROM donation_receipts WHERE  receipt_notebook = ". $last_receipt->receipt_notebook);
+				$datetime = new DateTime($last_receipt->receipt_date);
+				if(($receiptsCount[0]->count >= 50) || (date('m') > $datetime->format('m')))
+					$notebook = $last_receipt->receipt_notebook + 1 ;
+				else
+					$notebook = $last_receipt->receipt_notebook;	
+			}else
+				$notebook = 1;
 		}
-
+		
 		$projects = Project::lists('name','id');
 
 		return view('donation-receipt-license', compact('projects','receipt','last_id','notebook'));
