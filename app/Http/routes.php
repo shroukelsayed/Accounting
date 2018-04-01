@@ -26,6 +26,7 @@ Route::group(['middleware' => ['web']], function () {
 		});
 		Route::resource("users","UserController");
 		Route::resource("projects","ProjectController");
+		Route::resource("accounting-tree","AccountingTreeController");
 
 	});
 
@@ -35,7 +36,7 @@ Route::group(['middleware' => ['web']], function () {
 		Route::get('/allocation', "IndexController@allocation");
 		Route::get('/custody-advances', "IndexController@custodyAdvances");
 		Route::get('/treasury', "IndexController@treasury");
-		Route::get('/accounting-tree', "IndexController@accountingTree");
+		// Route::get('/accounting-tree', "IndexController@accountingTree");
 
 
 		Route::get('/license-receipts/{id?}', "IndexController@licenseReceipts");

@@ -13,6 +13,17 @@ class CreateFixedAssetsTable extends Migration
     public function up()
     {
         //
+        Schema::create('fixed_assets', function(Blueprint $table) {
+            $table->increments('id');
+            $table->string('code');
+            $table->string('title');
+            $table->integer('parent');
+            $table->integer('level');
+            $table->boolean('debit');
+            $table->boolean('credit');
+
+            $table->timestamps();
+        });
     }
 
     /**
@@ -23,5 +34,6 @@ class CreateFixedAssetsTable extends Migration
     public function down()
     {
         //
+        Schema::drop('fixed_assets');
     }
 }

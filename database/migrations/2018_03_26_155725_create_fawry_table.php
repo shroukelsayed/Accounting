@@ -13,6 +13,17 @@ class CreateFawryTable extends Migration
     public function up()
     {
         //
+        Schema::create('fawry', function(Blueprint $table) {
+            $table->increments('id');
+            $table->string('code');
+            $table->string('title');
+            $table->integer('parent');
+            $table->integer('level');
+            $table->boolean('debit');
+            $table->boolean('credit');
+
+            $table->timestamps();
+        });
     }
 
     /**
@@ -23,5 +34,6 @@ class CreateFawryTable extends Migration
     public function down()
     {
         //
+        Schema::drop('fawry');
     }
 }

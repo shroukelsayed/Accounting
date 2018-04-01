@@ -9,7 +9,7 @@ use DB;
 use Validator;
 use Auth;
 use App;
-use  PDF;
+
 use App\Http\Requests;
 use App\Project;
 use App\DonationReceipt;
@@ -102,7 +102,7 @@ class IndexController extends Controller
 			$notebook = $receipt->receipt_notebook;
 		}else{
 			$last_receipt = DonationReceipt::orderby('id', 'desc')->first();
-			$last_id = $last_receipt->id + 1 ;
+			$last_id = ($last_receipt->id +1)? ($last_receipt->id +1) : 1;
 			
 			$receiptsCount =  DB::select("SELECT count(id) as count FROM donation_receipts WHERE  receipt_notebook = ". $last_receipt->receipt_notebook);
 			$datetime = new DateTime($last_receipt->receipt_date);
