@@ -34,7 +34,7 @@ class AccountingTreeController extends Controller
     public function index()
     {
         //
-        $levels = AccountingTreeLevelOne::orderBy('id', 'desc')->paginate(10);
+        $levels = AccountingTreeLevelOne::orderBy('id', 'asc')->paginate(10);
 
         return view('accounting-tree.index', compact('levels'));
     }
@@ -112,10 +112,9 @@ class AccountingTreeController extends Controller
      */
     public function edit($id)
     {
-        //
-        $user = User::findOrFail($id);
+        $level = AccountingTreeLevelOne::findOrFail($id);
 
-        return view('accounting-tree.edit', compact('user'));
+        return view('accounting-tree.edit', compact('level'));
     }
 
     /**
@@ -155,4 +154,21 @@ class AccountingTreeController extends Controller
 
         return redirect()->route('accounting-tree.index')->with('message', 'Item deleted successfully.');
     }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function addChild(Request $request)
+    {
+        //
+        var_dump($request->all());die;
+        $level = AccountingTreeLevelOne::findOrFail($id);
+
+
+        return redirect()->route('accounting-tree.index')->with('message', 'Item created successfully.');
+    }
+
 }

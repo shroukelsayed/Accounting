@@ -98,9 +98,9 @@
                                 <li>
                                     <a href="<?php echo e(url('/license-receipts')); ?>"><?php echo app('translator')->get('validation.add_donation_receipt_license'); ?></a>
                                 </li>
-                                <!-- <li>
-                                    <a href="<?php echo e(url('/cash-receipt')); ?>"><?php echo app('translator')->get('validation.cash_receipt'); ?></a>
-                                </li> -->
+                                <li>
+                                    <a href="<?php echo e(url('/all-cash')); ?>"><?php echo app('translator')->get('validation.all_cash'); ?></a>
+                                </li>
                             </ul>
                         </li>
 

@@ -27,6 +27,7 @@ Route::group(['middleware' => ['web']], function () {
 		Route::resource("users","UserController");
 		Route::resource("projects","ProjectController");
 		Route::resource("accounting-tree","AccountingTreeController");
+		Route::post("add-child","AccountingTreeController@addChild");
 
 	});
 
@@ -48,6 +49,7 @@ Route::group(['middleware' => ['web']], function () {
 		Route::post('/cash-receipt', "IndexController@cashReceipt");
 		Route::get('/cash-receipt', "IndexController@cashReceipt");
 		Route::get('/all-receipts', "IndexController@index");
+		Route::get('/all-cash', "IndexController@allCashReceipts");
 		Route::post('/receipts/search','IndexController@search');
 		Route::post('/convert-number','IndexController@convertNumber');
 

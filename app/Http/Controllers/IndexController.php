@@ -33,10 +33,22 @@ class IndexController extends Controller
 	public function index()
 	{
 		$receipts = DonationReceipt::all();
-		// $receipts = Receipt::all();
 
 		return view('receipts-index',compact('receipts'));
 	}
+
+	/**
+	 * Display a listing of the resource.
+	 *
+	 * @return Response
+	 */
+	public function allCashReceipts()
+	{
+		$receipts = Receipt::all();
+
+		return view('all-cash-receipts',compact('receipts'));
+	}
+
 
 	 /**
 	 * Display a listing of the resource.
@@ -142,7 +154,6 @@ class IndexController extends Controller
 				$receipt->is_approved = true;
 				$receipt->collecting_type = $request->input('collecting_type');
 			}
-
 		}
 
 		$receipt->cash = $request->input('receipt_type') == '1' ? true : false;
@@ -361,10 +372,10 @@ class IndexController extends Controller
 		$receipt->receipt_date = $request->input('delivery_date');
 		$receipt->delivered_by = $request->input('delivered_by');
 		$receipt->notes = $request->input('notes');
+		$receipt->type = 0;
 		$receipt->cash = $request->input('receipt_type');
 		$receipt->amount = $request->input('amount');
 		$receipt->alpha_amount = $request->input('amount_alpha');
-		$receipt->notes = $request->input('notes');
 		$receipt->save();
 		$donation_receipts = DonationReceipt::whereIn('id',$ids)->get();
 
@@ -465,7 +476,7 @@ class IndexController extends Controller
 	                    if($groups2[$z] == " واحد")
                             $output .= "ألف";
                         elseif ($groups2[$z] == " اثنين")
-                            $output .= "ألفين";
+                            $output .= "ألفان";
                         elseif (strlen($groups2[$z]) > 11) 
                             $output .= $groups2[$z] . " ألف";
                         else

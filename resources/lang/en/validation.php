@@ -132,11 +132,15 @@ return [
     'receipts'                   => 'Receipts',
     'donation_receipt'           => 'Donation Receipts',
     'add_donation_receipt'       => 'Add Donation Receipt',
-    'cash_receipt'               => 'Cash Receipts',
+    'cash_receipt'               => 'Add Cash Receipt',
     'projects'                   => 'Projects',
     'addProject'                 => 'Add Project',
     'createReceipt'              => 'Create Receipt',
     'add_donation_receipt_license'    => 'Add Donation Receipt / License',
+    'all_cash'                        => 'Cash Receipts',
+
+
+
 
     ''=>'',
     ''=>'',

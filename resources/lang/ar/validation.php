@@ -127,6 +127,7 @@ return [
     'addProject'                      => 'إضافة مشروع جديد',
     'createReceipt'                   => 'إنشاء ايصال إستلام نقدية',
     'add_donation_receipt_license'    => 'إضافة إيصال تبرع / تراخيص',
+    'all_cash'                        => 'ايصالات إستلام نقدية',
 
 
     ' '                               => ' ',
