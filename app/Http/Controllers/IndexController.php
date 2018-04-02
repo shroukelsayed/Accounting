@@ -630,21 +630,21 @@ class IndexController extends Controller
 	        switch ($digit1)
 	        {
 	            case "2":
-	                return $temp . " " . trans('validation.twenty');
+	                return $temp . " و " . trans('validation.twenty');
 	            case "3":
-	                return $temp . " " . trans('validation.thirty');
+	                return $temp . " و " . trans('validation.thirty');
 	            case "4":
-	                return $temp . " " . trans('validation.forty');
+	                return $temp . " و " . trans('validation.forty');
 	            case "5":
-	                return $temp . " " . trans('validation.fifty');
+	                return $temp . " و " . trans('validation.fifty');
 	            case "6":
-	                return $temp . " " . trans('validation.sixty');
+	                return $temp . " و " . trans('validation.sixty');
 	            case "7":
-	                return $temp . " " . trans('validation.seventy');
+	                return $temp . " و " . trans('validation.seventy');
 	            case "8":
-	                return $temp . " " . trans('validation.eighty');
+	                return $temp . " و " . trans('validation.eighty');
 	            case "9":
-	                return $temp . " " . trans('validation.ninety');
+	                return $temp . " و " . trans('validation.ninety');
 	        }
 	    }
 	}
