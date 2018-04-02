@@ -190,7 +190,7 @@
 							<div>
 		               	 		<label>جنيه</label>&nbsp&nbsp&nbsp&nbsp<label>قرش</label><br>
 		               	 		<?php if(isset($receipt) and $receipt->amount): ?>
-						    		<?php echo Form::text('amount', $receipt->amount, ['class' => 'form-control', 'dir'=> "rtl",'size' =>"7"]); ?>
+						    		<?php echo Form::text('amount', number_format($receipt->amount, 2, '.', ','), ['class' => 'form-control', 'dir'=> "rtl",'size' =>"7"]); ?>
 
 		               	 		<?php else: ?>
 						    		<?php echo Form::text('amount', null, ['class' => 'form-control', 'dir'=> "rtl",'size' => "7"]); ?>

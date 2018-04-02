@@ -150,7 +150,7 @@
             <td style="text-align: center;">{{$receipt->notes}}</td>
             <td width="100 px;" style="text-align: center;">{{ Carbon\Carbon::parse($receipt->receipt_date)->format('d-m-Y')}}</td>
            
-            <td style="text-align: center;">{{$receipt->amount}}</td>
+            <td style="text-align: center;">{{number_format($receipt->amount, 2, '.', ',')}}</td>
             @if($receipt->cash == '1')
                 <td  style="text-align: center;">نقاً </td>
             @else

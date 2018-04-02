@@ -209,7 +209,7 @@ class IndexController extends Controller
 		}
 
 		$receipt->alpha_amount = $request->input('amount_alpha');
-		$receipt->amount = $request->input('amount');
+		$receipt->amount = str_replace(',', '',$request->input('amount'));
 		$receipt->notes = $request->input('notes');
 		$receipt->type = $request->input('type');
 		$receipt->receipt_date = $request->input('delivery_date');

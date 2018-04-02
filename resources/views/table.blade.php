@@ -42,7 +42,7 @@
             @else
                 <td style="text-align: center;">مستغل</td>
             @endif
-            <td style="text-align: center;">{{$receipt->amount}}</td>
+            <td style="text-align: center;">{{number_format($receipt->amount)}}</td>
             @if($receipt->cash == '1')
                 <td  style="text-align: center;">نقاً </td>
             @else

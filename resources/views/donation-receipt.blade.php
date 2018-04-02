@@ -172,7 +172,7 @@
 							<div>
 		               	 		<label>جنيه</label>&nbsp&nbsp&nbsp&nbsp<label>قرش</label><br>
 		               	 		@if(isset($receipt) and $receipt->amount)
-						    		{!! Form::text('amount', $receipt->amount, ['class' => 'form-control', 'dir'=> "rtl",'size' =>"7"]) !!}
+						    		{!! Form::text('amount', number_format($receipt->amount, 2, '.', ','), ['class' => 'form-control', 'dir'=> "rtl",'size' =>"7"]) !!}
 		               	 		@else
 						    		{!! Form::text('amount', null, ['class' => 'form-control', 'dir'=> "rtl",'size' => "7"]) !!}
 		               	 		@endif
