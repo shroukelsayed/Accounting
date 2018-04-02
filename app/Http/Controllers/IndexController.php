@@ -32,7 +32,7 @@ class IndexController extends Controller
 	 */
 	public function index()
 	{
-		$receipts = DonationReceipt::all();
+		$receipts = DonationReceipt::orderBy('id', 'asc')->paginate(10);
 
 		return view('receipts-index',compact('receipts'));
 	}
