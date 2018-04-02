@@ -371,8 +371,10 @@ class IndexController extends Controller
 		}
 
 		$receipt->cheque_number = 0;
+		$receipt->for_account = "";
 		$receipt->cheque_bank = "";
 	    $receipt->cheque_date = $request->input('delivery_date');
+	    $receipt->user_id = Auth::user()->id;
 
 
 		$receipt->receipt_date = $request->input('delivery_date');
