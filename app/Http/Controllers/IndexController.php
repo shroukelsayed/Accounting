@@ -369,6 +369,12 @@ class IndexController extends Controller
 			$receipt->cheque_bank = $request->input('cheque_bank');
 		    $receipt->cheque_date = $request->input('cheque_date');
 		}
+
+		$receipt->cheque_number = 0;
+		$receipt->cheque_bank = "";
+	    $receipt->cheque_date = $request->input('delivery_date');
+
+
 		$receipt->receipt_date = $request->input('delivery_date');
 		$receipt->delivered_by = $request->input('delivered_by');
 		$receipt->notes = $request->input('notes');
