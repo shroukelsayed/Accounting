@@ -431,7 +431,7 @@ class IndexController extends Controller
 
 	public function convertNumber(Request $request)
 	{
-		$number = $request->input('number');
+		$number = str_replace(',','',$request->input('number'));
 		$outputf  = "";
 		if(strpos((string) $number, '.')){
 	    	list($integer, $fraction) = explode(".", (string) $number);
