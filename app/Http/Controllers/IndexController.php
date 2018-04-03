@@ -437,7 +437,7 @@ class IndexController extends Controller
 	    	list($integer, $fraction) = explode(".", (string) $number);
 	    	if ($fraction > 0)
 		    {
-		        $outputf .=  " و" . $fraction;
+		        $outputf .=  " و" . $fraction . " / 100 ";
 		        // for ($i = 0; $i < strlen($fraction); $i++)
 		        // {
 		        //     $outputf .= " " . $this->convertDigit($fraction{$i});
@@ -508,7 +508,7 @@ class IndexController extends Controller
 	        $output = rtrim($output, ", ");
 	    }
 
-	    return $output . " جنيه" . $outputf;
+	    return $output . $outputf . " جنيها مصريا " ;
 	}
 
 	function convertGroup($index){
