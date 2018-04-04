@@ -16,11 +16,27 @@
 <script type="text/javascript">
    
     $(function($){
+            
+        // $('#addChild').click(function(){
+        //      $.ajax({
+        //         url: '/add-child',
+        //         type: "POST",
+        //         data: {'id': $(":input[name='id']").val(),
+        //                'code': $(":input[name='code']").val(),
+        //                'title': $(":input[name='level_title']").val(),
+        //                '_token': $('input[name=_token]').val()},
+
+        //         success:function(data) {                 
+        //             console.log(data);
+        //         }
+        //     });
 
 
-   $('#myModal').modal('toggle');
-    }); 
-   
+        // });    
+           
+    });
+
+
 </script>
     <br><br><br><br><br><br>
     <div class="row">
@@ -36,50 +52,73 @@
                     </thead>
 
                     <tbody>
-                        @foreach($levels as $level)
-                            <tr>                                
-                                <td>
+                        @foreach($levels as $level_one)
+                            <li class="dropdown" dir="rtl"><a class="dropdown-toggle" data-toggle="dropdown" href="#">{{ $level_one->title}}<span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                @foreach($level_one->levelTwo as $level)
+                                        <li><a href="#">{{ $level->title}}</a></li>
                                     
-                                    <button type="button" class="btn btn-xs btn-danger" data-toggle="modal" data-target="#myModal"><i class="glyphicon glyphicon-trash"></i> Add Child</button>
-                                    <a class="btn btn-xs btn-warning" href="{{ route('accounting-tree.edit', $level->id) }}"><i class="glyphicon glyphicon-edit"></i> Edit</a>
-                                </td>
-                                <td>{{$level->code}}</td>
-                                <td>{{$level->title}}</td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-                <form action="{{ url('add-child') }}" method="POST" >
-                                        <!-- Modal -->
-                                        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                                            <div class="modal-dialog" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                        <h4 class="modal-title" id="myModalLabel">Add New Level</h4>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <input type="hidden" name="id" value="{{ $level->id }}">
-                                                        <input type="hidden" name="code" value="{{ $level->code }}">
-                                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                                        <div class="row">
-                                                            <div class="col-md-3">
-                                                                <label> Level Title</label>
+                                <tr>                                
+                                    <td>
+                                        
+                                        <button type="button" class="btn btn-xs btn-danger" data-toggle="modal" data-target="#myModal-{{$level->id}}"><i class="glyphicon glyphicon-trash"></i> Add Child</button>
+                                        <a class="btn btn-xs btn-warning" href="{{ route('accounting-tree.edit', $level->id) }}"><i class="glyphicon glyphicon-edit"></i> Edit</a>
+                                        <form action="{{ url('add-child') }}" method="POST" >
+                                            <div class="modal fade" id="myModal-{{ $level->id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                            <h4 class="modal-title" id="myModalLabel">Add New Level</h4>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <input type="hidden" name="parent_id" value="{{ $level->id }}">
+                                                            <input type="hidden" name="parent_code" value="{{ $level->code }}">
+                                                            <input type="hidden" name="parent_level" value="{{ $level->level }}">
+                                                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                                            <div class="row">
+                                                                <div class="col-md-3">
+                                                                    <label> Level Title</label>
+                                                                </div>
+                                                                <div class="col-md-9">
+                                                                    <input type="text" name="level_title" class="form-control" required>
+                                                                </div>
                                                             </div>
-                                                            <div class="col-md-9">
-                                                                <input type="text" name="level_title" class="form-control">
+                                                             <div class="row">
+                                                                <div class="col-md-3">
+                                                                    <label> Level Code</label>
+                                                                </div>
+                                                                <div class="col-md-9">
+                                                                    <input type="text" name="level_code" class="form-control" required>
+                                                                </div>
                                                             </div>
-                                                        </div>                                                        
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                                        <button type="submit" class="btn btn-primary">Save changes</button>
+                                                            <div class="row">
+                                                                <div class="col-md-3"></div>
+                                                                <div class="col-md-6">
+                                                                    <input type="radio" name="type" value="credit"> دائن
+                                                                    <input type="radio" name="type" value="debit" > مدين <br>
+                                                                </div>
+                                                                <div class="col-md-3"></div>
+                                                            </div>          
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                            <button type="submit" id="addChild" class="btn btn-primary">Save changes</button>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        
-                                    </form>
+                                        </form>
+                                    </td>
+                                    <td>{{$level->code}}</td>
+                                    <td>{{$level->title}}</td>
+                                </tr>
+                            @endforeach
+                        </ul>
+                        @endforeach
+                    </tbody>
+                </table>
+               
                 {!! $levels->render() !!}
             @else
                 <h3 class="text-center alert alert-info">Empty!</h3>
@@ -87,6 +126,7 @@
 
         </div>
     </div>
+
 
 
 

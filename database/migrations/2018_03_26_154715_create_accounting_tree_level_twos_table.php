@@ -17,7 +17,7 @@ class CreateAccountingTreeLevelTwosTable extends Migration
             $table->increments('id');
             $table->string('code');
             $table->string('title');
-            $table->integer('parent');
+            $table->integer('accounting_tree_level_one_id');
             $table->integer('level');
             $table->boolean('debit');
             $table->boolean('credit');

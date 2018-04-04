@@ -8,7 +8,7 @@ class AccountingTreeLevelOne extends Model
 {
     //
 
-     public function levelTwo()
+    public function levelTwo()
     {
         return $this->hasMany(AccountingTreeLevelTwo::class);
     }

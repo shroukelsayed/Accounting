@@ -10,4 +10,9 @@ class AccountingTreeLevelTwo extends Model
     public function levelOne(){
         return $this->hasOne(AccountingTreeLevelOne::class); 
     }
+
+    public function fixedAssets()
+    {
+        return $this->hasMany(FixedAssets::class);
+    }
 }

@@ -8,6 +8,8 @@ use App\Http\Requests;
 
 use App\User;
 use App\AccountingTreeLevelOne;
+use App\AccountingTreeLevelTwo;
+use App\FixedAssets;
 use App\Role;
 use DateTime;
 use DB;
@@ -35,6 +37,11 @@ class AccountingTreeController extends Controller
     {
         //
         $levels = AccountingTreeLevelOne::orderBy('id', 'asc')->paginate(10);
+        // foreach ($levels[0]->levelTwo as $l) {
+        //     var_dump($l->title);
+        // }
+        // die;
+        // var_dump($levels[0]->levelTwo());die;
 
         return view('accounting-tree.index', compact('levels'));
     }
@@ -164,10 +171,30 @@ class AccountingTreeController extends Controller
     public function addChild(Request $request)
     {
         //
-        var_dump($request->all());die;
-        $level = AccountingTreeLevelOne::findOrFail($id);
+        // var_dump($request->all());die;
+
+        // $parentLevel = AccountingTreeLevelTwo::findOrFail($request->input('id'));
 
 
+        // $level = new AccountingTreeLevelTwo();
+        $level = new FixedAssets();
+        $level->level = $request->input('parent_level') +1;
+        $level->parent = $request->input('parent_id');
+        $level->code = $request->input('parent_code').$request->input('level_code');
+        $level->title = $request->input('level_title');
+
+        if($request->input('type') == 'credit'){
+            $level->debit = false;
+            $level->credit = true;
+        }else{
+            $level->debit = true;
+            $level->credit = false;
+        }
+        
+        // var_dump($level);die();
+        $level->save();
+
+       
         return redirect()->route('accounting-tree.index')->with('message', 'Item created successfully.');
     }
 

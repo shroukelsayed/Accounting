@@ -161,45 +161,24 @@
                   <i class="fa fa-user-plus"></i> <span>@lang('validation.addUser')</span> 
                 </a>
               </li>
-              <!-- <li>
-              <a href="{{URL::to('/users')}}">
-                  <i class="fa fa-th"></i> <span>@lang('validation.AllBenefactors')</span> 
-              </a>
-            </li>
-            @else
-              <li>
-                <a href="{{URL::to('/person_infos')}}">
-                  <i class="fa fa-th"></i> <span>@lang('validation.AllPersons')</span> 
-                </a>
-              </li>
-              <li>
-                <a href="{{URL::to('/people')}}">
-                  <i class="fa fa-th"></i> <span>@lang('validation.AllCases')</span> 
-                </a>
-              </li>
-              <li>
-              <a href="{{URL::to('/people/create')}}">
-                  <i class="fa fa-edit"></i> <span>@lang('validation.NewCase')</span> 
-                </a>
-              </li> -->
               <!-- // Start of Links to create new case ... by shrouk -->
 
 
-              <li class="treeview">
+             <!--  <li class="treeview">
                 <a href="#">
                   <i class="fa fa-edit"></i> <span>New Case</span>
                   <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
-                  <li><a href="{{URL::to('/bloods/create')}}"><i class="fa fa-edit"></i> Blood Case</a></li>
-                  <li><a href="{{URL::to('/money/create')}}"><i class="fa fa-edit"></i> Money Case</a></li>
-                  <li><a href="{{URL::to('/medicines/create')}}"><i class="fa fa-edit"></i> Medicine Case</a></li>
-                  <li><a href="{{URL::to('/others/create')}}"><i class="fa fa-edit"></i> Other Case</a></li>
+                  <li><a href="{{URL::to('/projects')}}"><i class="fa fa-edit"></i> Blood Case</a></li>
+                  <li><a href="{{URL::to('/projects')}}"><i class="fa fa-edit"></i> Money Case</a></li>
+                  <li><a href="{{URL::to('/projects')}}"><i class="fa fa-edit"></i> Medicine Case</a></li>
+                  <li><a href="{{URL::to('/projects')}}"><i class="fa fa-edit"></i> Other Case</a></li>
                 </ul>
-              </li>
+              </li> -->
           <!-- // End of Links to create new case ... by shrouk -->  
                     
-              <li>
+              <!-- <li>
                <a href="{{URL::to('/compaigns')}}">
                   <i class="fa fa-th"></i> <span>@lang('validation.AllCompaigns')</span> 
                 </a>
@@ -208,7 +187,7 @@
               <a href="{{URL::to('/compaigns/create')}}">
                   <i class="fa fa-edit"></i> <span>@lang('validation.NewCompaign')</span> 
                 </a>
-              </li>
+              </li> -->
               <!-- /// cases according to donation type .. by shrouk -->
             @endif
             <!-- /// end of  -->
