@@ -19,7 +19,11 @@
     <!-- AdminLTE Skins. Choose a skin from the css/skins
          folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" href="/Admin/dist/css/skins/_all-skins.min.css">
-
+<!-- jQuery 2.1.4 -->
+    <script src="/Admin/plugins/jQuery/jQuery-2.1.4.min.js"></script>
+    <!-- Bootstrap 3.3.5 -->
+     <script src="/Admin/bootstrap/js/bootstrap.min.js"></script>
+  
 
      <link rel="stylesheet" href="/Admin/bootstrap/css/bootstrap.min.css">
 
@@ -62,7 +66,10 @@
           </a>
           <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
-   
+            
+              <li>
+                <a href="/accounting-tree"><i class="fa fa-gears">&nbsp&nbsp @lang('validation.accounting_tree') </i></a>
+              </li>
               
             <!-- User Account: style can be found in dropdown.less -->
               <li class="dropdown user user-menu">
@@ -95,11 +102,7 @@
                     </div>
                   </li>
                 </ul>
-              </li>
-              <!-- Control Sidebar Toggle Button -->
-             <!--  <li>
-                <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
-              </li> -->
+              </li>            
             </ul>
           </div>
         </nav>
@@ -247,7 +250,7 @@
   
 
 
-  <script type="text/javascript" src="{{ URL::asset('Admin/jquery-ui.min.js') }}"></script>
+  <script type="text/javascript" src="Admin/jquery-ui.min.js"></script>
     <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
     <script>
       $.widget.bridge('uibutton', $.ui.button);
@@ -255,11 +258,7 @@
 
   
   
-    <!-- jQuery 2.1.4 -->
-    <script src="/Admin/plugins/jQuery/jQuery-2.1.4.min.js"></script>
-    <!-- Bootstrap 3.3.5 -->
-     <script src="/Admin/bootstrap/js/bootstrap.min.js"></script>
-  
+    
   <!-- AdminLTE App -->
     <script src="/Admin/dist/js/app.min.js"></script>
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->

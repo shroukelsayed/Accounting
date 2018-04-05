@@ -13,6 +13,6 @@ class AccountingTreeLevelTwo extends Model
 
     public function fixedAssets()
     {
-        return $this->hasMany(FixedAssets::class);
+        return $this->hasMany(FixedAssets::class,'parent');
     }
 }
