@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class FixedAssets extends Model
 {
     //
-    public function levelOne(){
+    public function levelTwo(){
         return $this->hasOne(AccountingTreeLevelTwo::class); 
     }
 }

@@ -10,6 +10,8 @@ use App\User;
 use App\AccountingTreeLevelOne;
 use App\AccountingTreeLevelTwo;
 use App\FixedAssets;
+use App\CurrentAssets;
+use App\CurrentLiabilities;
 use App\Role;
 use DateTime;
 use DB;
@@ -37,11 +39,6 @@ class AccountingTreeController extends Controller
     {
         //
         $levels = AccountingTreeLevelOne::orderBy('id', 'asc')->paginate(10);
-        // foreach ($levels[0]->levelTwo as $l) {
-        //     var_dump($l->title);
-        // }
-        // die;
-        // var_dump($levels[0]->levelTwo());die;
 
         return view('accounting-tree.index', compact('levels'));
     }
@@ -171,17 +168,30 @@ class AccountingTreeController extends Controller
     public function addChild(Request $request)
     {
         //
-        // var_dump($request->all());die;
+        var_dump($request->all());die;
 
         // $parentLevel = AccountingTreeLevelTwo::findOrFail($request->input('id'));
 
 
         // $level = new AccountingTreeLevelTwo();
-        $level = new FixedAssets();
+        if($request->input('parent_code') == '11'){
+            $level = new FixedAssets();
+        }else if($request->input('parent_code') == '12'){
+            $level = new CurrentAssets();
+        }else if($request->input('parent_code') == '21'){
+            $level = new CurrentLiabilities();
+        }else if($request->input('parent_code') == '31'){
+            $level = new FixedAssets();
+        }else if($request->input('parent_code') == '32'){
+            $level = new FixedAssets();
+        }
+
+        
         $level->level = $request->input('parent_level') +1;
         $level->parent = $request->input('parent_id');
         $level->code = $request->input('parent_code').$request->input('level_code');
         $level->title = $request->input('level_title');
+    
 
         if($request->input('type') == 'credit'){
             $level->debit = false;
