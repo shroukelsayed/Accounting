@@ -1,35 +1,6 @@
 @extends(  Auth::user()->role  == 1  ? 'layouts.admin' : 'layouts.app')
 
 @section('content')
-
-    <script type="text/javascript">
-        
-
-        $(document).ready(function () {
-         
-
-        });
-
-        function drawNewChild(parent_id,parent_code,parent_level){
-            addChild=document.getElementById("addChild-"+parent_code);
-            addChild.innerHTML= "";
-
-            var html = " <form id='form' action='{{ url("add-child") }}' method='POST' >";
-            html +='<input type="hidden" name="parent_id" value="'+parent_id+'"><input type="hidden" name="parent_code" value="'+parent_code+'"><input type="hidden" name="parent_level" value="'+parent_level+'"><input type="hidden" name="_token" value="{{ csrf_token() }}">';
-            html += '<div class="row"><div class="col-md-3"><label> Level Title</label></div><div class="col-md-9"><input type="text" name="level_title" class="form-control" required></div></div>';
-            // html += '<div class="row"><div class="col-md-3"><label> Level Code</label></div><div class="col-md-9"><input type="text" name="level_code" class="form-control" required></div></div>';
-            html += '<div class="row"><div class="col-md-3"></div><div class="col-md-6"><input type="radio" name="type" value="credit"> دائن<input type="radio" name="type" value="debit" > مدين <br></div><div class="col-md-3"></div></div>';
-            html += '<button type="submit" class="btn btn-primary">Save changes</button></form>';
-            addChild.innerHTML= html;
-
-            $("#btn-"+parent_code).click(function () {
-                $("#addChild-"+parent_code).toggle();
-            });
-        }
-
-    </script>
-    
-
     <br><br><br><br><br><br><br>
     <div class="page-header">
         <h1 class="pull-right"> {{$level->title}} &nbsp <i class="fa fa-th-large"></i></h1><br>
@@ -53,8 +24,9 @@
             <!--Panel 1-->
             <div class="tab-pane fade in" id="panel-{{$level_two->code}}" role="tabpanel">
                 <!-- Nav tabs -->
-                <div class="row">
-                    <div class="col-md-3">
+                <div class="row pull-right">
+                    <div class="col-md-3"></div>
+                    <div class="col-md-9">
                         <!-- Fixed Assets View  -->
                        @if(!empty($level_two->fixedAssets->toArray()))
                             <ul class="nav  md-pills pills-primary flex-column" role="tablist">
@@ -64,55 +36,8 @@
                                     </li>
                                 @endforeach
                                 <li class="nav-item">
-                                    <button type="button" id="btn-{{$level_two->code}}" class="btn btn-xs btn-primary" onclick="drawNewChild({{ $level_two->id }},{{ $level_two->code }},{{ $level_two->level }});"><i class="glyphicon glyphicon-trash"></i> Add New</button>
-                                    <div id="addChild-{{$level_two->code}}"></div>     
-
-                                    <!-- <form action="{{ url('add-child') }}" method="POST" > -->
-                                       <!--  <div class="modal fade" id="myModal-{{ $level_two->id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                                            <div class="modal-dialog" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                        <h4 class="modal-title" id="myModalLabel">Add New Level</h4>
-                                                    </div>
-                                                    <div class="modal-body"> -->
-                                                       <!--  <input type="hidden" name="parent_id" value="{{ $level_two->id }}">
-                                                        <input type="hidden" name="parent_code" value="{{ $level_two->code }}">
-                                                        <input type="hidden" name="parent_level" value="{{ $level_two->level }}">
-                                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                                        <div class="row">
-                                                            <div class="col-md-3">
-                                                                <label> Level Title</label>
-                                                            </div>
-                                                            <div class="col-md-9">
-                                                                <input type="text" name="level_title" class="form-control" required>
-                                                            </div>
-                                                        </div>
-                                                         <div class="row">
-                                                            <div class="col-md-3">
-                                                                <label> Level Code</label>
-                                                            </div>
-                                                            <div class="col-md-9">
-                                                                <input type="text" name="level_code" class="form-control" required>
-                                                            </div>
-                                                        </div>
-                                                        <div class="row">
-                                                            <div class="col-md-3"></div>
-                                                            <div class="col-md-6">
-                                                                <input type="radio" name="type" value="credit"> دائن
-                                                                <input type="radio" name="type" value="debit" > مدين <br>
-                                                            </div>
-                                                            <div class="col-md-3"></div>
-                                                        </div>   -->        
-                                                    <!-- </div> -->
-                                                    <!-- <div class="modal-footer">
-                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                                        <button type="submit" id="addChild" class="btn btn-primary">Save changes</button>
-                                                    </div> -->
-                                              <!--   </div>
-                                            </div>
-                                        </div> -->
-                                    <!-- </form> -->
+                                    <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal" onclick="drawdev({{ $level_two->id }},{{ $level_two->code }},{{ $level_two->level }});">Open Modal</button>
+                                    <div id="addChild-{{$level_two->code}}"></div>
                                 </li>
                             </ul>
                         @endif
@@ -134,7 +59,7 @@
                                                     @foreach($currentAsset->banks as $bank)
                                                         <h5 class="my-2 h5">{{$bank->title}}</h5>
                                                     @endforeach 
-                                                    <button type="button" id="btn-{{$currentAsset->code}}" class="btn btn-xs btn-primary" onclick="drawNewChild({{ $currentAsset->id }},{{ $currentAsset->code }},{{ $currentAsset->level }});"><i class="glyphicon glyphicon-trash"></i> Add New</button>
+                                                    <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal" onclick="drawdev({{ $currentAsset->id }},{{ $currentAsset->code }},{{ $currentAsset->level }});">Open Modal</button>
                                                     <div id="addChild-{{$currentAsset->code}}"></div>
                                                 </div>
                                                 <!--/.Panel 1-->
@@ -143,8 +68,8 @@
                                     </div>
                                 @endforeach
                                 <li class="nav-item">
-                                    <button type="button" id="btn-{{$level_two->code}}" class="btn btn-xs btn-primary" onclick="drawNewChild({{ $level_two->id }},{{ $level_two->code }},{{ $level_two->level }});"><i class="glyphicon glyphicon-trash"></i> Add New</button>
-                                    <div id="addChild-{{$level_two->code}}"></div>     
+                                    <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal" onclick="drawdev({{ $level_two->id }},{{ $level_two->code }},{{ $level_two->level }});">Open Modal</button>
+                                        <div id="addChild-{{$level_two->code}}"></div>
                                     
                                 </li>
                             </ul>
@@ -172,9 +97,8 @@
                                     </div>
                                 @endforeach
                                 <li class="nav-item">
-                                    <button type="button" id="btn-{{$level_two->code}}" class="btn btn-xs btn-primary" onclick="drawNewChild({{ $level_two->id }},{{ $level_two->code }},{{ $level_two->level }});"><i class="glyphicon glyphicon-trash"></i> Add New</button>
-                                    <div id="addChild-{{$level_two->code}}"></div>     
-                                    
+                                    <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal" onclick="drawdev({{ $level_two->id }},{{ $level_two->code }},{{ $level_two->level }});">Open Modal</button>
+                                    <div id="addChild-{{$level_two->code}}"></div>
                                 </li>
                             </ul>
                         @endif                        
@@ -185,7 +109,6 @@
                                     <div id="addChild-{{$level_two->code}}"></div>     
  -->
                     </div>
-                    <div class="col-md-9"></div>
                 </div>
                 <!-- Nav tabs -->
             </div>
@@ -194,5 +117,25 @@
     </div>
        
 
+<script type="">
+    
 
+function drawdev(parent_id,parent_code,parent_level){
+            html ="<div class='modal fade' id='myModal' role='dialog'><div class='modal-dialog'><div class='modal-content'><div class='modal-header'><button type='button' class='close' data-dismiss='modal'>&times;</button><h4 class='modal-title'>Modal Header</h4></div>;"
+
+             html +='<div class="modal-body"><input type="hidden" name="parent_id" value="'+parent_id+'"><input type="hidden" name="parent_code" value="'+parent_code+'"><input type="hidden" name="parent_level" value="'+parent_level+'"><input type="hidden" name="_token" value="{{ csrf_token() }}">';
+
+             html += '<div class="row"><div class="col-md-3"><label> Level Title</label></div><div class="col-md-9"><input type="text" name="level_title" class="form-control" required></div></div>';
+
+             html += '<div class="row"><div class="col-md-3"></div><div class="col-md-6"><input type="radio" name="type" value="credit"> دائن<input type="radio" name="type" value="debit" > مدين <br></div><div class="col-md-3"></div></div></div>'; 
+
+            html +="<div class='modal-footer'><button type='submit' class='btn btn-primary'>Save changes</button><button type='button' class='btn btn-default' data-dismiss='modal'>Close</button></div></div></div></div>";
+           
+            $('#addChild-'+parent_code).append(html)
+
+         }
+
+</script>
 @endsection
+
+
