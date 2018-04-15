@@ -10,111 +10,46 @@
 @endsection
 
 @section('content')
-    <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
-    <script type="text/javascript" src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/fancybox/1.3.4/jquery.fancybox-1.3.4.pack.min.js"></script>
-    <script type="text/javascript">
-
-        $(document).ready(function () {
-         modaldia = $("#addChild");
-        
-            $("#btn").click(function () {
-                modaldia.dialog({
-                    autoOpen: false,
-                    width: 750,
-                    modal: true
-                   
-                });
-                modaldia.dialog('open');
-                // modaldia.load("/home/Ajaxform", function () {
-                //    //tryed loading date picker here 
-                //     //var startDate = $("#EffectiveStartDate");
-                //     //startDate.unbind();
-                //     //startDate.datepicker();
-                // });
-
-            });
-
-        });
-        
-        function drawNewChild(parent_id,parent_code,parent_level){
-            // addChild=document.getElementById("addChild");
-            // addChild.innerHTML= "";
-
-            var html = " <form action='{{ url("add-child") }}' method='POST' >";
-            html += '<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">';
-            html += '<div class="modal-dialog" role="document"><div class="modal-content">';
-            html += '<div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button><h4 class="modal-title" id="myModalLabel">Add New Level</h4></div>';
-
-            html += '<div class="modal-body"><input type="hidden" name="parent_id" value="'+parent_id+'"><input type="hidden" name="parent_code" value="'+parent_code+'"><input type="hidden" name="parent_level" value="'+parent_level+'"><input type="hidden" name="_token" value="{{ csrf_token() }}">';
-
-            html += '<div class="row"><div class="col-md-3"><label> Level Title</label></div><div class="col-md-9"><input type="text" name="level_title" class="form-control" required></div></div>';
-            html += '<div class="row"><div class="col-md-3"><label> Level Code</label></div><div class="col-md-9"><input type="text" name="level_code" class="form-control" required></div></div>';
-            html += '<div class="row"><div class="col-md-3"></div><div class="col-md-6"><input type="radio" name="type" value="credit"> دائن<input type="radio" name="type" value="debit" > مدين <br></div><div class="col-md-3"></div></div>';
-            html += '<div class="modal-footer"> <button type="button" class="btn btn-default" data-dismiss="modal">Close</button><button type="submit" id="addChild" class="btn btn-primary">Save changes</button></div></div></div></div></form>';
-            
-            return html;
-
-
-
-            // html= '';
-            // html= '';
-            // html= '';
-
-            // alert(parent_id);
-            // alert(parent_code);
-            // alert(parent_id);
-        }
-
-
-        // $(function($){
-            
-        // });
-    </script>
-
+   
     <br><br><br><br><br><br>
     <div class="row">
         <div class="col-md-12">
 
-            @foreach($levels as $level_one)
-                <li class="dropdown" ><a class="dropdown-toggle" data-toggle="dropdown" href="#">{{ $level_one->title }}<span></span></a>
-                    <ul class="dropdown-submenu">
-                        @foreach($level_one->levelTwo as $level)
-                            <li class="dropdown" ><a class="dropdown-toggle" data-toggle="dropdown" href="#"><span>{{ $level->title }} </span></a>
-                            <!-- Modal for adding new child -->                    
-                            <!-- Modal for adding new child -->   
 
-                            @if(!empty($level->fixedAssets->toArray()))
-                                <ul class="dropdown-menu">
-                                    @foreach($level->fixedAssets as $fixedAsset)
-                                        <li><a href="#">{{ $fixedAsset->title}}</a></li>
-                                    @endforeach
-                                </ul>
-                            @endif
-
-                            @if(!empty($level->currentAssets->toArray()))
-                                <ul class="dropdown-menu">
-                                    @foreach($level->currentAssets as $currentAsset)
-                                         <li class="dropdown" ><a class="dropdown-toggle" data-toggle="dropdown" href="#"><span>{{ $currentAsset->title}}</span></a>
-                                            <!-- Modal for adding new child -->
-                                             <!-- <button type="button" class="btn btn-xs btn-danger" data-toggle="modal" data-target="#myModal-{{$level->id}}"><i class="glyphicon glyphicon-trash"></i> Add Child</button> -->
-
-                            <button type="button" id="btn" class="btn btn-xs btn-danger"  data-toggle="modal" data-target="#myModal" onclick="drawNewChild({{ $currentAsset->id }},{{ $currentAsset->code }},{{ $currentAsset->level }});"><i class="glyphicon glyphicon-plus"></i></button> 
-
-                            <div id="addChild"></div>    
-
-                                   
-                            <!-- Modal for adding new child -->  
-                                        </li>
-                                    @endforeach
-                                </ul>
-                            @endif
-
-                        </li>
+            <!-- Nav tabs -->
+            <div class="row">
+                <div class="col-md-6"></div>
+                <div class="col-md-3">
+                    <!-- Tab panels -->
+                    <div class="tab-content vertical">
+                        @foreach($levels as $level_one)
+                            <!--Panel 1-->
+                            <div class="tab-pane fade in " id="panel-{{$level_one->id}}" role="tabpanel">
+                                @foreach($level_one->levelTwo as $level)
+                                    <h5 class="my-2 h5">
+                                        <!-- <a  id="btn" class="btn btn-xs btn-danger"  data-toggle="modal" data-target="#myModal-" ><i class="glyphicon glyphicon-plus"></i></a>  -->
+                                        <a  class="btn btn-success" href="{{ route('accounting-tree.show',$level_one->id) }}"><i class="glyphicon glyphicon-eye-open"></i> View</a> 
+                                        {{$level->title}}
+                                    </h5>
+                                @endforeach
+                            </div>
+                            <!--/.Panel 1-->
+                        @endforeach
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <ul class="nav  md-pills pills-primary flex-column" role="tablist">
+                        @foreach($levels as $level_one)
+                            <li class="nav-item">
+                                <a class="nav-link " data-toggle="tab" href="#panel-{{$level_one->id}}" role="tab">{{$level_one->title}}
+                                <i class="fa fa-th-large"></i>
+                                </a>
+                            </li>
                         @endforeach
                     </ul>
-                </li>
-            @endforeach
+                </div>
+            </div>
+            <!-- Nav tabs -->
 
             @if($levels->count())
                 {!! $levels->render() !!}

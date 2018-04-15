@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class CurrentLiabilities extends Model
 {
     //
-    public function levelOne(){
-        return $this->hasOne(AccountingTreeLevelOne::class); 
+   	public function levelTwo(){
+        return $this->hasOne(AccountingTreeLevelTwo::class); 
     }
 }

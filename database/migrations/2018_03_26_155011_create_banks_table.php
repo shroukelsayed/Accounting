@@ -22,6 +22,8 @@ class CreateBanksTable extends Migration
             $table->boolean('debit');
             $table->boolean('credit');
 
+            $table->foreign('parent')->references('id')->on('current_assets')->onDelete('cascade');
+
             $table->timestamps();
         });
     }

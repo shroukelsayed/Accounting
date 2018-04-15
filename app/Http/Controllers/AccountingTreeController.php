@@ -12,6 +12,7 @@ use App\AccountingTreeLevelTwo;
 use App\FixedAssets;
 use App\CurrentAssets;
 use App\CurrentLiabilities;
+use App\Banks;
 use App\Role;
 use DateTime;
 use DB;
@@ -102,10 +103,9 @@ class AccountingTreeController extends Controller
     public function show($id)
     {
         //
-        $user = User::findOrFail($id);
-        $role = Role::findOrFail($user->role);
+        $level = AccountingTreeLevelOne::findOrFail($id);
 
-        return view('accounting-tree.show', compact('user','role'));
+        return view('accounting-tree.show', compact('level'));
     }
 
     /**
@@ -168,28 +168,56 @@ class AccountingTreeController extends Controller
     public function addChild(Request $request)
     {
         //
-        var_dump($request->all());die;
+        // var_dump($request->all());die;
 
         // $parentLevel = AccountingTreeLevelTwo::findOrFail($request->input('id'));
 
 
         // $level = new AccountingTreeLevelTwo();
-        if($request->input('parent_code') == '11'){
-            $level = new FixedAssets();
-        }else if($request->input('parent_code') == '12'){
-            $level = new CurrentAssets();
-        }else if($request->input('parent_code') == '21'){
-            $level = new CurrentLiabilities();
-        }else if($request->input('parent_code') == '31'){
-            $level = new FixedAssets();
-        }else if($request->input('parent_code') == '32'){
-            $level = new FixedAssets();
+        if($request->input('parent_level') == '2'){
+            if($request->input('parent_code') == '11'){
+                $level = new FixedAssets();
+                $last_level = FixedAssets::orderby('id', 'desc')->first();
+            }else if($request->input('parent_code') == '12'){
+                $level = new CurrentAssets();
+                $last_level = CurrentAssets::orderby('id', 'desc')->first();
+            }else if($request->input('parent_code') == '21'){
+                $level = new CurrentLiabilities();
+                $last_level = CurrentLiabilities::orderby('id', 'desc')->first();
+            }else if($request->input('parent_code') == '31'){
+                $level = new FixedAssets();
+                $last_level = FixedAssets::orderby('id', 'desc')->first();
+            }else if($request->input('parent_code') == '32'){
+                $level = new FixedAssets();
+                $last_level = FixedAssets::orderby('id', 'desc')->first();
+            }
+        }elseif($request->input('parent_level') == '3'){
+            if($request->input('parent_code') == '1201'){
+                $level = new FixedAssets();
+                $last_level = FixedAssets::orderby('id', 'desc')->first();
+            }else if($request->input('parent_code') == '1202'){
+                $level = new Banks();
+                $last_level = Banks::orderby('id', 'desc')->first();
+            }
         }
 
-        
+        // $new_level_code = 0;
+        if(!is_null($last_level)){
+            $new_level_code = $last_level->code + 1;
+        }else{
+            if($request->input('parent_level') == '3' || $request->input('parent_level') == '2'){
+                $new_level_code  = $request->input('parent_code')."01";
+            }elseif($request->input('parent_level') == '4'){
+                $new_level_code  = $request->input('parent_code')."001";
+            }elseif($request->input('parent_level') == '5'){
+                $new_level_code  = $request->input('parent_code')."0001";
+            }
+            // var_dump($new_level_code);die;
+        }
+
         $level->level = $request->input('parent_level') +1;
         $level->parent = $request->input('parent_id');
-        $level->code = $request->input('parent_code').$request->input('level_code');
+        $level->code = $new_level_code;
         $level->title = $request->input('level_title');
     
 
@@ -205,7 +233,7 @@ class AccountingTreeController extends Controller
         $level->save();
 
        
-        return redirect()->route('accounting-tree.index')->with('message', 'Item created successfully.');
+        return Redirect::back();
     }
 
 }
