@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTreasuryTable extends Migration
+class CreateStoresTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,16 @@ class CreateTreasuryTable extends Migration
     public function up()
     {
         //
-        Schema::create('treasury', function(Blueprint $table) {
+        Schema::create('stores', function(Blueprint $table) {
             $table->increments('id');
             $table->string('code');
             $table->string('title');
-            $table->integer('parent');
+            $table->integer('parent')->unsigned();
             $table->integer('level');
             $table->boolean('debit');
             $table->boolean('credit');
 
+            $table->foreign('parent')->references('id')->on('current_assets')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -34,6 +35,6 @@ class CreateTreasuryTable extends Migration
     public function down()
     {
         //
-        Schema::drop('treasury');
+        Schema::drop('stores');
     }
 }

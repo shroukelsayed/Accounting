@@ -17,7 +17,7 @@ class CreateBanksTable extends Migration
             $table->increments('id');
             $table->string('code');
             $table->string('title');
-            $table->integer('parent');
+            $table->integer('parent')->unsigned();
             $table->integer('level');
             $table->boolean('debit');
             $table->boolean('credit');

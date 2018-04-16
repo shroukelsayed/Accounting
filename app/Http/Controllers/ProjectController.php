@@ -9,6 +9,7 @@ use Auth;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Redirect;
 use Validator;
+use DB;
 
 class ProjectController extends Controller {
 
@@ -45,7 +46,6 @@ class ProjectController extends Controller {
 
 	    $validator = Validator::make($request->all(), array(
 	        'name' => 'required|unique:projects',
-	        'code' => 'required|unique:projects',
 	    ));
 	    if($validator->fails()) {
 	        return Redirect::back()
@@ -53,15 +53,35 @@ class ProjectController extends Controller {
 	            ->WithInput();
 	    }
 
+	    // Start transaction!
+		DB::beginTransaction();
 
-		$project = new Project();
+		try {
+			//first stage:
+			//creating Project Object ...
+            $last_project = Project::orderby('id', 'desc')->first();
+			if(!is_null($last_project)){
+	            $new_level_code = $last_project->code + 1;
+	        }else{
+	            $new_level_code  = 01;
+           	}
+           	$project = new Project();
 
-		$project->name = $request->input('name');
-		$project->code = $request->input('code');
-		$project->user_id = Auth::user()->id;
-		$project->published_at = Carbon::now();
+			$project->name = $request->input('name');
+			$project->code = $new_level_code ;
+			$project->user_id = Auth::user()->id;
+			$project->published_at = Carbon::now();
 
-		$project->save();
+			$project->save();
+		} catch(\Exception $e){
+		    DB::rollback();
+		    throw $e;
+		}
+
+		// If we reach here, then
+		// data is valid and working.
+		// Commit the queries!
+		DB::commit();
 
 		return redirect()->route('projects.index')->with('message', 'Item created successfully.');
 	}

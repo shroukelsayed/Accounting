@@ -1,17 +1,13 @@
 @extends('layouts.admin')
 
-@section('header')
+@section('content')
+    <br><br><br>
     <div class="page-header clearfix">
-        <h1>
-            <i class="glyphicon glyphicon-align-justify"></i> Levels
-            <a class="btn btn-success pull-right" href="{{ route('accounting-tree.create') }}"><i class="glyphicon glyphicon-plus"></i> Create</a>
+        <h1 class="pull-right">
+             @lang('validation.accounting_tree') <i class="glyphicon glyphicon-align-justify"></i>
         </h1>
     </div>
-@endsection
-
-@section('content')
-   
-    <br><br><br><br><br><br>
+    <br><br><br>
     <div class="row">
         <div class="col-md-12">
 
@@ -27,7 +23,6 @@
                             <div class="tab-pane fade in " id="panel-{{$level_one->id}}" role="tabpanel">
                                 @foreach($level_one->levelTwo as $level)
                                     <h5 class="my-2 h5">
-                                        <!-- <a  id="btn" class="btn btn-xs btn-danger"  data-toggle="modal" data-target="#myModal-" ><i class="glyphicon glyphicon-plus"></i></a>  -->
                                         <a  class="btn btn-success" href="{{ route('accounting-tree.show',$level_one->id) }}"><i class="glyphicon glyphicon-eye-open"></i> View</a> 
                                         {{$level->title}}
                                     </h5>

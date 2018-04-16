@@ -13,15 +13,16 @@ class CreatePenalitiesFundTable extends Migration
     public function up()
     {
         //
-        Schema::create('penalities_fund', function(Blueprint $table) {
+        Schema::create('penalities_funds', function(Blueprint $table) {
             $table->increments('id');
             $table->string('code');
             $table->string('title');
-            $table->integer('parent');
+            $table->integer('parent')->unsigned();
             $table->integer('level');
             $table->boolean('debit');
             $table->boolean('credit');
 
+            $table->foreign('parent')->references('id')->on('current_liabilities')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -34,6 +35,6 @@ class CreatePenalitiesFundTable extends Migration
     public function down()
     {
         //
-        Schema::drop('penalities_fund');
+        Schema::drop('penalities_funds');
     }
 }

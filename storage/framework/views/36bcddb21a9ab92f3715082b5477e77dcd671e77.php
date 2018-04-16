@@ -27,14 +27,14 @@
                     </div>
                 </div>
                 <br>
-                <div class="row">
+                <!-- <div class="row">
                     <div class="col-md-9">
                         <input type="text" name="code" class="form-control" dir="rtl">
                     </div>
                     <div class="col-md-3">
                         <label style="float: right;"> كود المشروع</label>
                     </div>
-                </div>
+                </div> -->
                 <br><br><br>
 
                 <div class="well well-sm">

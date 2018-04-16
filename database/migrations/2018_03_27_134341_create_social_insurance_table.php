@@ -13,15 +13,16 @@ class CreateSocialInsuranceTable extends Migration
     public function up()
     {
         //
-        Schema::create('social_insurance', function(Blueprint $table) {
+        Schema::create('social_insurances', function(Blueprint $table) {
             $table->increments('id');
             $table->string('code');
             $table->string('title');
-            $table->integer('parent');
+            $table->integer('parent')->unsigned();
             $table->integer('level');
             $table->boolean('debit');
             $table->boolean('credit');
 
+            $table->foreign('parent')->references('id')->on('current_liabilities')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -34,6 +35,6 @@ class CreateSocialInsuranceTable extends Migration
     public function down()
     {
         //
-        Schema::drop('social_insurance');
+        Schema::drop('social_insurances');
     }
 }

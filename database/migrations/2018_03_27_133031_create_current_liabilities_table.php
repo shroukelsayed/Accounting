@@ -18,6 +18,7 @@ class CreateCurrentLiabilitiesTable extends Migration
             $table->string('code');
             $table->string('title');
             $table->integer('level');
+            $table->integer('parent')->unsigned();
             $table->boolean('debit');
             $table->boolean('credit');
             $table->foreign('parent')->references('id')->on('accounting_tree_level_twos')->onDelete('cascade');

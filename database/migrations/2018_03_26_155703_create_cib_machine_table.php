@@ -13,15 +13,16 @@ class CreateCibMachineTable extends Migration
     public function up()
     {
         //
-        Schema::create('cib_machine', function(Blueprint $table) {
+        Schema::create('cib_machines', function(Blueprint $table) {
             $table->increments('id');
             $table->string('code');
             $table->string('title');
-            $table->integer('parent');
+            $table->integer('parent')->unsigned();
             $table->integer('level');
             $table->boolean('debit');
             $table->boolean('credit');
 
+            $table->foreign('parent')->references('id')->on('current_assets')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -34,6 +35,6 @@ class CreateCibMachineTable extends Migration
     public function down()
     {
         //
-        Schema::drop('cib_machine');
+        Schema::drop('cib_machines');
     }
 }
