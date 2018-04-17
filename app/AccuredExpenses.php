@@ -11,4 +11,10 @@ class AccuredExpenses extends Model
         return $this->hasOne(CurrentLiabilities::class); 
     }
 
+
+    public function expensesItems()
+    {
+    	return $this->belongsToMany(ExpensesItems::class, 'accured_expense_items', 'accured_expense_id', 'expenses_item_id');
+    }
+
 }

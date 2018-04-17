@@ -64,21 +64,21 @@
 
                                                         <div class="tab-pane fade  " id="panel-{{$bank->code}}" role="tabpanel">
 
-                                                            @foreach($bank->bankAccounts as $bankAccount)
-                                                            <a style="color: darkblue;" class="nav-link " data-toggle="tab" href="#panel-{{$bankAccount->code}}" role="tab"> <i class="fa fa-download ml-2"></i> &nbsp{{$bankAccount->title}}</a>
-                                                            <div class="tab-pane fade  " id="panel-{{$bankAccount->code}}" role="tabpanel">
-                                                                @foreach($bankAccount->bankAccountItems as $bankAccountItem)
-                                                                    <h5 class="my-2 h5">{{$bankAccountItem->title}}</h5>
-                                                                @endforeach 
-                                                                <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal" onclick="drawdev({{ $bankAccount->id }},{{ $bankAccount->code }},{{ $bankAccount->level }});"><i class="glyphicon glyphicon-plus"></i> Add New </button>
-                                                                <div id="addChild-{{$bankAccount->code}}"></div>
-                                                            </div>
-                                                            @endforeach
+                                                            <!--  -->
+                                                            <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal" onclick="drawdev({{ $bank->id }},{{ $bank->code }},{{ $bank->level }});"><i class="glyphicon glyphicon-plus"></i> Add New </button>
+                                                                <div id="addChild-{{$bank->code}}"></div>
                                                         <hr> 
                                                         </div>
                                                     @endforeach
                                                     @foreach($currentAsset->advancedExpenses as $advancedExpense)
-                                                        <h5 class="my-2 h5">{{$advancedExpense->title}}</h5>
+                                                    <a style="color: darkred;" class="nav-link " data-toggle="tab" href="#panel-{{$advancedExpense->code}}" role="tab"> <i class="fa fa-download ml-2"></i> &nbsp{{$advancedExpense->title}}</a>
+                                                        <div class="tab-pane fade  " id="panel-{{$advancedExpense->code}}" role="tabpanel">
+                                                            @foreach($advancedExpense->expensesItems as $expensesItem)
+                                                                <h5 class="my-2 h5">{{$expensesItem->title}}</h5>
+                                                            @endforeach
+                                                            
+                                                        <hr> 
+                                                        </div>
                                                     @endforeach 
                                                     @foreach($currentAsset->depositsWithOthers as $depositsWithOther)
                                                         <h5 class="my-2 h5">{{$depositsWithOther->title}}</h5>
@@ -134,8 +134,8 @@
                                                         <h5 class="my-2 h5">{{$cibMachine->title}}</h5>
                                                     @endforeach 
                                                    
-                                                    <!-- <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal" onclick="drawdev({{ $currentAsset->id }},{{ $currentAsset->code }},{{ $currentAsset->level }});"><i class="glyphicon glyphicon-plus"></i> Add New </button>
-                                                    <div id="addChild-{{$currentAsset->code}}"></div> -->
+                                                    <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal" onclick="drawdev({{ $currentAsset->id }},{{ $currentAsset->code }},{{ $currentAsset->level }});"><i class="glyphicon glyphicon-plus"></i> Add New </button>
+                                                    <div id="addChild-{{$currentAsset->code}}"></div>
                                                 </div>
                                                 <!--/.Panel 1-->
                                             </div>
@@ -169,7 +169,14 @@
                                                     @endforeach
 
                                                     @foreach($currentLiability->accuredExpenses as $accuredExpense)
-                                                        <h5 class="my-2 h5">{{$accuredExpense->title}}</h5>
+                                                        <a style="color: darkred;" class="nav-link " data-toggle="tab" href="#panel-{{$accuredExpense->code}}" role="tab"> <i class="fa fa-download ml-2"></i> &nbsp{{$accuredExpense->title}}</a>
+                                                        <div class="tab-pane fade  " id="panel-{{$accuredExpense->code}}" role="tabpanel">
+                                                            @foreach($accuredExpense->expensesItems as $expensesItem)
+                                                                <h5 class="my-2 h5">{{$expensesItem->title}}</h5>
+                                                            @endforeach
+                                                            
+                                                        <hr> 
+                                                        </div>
                                                     @endforeach
 
 
@@ -240,7 +247,7 @@
     
 
 function drawdev(parent_id,parent_code,parent_level){
-            html ="<div class='modal fade' id='myModal' role='dialog'><form id='form' action='{{ url("add-child") }}' method='POST' ><div class='modal-dialog'><div class='modal-content'><div class='modal-header'><button type='button' class='close' data-dismiss='modal'>&times;</button><h4 class='modal-title'>Modal Header</h4></div>;"
+            html ="<div class='modal fade' id='myModal' role='dialog'><form id='form' action='{{ url("add-child") }}' method='POST' ><div class='modal-dialog'><div class='modal-content'><div class='modal-header'><button type='button' class='close' data-dismiss='modal'>&times;</button><h4 class='modal-title'>Modal Header</h4></div>";
 
              html +='<div class="modal-body"><input type="hidden" name="parent_id" value="'+parent_id+'"><input type="hidden" name="parent_code" value="'+parent_code+'"><input type="hidden" name="parent_level" value="'+parent_level+'"><input type="hidden" name="_token" value="{{ csrf_token() }}">';
 

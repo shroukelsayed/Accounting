@@ -11,4 +11,9 @@ class AdvancedExpenses extends Model
         return $this->hasOne(CurrentAssets::class); 
     }
 
+    public function expensesItems()
+    {
+    	return $this->belongsToMany(ExpensesItems::class, 'advanced_expense_expenses_items', 'advanced_expense_id', 'expenses_item_id');
+    }
+
 }

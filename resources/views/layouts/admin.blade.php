@@ -164,6 +164,11 @@
                   <i class="fa fa-user-plus"></i> <span>@lang('validation.addUser')</span> 
                 </a>
               </li>
+              <li>
+                <a href="{{URL::to('add-expenses-item')}}">
+                  <i class="fa fa-plus"></i> <span>@lang('validation.add-expenses-item')</span> 
+                </a>
+              </li>
               <!-- // Start of Links to create new case ... by shrouk -->
 
 

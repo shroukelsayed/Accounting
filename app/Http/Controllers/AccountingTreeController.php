@@ -16,6 +16,7 @@ use App\BankAccounts;
 use App\BankAccountItems;
 use App\Treasury;
 use App\AdvancedExpenses;
+use App\ExpensesItems;
 use App\DepositsWithOthers;
 use App\CustodyAndAdvances;
 use App\ReceivableCheques;
@@ -40,6 +41,8 @@ use App\SocialInsurances;
 use App\Taxes;
 use App\Suppliers;
 
+use App\AdvancedExpenseExpensesItems; 
+use App\AccuredExpenseItems;
 use App\Role;
 use DateTime;
 use DB;
@@ -185,6 +188,71 @@ class AccountingTreeController extends Controller
 
         return redirect()->route('accounting-tree.index')->with('message', 'Item deleted successfully.');
     }
+
+     /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function expensesItem()
+    {
+        // $items = ExpensesItems::all();
+        // // $advancedExpenses = AccuredExpenses::all();
+
+        // // foreach ($advancedExpenses as $advancedExpense) {
+        //     foreach ($items as $item) {
+        //         $advancedExpenseExpensesItem = new AccuredExpenseItems();
+        //         $advancedExpenseExpensesItem->accured_expense_id = 2;
+        //         $advancedExpenseExpensesItem->expenses_item_id = $item->id;
+
+        //         $advancedExpenseExpensesItem->save();
+        //     }
+        // // }
+        // // var_dump($advancedExpenses);
+        // var_dump("done");
+        // die;
+
+        return view('accounting-tree.add-expenses-item');
+
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function addExpensesItem(Request $request)
+    {
+        // var_dump($request);die;
+        $last_item = ExpensesItems::orderby('id', 'desc')->first();
+        $item = new ExpensesItems();
+
+
+        if(!is_null($last_item)){
+            $new_level_code = str_pad($last_item->code + 1, 3, '0', STR_PAD_LEFT);
+        }else{
+            $new_level_code = "001";
+        }
+// var_dump($new_level_code);die;
+        $item->level = 5;
+        $item->parent = 0;
+        $item->code = $new_level_code;
+        $item->title = $request->input('title');
+        $item->debit = false;
+        $item->credit = true;
+        $item->save();
+
+        // $advancedExpenseExpensesItem = new AdvancedExpenseExpensesItem();
+
+
+        return view('accounting-tree.add-expenses-item')->with('message', 'Item deleted successfully.');
+
+    }
+
+   
+
 
     /**
      * Remove the specified resource from storage.
