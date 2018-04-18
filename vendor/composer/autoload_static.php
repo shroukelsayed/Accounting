@@ -293,6 +293,8 @@ class ComposerStaticInitd862fef8e29d86cf3144b8ef6aacc142
         'CreateDonationReceiptsTable' => __DIR__ . '/../..' . '/database/migrations/2018_02_21_094751_create_donation_receipts_table.php',
         'CreateExpensesItemsTable' => __DIR__ . '/../..' . '/database/migrations/2018_03_27_130626_create_expenses_items_table.php',
         'CreateFawryBanksTable' => __DIR__ . '/../..' . '/database/migrations/2018_03_26_155745_create_fawry_banks_table.php',
+        'CreateFawryFawryItemsTable' => __DIR__ . '/../..' . '/database/migrations/2018_04_18_083443_create_fawry_fawry_items_table.php',
+        'CreateFawryItemBanksTable' => __DIR__ . '/../..' . '/database/migrations/2018_04_18_094645_create_fawry_item_banks_table.php',
         'CreateFawryItemsTable' => __DIR__ . '/../..' . '/database/migrations/2018_03_26_155739_create_fawry_items_table.php',
         'CreateFawryTable' => __DIR__ . '/../..' . '/database/migrations/2018_03_26_155725_create_fawry_table.php',
         'CreateFixedAssetsTable' => __DIR__ . '/../..' . '/database/migrations/2018_03_26_155822_create_fixed_assets_table.php',

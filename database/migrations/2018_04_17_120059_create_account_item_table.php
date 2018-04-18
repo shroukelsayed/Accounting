@@ -15,6 +15,8 @@ class CreateAccountItemTable extends Migration
         //
         Schema::create('account_items', function(Blueprint $table)
         {
+            $table->increments('id');
+            
             $table->integer('bank_account_id')->unsigned()->nullable();
             $table->foreign('bank_account_id')->references('id')
                 ->on('bank_accounts')->onDelete('cascade');

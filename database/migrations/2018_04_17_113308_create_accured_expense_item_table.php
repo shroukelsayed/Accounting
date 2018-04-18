@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateAdvancedExpenseExpensesItemsTable extends Migration
+class CreateAccuredExpenseItemTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,14 @@ class CreateAdvancedExpenseExpensesItemsTable extends Migration
     public function up()
     {
         //
-        Schema::create('advanced_expense_expenses_items', function(Blueprint $table)
+         //
+        Schema::create('accured_expense_items', function(Blueprint $table)
         {
-            $table->integer('advanced_expense_id')->unsigned()->nullable();
-            $table->foreign('advanced_expense_id')->references('id')
-                ->on('advanced_expenses')->onDelete('cascade');
+            $table->increments('id');
+            
+            $table->integer('accured_expense_id')->unsigned()->nullable();
+            $table->foreign('accured_expense_id')->references('id')
+                ->on('accured_expenses')->onDelete('cascade');
 
             $table->integer('expenses_item_id')->unsigned()->nullable();
             $table->foreign('expenses_item_id')->references('id')
@@ -35,6 +38,6 @@ class CreateAdvancedExpenseExpensesItemsTable extends Migration
     public function down()
     {
         //
-        Schema::drop('advanced_expense_expenses_items');
+        Schema::drop('accured_expense_items');
     }
 }

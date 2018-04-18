@@ -165,8 +165,8 @@
                 </a>
               </li>
               <li>
-                <a href="<?php echo e(URL::to('add-expenses-item')); ?>">
-                  <i class="fa fa-plus"></i> <span><?php echo app('translator')->get('validation.add-expenses-item'); ?></span> 
+                <a href="<?php echo e(URL::to('add-fawry-item')); ?>">
+                  <i class="fa fa-plus"></i> <span><?php echo app('translator')->get('validation.add'); ?></span> 
                 </a>
               </li>
               <!-- // Start of Links to create new case ... by shrouk -->

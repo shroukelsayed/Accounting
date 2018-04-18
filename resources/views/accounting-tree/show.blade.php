@@ -63,11 +63,15 @@
                                                         <a style="color: darkred;" class="nav-link " data-toggle="tab" href="#panel-{{$bank->code}}" role="tab"> <i class="fa fa-download ml-2"></i> &nbsp{{$bank->title}}</a>
 
                                                         <div class="tab-pane fade  " id="panel-{{$bank->code}}" role="tabpanel">
-
-                                                            <!--  -->
-                                                            <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal" onclick="drawdev({{ $bank->id }},{{ $bank->code }},{{ $bank->level }});"><i class="glyphicon glyphicon-plus"></i> Add New </button>
-                                                                <div id="addChild-{{$bank->code}}"></div>
-                                                        <hr> 
+                                                        @foreach($bank->bankAccounts as $bankAccount)
+                                                            <a style="color: darkblue;" class="nav-link " data-toggle="tab" href="#panel-{{$bankAccount->code}}" role="tab"> <i class="fa fa-download ml-2"></i> &nbsp{{$bankAccount->title}}</a>
+                                                            <div class="tab-pane fade  " id="panel-{{$bankAccount->code}}" role="tabpanel">
+                                                                @foreach($bankAccount->bankAccountItems as $bankAccountItem)
+                                                                    <h5 class="my-2 h5">{{$bankAccountItem->title}}</h5>
+                                                                @endforeach 
+                                                            </div>
+                                                        @endforeach
+                                                           
                                                         </div>
                                                     @endforeach
                                                     @foreach($currentAsset->advancedExpenses as $advancedExpense)
@@ -113,14 +117,8 @@
                                                                 @foreach($fawryItem->fawryBanks as $fawryBank)
                                                                     <h5 class="my-2 h5">{{$fawryBank->title}}</h5>
                                                                 @endforeach 
-                                                                <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal" onclick="drawdev({{ $fawryItem->id }},{{ $fawryItem->code }},{{ $fawryItem->level }});"><i class="glyphicon glyphicon-plus"></i> Add New </button>
-                                                                <div id="addChild-{{$fawryItem->code}}"></div>
                                                             </div>
                                                             @endforeach
-
-                                                            <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal" onclick="drawdev({{ $fawry->id }},{{ $fawry->code }},{{ $fawry->level }});"><i class="glyphicon glyphicon-plus"></i> Add New </button>
-                                                            <div id="addChild-{{$fawry->code}}"></div>
-                                                        <hr> 
                                                         </div>
                                                     @endforeach
 

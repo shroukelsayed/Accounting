@@ -28,8 +28,13 @@ Route::group(['middleware' => ['web']], function () {
 		Route::resource("projects","ProjectController");
 		Route::resource("accounting-tree","AccountingTreeController");
 		Route::post("add-child","AccountingTreeController@addChild");
+
 		Route::get("add-expenses-item","AccountingTreeController@expensesItem");
 		Route::post("add-expenses-item","AccountingTreeController@addExpensesItem");
+		Route::get("add-fawry-item","AccountingTreeController@fawryItem");
+		Route::post("add-fawry-item","AccountingTreeController@addFawryItem");
+		Route::get("add-fawry-bank","AccountingTreeController@fawryBank");
+		Route::post("add-fawry-bank","AccountingTreeController@addFawryBank");
 
 	});
 

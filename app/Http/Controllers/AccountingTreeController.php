@@ -43,6 +43,8 @@ use App\Suppliers;
 
 use App\AdvancedExpenseExpensesItems; 
 use App\AccuredExpenseItems;
+use App\FawryFawryItems;
+use App\FawryItemBanks;
 use App\Role;
 use DateTime;
 use DB;
@@ -70,6 +72,24 @@ class AccountingTreeController extends Controller
     {
         //
         $levels = AccountingTreeLevelOne::orderBy('id', 'asc')->paginate(10);
+        // foreach ($levels as $l) {
+        //     foreach ($l->levelTwo as $l_2) {
+        //         foreach ($l_2->currentAssets as $c) {
+        //             foreach ($c->fawry as $fawry) {
+        //                     // var_dump($fawry->fawryItems);
+        //                 foreach($fawry->fawryItems as $fawryItem) {
+        //                         var_dump($fawryItem->title);
+        //                    foreach ($fawryItem->fawryBanks as $bank){
+        //                     var_dump($bank->title);
+        //                    } 
+
+                            
+        //                 }
+        //             }
+        //         }
+        //     }
+        // }
+        // die;
 
         return view('accounting-tree.index', compact('levels'));
     }
@@ -189,7 +209,7 @@ class AccountingTreeController extends Controller
         return redirect()->route('accounting-tree.index')->with('message', 'Item deleted successfully.');
     }
 
-     /**
+    /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
@@ -251,7 +271,144 @@ class AccountingTreeController extends Controller
 
     }
 
-   
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function fawryItem()
+    {
+        // $items = FawryItems::all();
+        // $advancedExpenses = Fawry::all();
+
+        // foreach ($advancedExpenses as $advancedExpense) {
+        //     foreach ($items as $item) {
+        //         $advancedExpenseExpensesItem = new FawryFawryItems();
+        //         $advancedExpenseExpensesItem->fawry_id = $advancedExpense->id;
+        //         $advancedExpenseExpensesItem->fawry_item_id = $item->id;
+
+        //         $advancedExpenseExpensesItem->save();
+        //     }
+        // }
+        // var_dump($advancedExpenses);
+        // var_dump("done");
+        // die;
+
+        return view('accounting-tree.add-fawry-item');
+
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function addFawryItem(Request $request)
+    {
+        // var_dump($request);die;
+        $last_item = FawryItems::orderby('id', 'desc')->first();
+        $item = new FawryItems();
+
+
+        if(!is_null($last_item)){
+            $new_level_code = str_pad($last_item->code + 1, 3, '0', STR_PAD_LEFT);
+        }else{
+            $new_level_code = "001";
+        }
+// var_dump($new_level_code);die;
+        $item->level = 5;
+
+        $item->code = $new_level_code;
+        $item->title = $request->input('title');
+        $item->debit = false;
+        $item->credit = true;
+        $item->save();
+// var_dump($item);die;
+
+        // $advancedExpenseExpensesItem = new AdvancedExpenseExpensesItem();
+
+
+        return view('accounting-tree.add-fawry-item')->with('message', 'Item deleted successfully.');
+
+    }
+    
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function fawryBank()
+    {
+        // $items = FawryBanks::all();
+        // $advancedExpenses = FawryItems::all();
+
+        // foreach ($advancedExpenses as $advancedExpense) {
+        //             // var_dump($advancedExpense);
+        //     // foreach($advancedExpense->fawry as $f){
+        //             // var_dump($f);
+        //         if($advancedExpense->id == 2){
+        //             // var_dump($advancedExpense->title);
+        //             foreach ($items as $item) {
+        //                 $advancedExpenseExpensesItem = new FawryItemBanks();
+        //                 $advancedExpenseExpensesItem->fawry_item_id = $advancedExpense->id;
+        //                 $advancedExpenseExpensesItem->fawry_bank_id = $item->id;
+
+        //                 $advancedExpenseExpensesItem->save();
+        //             }
+        //         // }
+        //     }
+        // }
+        // // var_dump($advancedExpenses);
+        // var_dump("done");
+        // die;
+
+        return view('accounting-tree.add-fawry-bank');
+
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function addFawryBank(Request $request)
+    {
+        // var_dump($request);die;
+        $last_item = FawryBanks::orderby('id', 'desc')->first();
+        $item = new FawryBanks();
+
+
+        if(!is_null($last_item)){
+            $new_level_code = str_pad($last_item->code + 1, 4, '0', STR_PAD_LEFT);
+        }else{
+            $new_level_code = "0001";
+        }
+        $item->level = 6;
+        $item->code = $new_level_code;
+        $item->title = $request->input('title');
+        $item->debit = false;
+        $item->credit = true;
+        $item->save();
+
+        /// Add new bank to all items ..
+        $fawryItems = FawryItems::all();
+        foreach ($fawryItems as $fawryItem) {
+            if($fawryItem->id == 2){
+                $fawryItemBank = new FawryItemBanks();
+                $fawryItemBank->fawry_item_id = $fawryItem->id;
+                $fawryItemBank->fawry_bank_id = $item->id;
+
+                $fawryItemBank->save();
+            }
+        }
+
+        return view('accounting-tree.add-fawry-bank')->with('message', 'Item deleted successfully.');
+
+    }
 
 
     /**
@@ -262,14 +419,8 @@ class AccountingTreeController extends Controller
      */
     public function addChild(Request $request)
     {
-        //
-        // var_dump($request->all());die;
         // var_dump($request->all());die;
 
-        // $parentLevel = AccountingTreeLevelTwo::findOrFail($request->input('id'));
-
-
-        // $level = new AccountingTreeLevelTwo();
         if($request->input('parent_level') == '2'){
             if($request->input('parent_code') == '11'){
                 $level = new FixedAssets();
@@ -362,7 +513,6 @@ class AccountingTreeController extends Controller
             }
 
             //// Current Liabilities Level 4 
-
         }elseif($request->input('parent_level') == '4'){
             if($request->input('parent_code') == '120201'){
                 $level = new BankAccounts();
@@ -371,7 +521,6 @@ class AccountingTreeController extends Controller
                 $level = new FawryItems();
                 $last_level = FawryItems::orderby('id', 'desc')->first();
             }
-
         }elseif($request->input('parent_level') == '5'){
             if($request->input('parent_code') == '120201001'){
                 $level = new BankAccountItems();
