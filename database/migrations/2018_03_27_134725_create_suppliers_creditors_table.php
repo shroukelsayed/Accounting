@@ -22,6 +22,7 @@ class CreateSuppliersCreditorsTable extends Migration
             $table->boolean('debit');
             $table->boolean('credit');
 
+            $table->foreign('parent')->references('id')->on('suppliers')->onDelete('cascade');
             $table->timestamps();
         });
     }

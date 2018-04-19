@@ -22,6 +22,7 @@ class CreateDepositsWithOtherItemsTable extends Migration
             $table->boolean('debit');
             $table->boolean('credit');
 
+            $table->foreign('parent')->references('id')->on('deposits_with_others')->onDelete('cascade');
             $table->timestamps();
         });
     }

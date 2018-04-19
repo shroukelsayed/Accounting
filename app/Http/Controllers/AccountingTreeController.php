@@ -18,6 +18,7 @@ use App\Treasury;
 use App\AdvancedExpenses;
 use App\ExpensesItems;
 use App\DepositsWithOthers;
+use App\DepositsWithOtherItems;
 use App\CustodyAndAdvances;
 use App\ReceivableCheques;
 use App\VariousDebitors;
@@ -29,6 +30,7 @@ use App\Sms;
 use App\AccuredRevenues;
 use App\OtherDebitBalances;
 use App\CibMachine;
+use App\Workers;
 
 use App\CurrentLiabilities;
 use App\AccuredExpenses;
@@ -45,6 +47,12 @@ use App\AdvancedExpenseExpensesItems;
 use App\AccuredExpenseItems;
 use App\FawryFawryItems;
 use App\FawryItemBanks;
+use App\AccountItems;
+use App\StoreItems;
+use App\CustodyAndAdvanceWorkers;
+use App\AccuredRevenuesItems;
+use App\AccuredItems;
+
 use App\Role;
 use DateTime;
 use DB;
@@ -215,210 +223,9 @@ class AccountingTreeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function expensesItem()
-    {
-        // $items = ExpensesItems::all();
-        // // $advancedExpenses = AccuredExpenses::all();
-
-        // // foreach ($advancedExpenses as $advancedExpense) {
-        //     foreach ($items as $item) {
-        //         $advancedExpenseExpensesItem = new AccuredExpenseItems();
-        //         $advancedExpenseExpensesItem->accured_expense_id = 2;
-        //         $advancedExpenseExpensesItem->expenses_item_id = $item->id;
-
-        //         $advancedExpenseExpensesItem->save();
-        //     }
-        // // }
-        // // var_dump($advancedExpenses);
-        // var_dump("done");
-        // die;
-
-        return view('accounting-tree.add-expenses-item');
-
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function addExpensesItem(Request $request)
-    {
-        // var_dump($request);die;
-        $last_item = ExpensesItems::orderby('id', 'desc')->first();
-        $item = new ExpensesItems();
-
-
-        if(!is_null($last_item)){
-            $new_level_code = str_pad($last_item->code + 1, 3, '0', STR_PAD_LEFT);
-        }else{
-            $new_level_code = "001";
-        }
-// var_dump($new_level_code);die;
-        $item->level = 5;
-        $item->parent = 0;
-        $item->code = $new_level_code;
-        $item->title = $request->input('title');
-        $item->debit = false;
-        $item->credit = true;
-        $item->save();
-
-        // $advancedExpenseExpensesItem = new AdvancedExpenseExpensesItem();
-
-
-        return view('accounting-tree.add-expenses-item')->with('message', 'Item deleted successfully.');
-
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function fawryItem()
-    {
-        // $items = FawryItems::all();
-        // $advancedExpenses = Fawry::all();
-
-        // foreach ($advancedExpenses as $advancedExpense) {
-        //     foreach ($items as $item) {
-        //         $advancedExpenseExpensesItem = new FawryFawryItems();
-        //         $advancedExpenseExpensesItem->fawry_id = $advancedExpense->id;
-        //         $advancedExpenseExpensesItem->fawry_item_id = $item->id;
-
-        //         $advancedExpenseExpensesItem->save();
-        //     }
-        // }
-        // var_dump($advancedExpenses);
-        // var_dump("done");
-        // die;
-
-        return view('accounting-tree.add-fawry-item');
-
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function addFawryItem(Request $request)
-    {
-        // var_dump($request);die;
-        $last_item = FawryItems::orderby('id', 'desc')->first();
-        $item = new FawryItems();
-
-
-        if(!is_null($last_item)){
-            $new_level_code = str_pad($last_item->code + 1, 3, '0', STR_PAD_LEFT);
-        }else{
-            $new_level_code = "001";
-        }
-// var_dump($new_level_code);die;
-        $item->level = 5;
-
-        $item->code = $new_level_code;
-        $item->title = $request->input('title');
-        $item->debit = false;
-        $item->credit = true;
-        $item->save();
-// var_dump($item);die;
-
-        // $advancedExpenseExpensesItem = new AdvancedExpenseExpensesItem();
-
-
-        return view('accounting-tree.add-fawry-item')->with('message', 'Item deleted successfully.');
-
-    }
-    
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function fawryBank()
-    {
-        // $items = FawryBanks::all();
-        // $advancedExpenses = FawryItems::all();
-
-        // foreach ($advancedExpenses as $advancedExpense) {
-        //             // var_dump($advancedExpense);
-        //     // foreach($advancedExpense->fawry as $f){
-        //             // var_dump($f);
-        //         if($advancedExpense->id == 2){
-        //             // var_dump($advancedExpense->title);
-        //             foreach ($items as $item) {
-        //                 $advancedExpenseExpensesItem = new FawryItemBanks();
-        //                 $advancedExpenseExpensesItem->fawry_item_id = $advancedExpense->id;
-        //                 $advancedExpenseExpensesItem->fawry_bank_id = $item->id;
-
-        //                 $advancedExpenseExpensesItem->save();
-        //             }
-        //         // }
-        //     }
-        // }
-        // // var_dump($advancedExpenses);
-        // var_dump("done");
-        // die;
-
-        return view('accounting-tree.add-fawry-bank');
-
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function addFawryBank(Request $request)
-    {
-        // var_dump($request);die;
-        $last_item = FawryBanks::orderby('id', 'desc')->first();
-        $item = new FawryBanks();
-
-
-        if(!is_null($last_item)){
-            $new_level_code = str_pad($last_item->code + 1, 4, '0', STR_PAD_LEFT);
-        }else{
-            $new_level_code = "0001";
-        }
-        $item->level = 6;
-        $item->code = $new_level_code;
-        $item->title = $request->input('title');
-        $item->debit = false;
-        $item->credit = true;
-        $item->save();
-
-        /// Add new bank to all items ..
-        $fawryItems = FawryItems::all();
-        foreach ($fawryItems as $fawryItem) {
-            if($fawryItem->id == 2){
-                $fawryItemBank = new FawryItemBanks();
-                $fawryItemBank->fawry_item_id = $fawryItem->id;
-                $fawryItemBank->fawry_bank_id = $item->id;
-
-                $fawryItemBank->save();
-            }
-        }
-
-        return view('accounting-tree.add-fawry-bank')->with('message', 'Item deleted successfully.');
-
-    }
-
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function addChild(Request $request)
     {
+        // var_dump();
         // var_dump($request->all());die;
 
         if($request->input('parent_level') == '2'){
@@ -514,13 +321,30 @@ class AccountingTreeController extends Controller
 
             //// Current Liabilities Level 4 
         }elseif($request->input('parent_level') == '4'){
-            if($request->input('parent_code') == '120201'){
+            if(strpos($request->input('parent_code'), '1202')){
                 $level = new BankAccounts();
                 $last_level = BankAccounts::orderby('id', 'desc')->first();
+                //Add all items to new account ..
+                // $items = BankAccounts::all();
+                // foreach ($items as $item) {
+                //     $accountItem = new AccountItems();
+                //     $accountItem->bank_account_id = $level->id;
+                //     $accountItem->bank_account_item_id = $item->id;
+                //     $accountItem->code = $level->code."".$item->code;
+
+                //     $accountItem->save();
+                // }
             }elseif($request->input('parent_code') == '121101'){
                 $level = new FawryItems();
                 $last_level = FawryItems::orderby('id', 'desc')->first();
+            }elseif($request->input('parent_code') == '120401'){
+                $level = new DepositsWithOtherItems();
+                $last_level = DepositsWithOtherItems::orderby('id', 'desc')->first();
+            }elseif(strpos($request->input('parent_code'), '1209') !== false){
+                $level = new StoreItems();
+                $last_level = StoreItems::orderby('id', 'desc')->first();
             }
+
         }elseif($request->input('parent_level') == '5'){
             if($request->input('parent_code') == '120201001'){
                 $level = new BankAccountItems();
@@ -569,4 +393,391 @@ class AccountingTreeController extends Controller
         return Redirect::back();
     }
 
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function expensesItem()
+    {
+        // $items = ExpensesItems::all();
+        // // $advancedExpenses = AccuredExpenses::all();
+
+        // // foreach ($advancedExpenses as $advancedExpense) {
+        //     foreach ($items as $item) {
+        //         $advancedExpenseExpensesItem = new AccuredExpenseItems();
+        //         $advancedExpenseExpensesItem->accured_expense_id = 2;
+        //         $advancedExpenseExpensesItem->expenses_item_id = $item->id;
+
+        //         $advancedExpenseExpensesItem->save();
+        //     }
+        // // }
+        // // var_dump($advancedExpenses);
+        // var_dump("done");
+        // die;
+
+        return view('accounting-tree.add-expenses-item');
+
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function addExpensesItem(Request $request)
+    {
+        // var_dump($request);die;
+        $last_item = ExpensesItems::orderby('id', 'desc')->first();
+        $item = new ExpensesItems();
+
+
+        if(!is_null($last_item)){
+            $new_level_code = str_pad($last_item->code + 1, 3, '0', STR_PAD_LEFT);
+        }else{
+            $new_level_code = "001";
+        }
+// var_dump($new_level_code);die;
+        $item->level = 5;
+        $item->parent = 0;
+        $item->code = $new_level_code;
+        $item->title = $request->input('title');
+        $item->debit = false;
+        $item->credit = true;
+        $item->save();
+
+        // $advancedExpenseExpensesItem = new AdvancedExpenseExpensesItem();
+
+
+        return view('accounting-tree.add-expenses-item')->with('message', 'Item deleted successfully.');
+
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function fawryItem()
+    {
+        // $items = FawryItems::all();
+        // $advancedExpenses = Fawry::all();
+
+        // foreach ($advancedExpenses as $advancedExpense) {
+        //     foreach ($items as $item) {
+        //         $advancedExpenseExpensesItem = new FawryFawryItems();
+        //         $advancedExpenseExpensesItem->fawry_id = $advancedExpense->id;
+        //         $advancedExpenseExpensesItem->fawry_item_id = $item->id;
+        //         $advancedExpenseExpensesItem->code = $advancedExpense->code."".$item->code;
+
+        //         $advancedExpenseExpensesItem->save();
+        //     }
+        // }
+        // var_dump($advancedExpenses);
+        // var_dump("done");
+        // die;
+
+        return view('accounting-tree.add-fawry-item');
+
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function addFawryItem(Request $request)
+    {
+        // var_dump($request);die;
+        $last_item = FawryItems::orderby('id', 'desc')->first();
+        $item = new FawryItems();
+
+
+        if(!is_null($last_item)){
+            $new_level_code = str_pad($last_item->code + 1, 3, '0', STR_PAD_LEFT);
+        }else{
+            $new_level_code = "001";
+        }
+        $item->level = 5;
+
+        $item->code = $new_level_code;
+        $item->title = $request->input('title');
+        $item->debit = false;
+        $item->credit = true;
+        $item->save();
+
+        $fawries = Fawry::all();
+
+        foreach ($fawries as $fawry) {
+            $FawryFawryItem = new FawryFawryItems();
+            $FawryFawryItem->fawry_id = $fawry->id;
+            $FawryFawryItem->fawry_item_id = $item->id;
+            $FawryFawryItem->code = $fawry->code."".$item->code;
+
+            $FawryFawryItem->save();
+        }
+
+
+        return view('accounting-tree.add-fawry-item')->with('message', 'Item deleted successfully.');
+
+    }
+    
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function fawryBank()
+    {
+        // $fawryItems = FawryFawryItems::all();
+        // foreach ($fawryItems as $fawryItem) {
+        //     var_dump($fawryItem->fawry_item_id);
+
+        //     // if($fawryItem->fawry_item_id == 6){
+        //         // $fawryItemBank = new FawryItemBanks();
+        //         // $fawryItemBank->fawry_item_id = $fawryItem->fawry_item_id;
+        //         // $fawryItemBank->fawry_bank_id = $item->id;
+
+        //         // $fawryItemBank->save();
+        //     // }
+        // }
+        // die;
+        return view('accounting-tree.add-fawry-bank');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function addFawryBank(Request $request)
+    {
+        // var_dump($request);die;
+        $last_item = FawryBanks::orderby('id', 'desc')->first();
+        $item = new FawryBanks();
+
+
+        if(!is_null($last_item)){
+            $new_level_code = str_pad($last_item->code + 1, 4, '0', STR_PAD_LEFT);
+        }else{
+            $new_level_code = "0001";
+        }
+        $item->level = 6;
+        $item->code = $new_level_code;
+        $item->title = $request->input('title');
+        $item->debit = false;
+        $item->credit = true;
+        $item->save();
+
+        /// Add new bank to all items ..
+        $fawryItems = FawryFawryItems::all();
+        foreach ($fawryItems as $fawryItem) {
+            if($fawryItem->fawry_item_id == 6){
+                $fawryItemBank = new FawryItemBanks();
+                $fawryItemBank->fawry_item_id = $fawryItem->fawry_item_id;
+                $fawryItemBank->fawry_bank_id = $item->id;
+                $fawryItemBank->code = $fawryItem->code.''.$item->code;
+
+                $fawryItemBank->save();
+                break;
+            }
+        }
+
+        return view('accounting-tree.add-fawry-bank')->with('message', 'Item deleted successfully.');
+
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function bankAccountItem()
+    {
+        // $items = BankAccountItems::all();
+        // $BankAccounts = BankAccounts::all();
+        // foreach ($BankAccounts as $bankAccount) {
+        //         foreach ($items as $item) {
+        //             $accountItem = new AccountItems();
+        //             $accountItem->bank_account_id = $bankAccount->id;
+        //             $accountItem->bank_account_item_id = $item->id;
+        //             $accountItem->code = $bankAccount->code."".$item->code;
+
+        //             $accountItem->save();
+        //         }
+        //     }
+        return view('accounting-tree.add-bank-account-item');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function addBankAccountItem(Request $request)
+    {
+        // var_dump($request->all());die;
+        $last_item = BankAccountItems::orderby('id', 'desc')->first();
+        $item = new BankAccountItems();
+
+
+        if(!is_null($last_item)){
+            $new_level_code = str_pad($last_item->code + 1, 4, '0', STR_PAD_LEFT);
+        }else{
+            $new_level_code = "0001";
+        }
+        $item->level = 5;
+        $item->code = $new_level_code;
+        $item->title = $request->input('title');
+        $item->debit = false;
+        $item->credit = true;
+        $item->save();
+
+
+        $BankAccounts = BankAccounts::all();
+
+        foreach ($BankAccounts as $BankAccount) {
+            $accountItem = new AccountItems();
+            $accountItem->bank_account_id = $BankAccount->id;
+            $accountItem->bank_account_item_id = $item->id;
+            $accountItem->code = $BankAccount->code."".$item->code;
+
+            $accountItem->save();
+        }
+        // var_dump("done");
+        // die;
+
+
+        return view('accounting-tree.add-bank-account-item')->with('message', 'Item added successfully.');
+
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function worker()
+    {
+        // $items = BankAccountItems::all();
+        // $BankAccounts = BankAccounts::all();
+        // foreach ($BankAccounts as $bankAccount) {
+        //         foreach ($items as $item) {
+        //             $accountItem = new AccountItems();
+        //             $accountItem->bank_account_id = $bankAccount->id;
+        //             $accountItem->bank_account_item_id = $item->id;
+        //             $accountItem->code = $bankAccount->code."".$item->code;
+
+        //             $accountItem->save();
+        //         }
+        //     }
+        return view('accounting-tree.add-worker');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function addWorker(Request $request)
+    {
+        // var_dump($request->all());die;
+        $last_item = Workers::orderby('id', 'desc')->first();
+        $item = new Workers();
+
+
+        if(!is_null($last_item)){
+            $new_level_code = str_pad($last_item->code + 1, 3, '0', STR_PAD_LEFT);
+        }else{
+            $new_level_code = "001";
+        }
+        $item->level = 5;
+        $item->code = $new_level_code;
+        $item->title = $request->input('title');
+        $item->debit = false;
+        $item->credit = true;
+        $item->save();
+
+
+        $CustodyAndAdvances = CustodyAndAdvances::all();
+
+        foreach ($CustodyAndAdvances as $CustodyAndAdvance) {
+            $CustodyAndAdvanceWorker = new CustodyAndAdvanceWorkers();
+            $CustodyAndAdvanceWorker->custody_and_advance_id = $CustodyAndAdvance->id;
+            $CustodyAndAdvanceWorker->worker_id = $item->id;
+            $CustodyAndAdvanceWorker->code = $CustodyAndAdvance->code."".$item->code;
+
+            $CustodyAndAdvanceWorker->save();
+        }
+        // var_dump("done");
+        // die;
+
+
+        return view('accounting-tree.add-worker')->with('message', 'Item added successfully.');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function revenueItem()
+    {
+        return view('accounting-tree.add-revenue-item');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function addRevenueItem(Request $request)
+    {
+        // var_dump($request->all());die;
+        $last_item = AccuredRevenuesItems::orderby('id', 'desc')->first();
+        $item = new AccuredRevenuesItems();
+
+
+        if(!is_null($last_item)){
+            $new_level_code = str_pad($last_item->code + 1, 3, '0', STR_PAD_LEFT);
+        }else{
+            $new_level_code = "001";
+        }
+        $item->level = 5;
+        $item->code = $new_level_code;
+        $item->title = $request->input('title');
+        $item->debit = false;
+        $item->credit = true;
+        $item->save();
+
+
+        $AccuredRevenues = AccuredRevenues::all();
+
+        foreach ($AccuredRevenues as $AccuredRevenue) {
+            $AccountItem = new AccuredItems();
+            $AccountItem->accured_revenue_id  = $AccuredRevenue->id;
+            $AccountItem->accured_revenues_item_id = $item->id;
+            $AccountItem->code = $AccuredRevenue->code."".$item->code;
+
+            $AccountItem->save();
+        }
+        // var_dump("done");
+        // die;
+
+
+        return view('accounting-tree.add-revenue-item')->with('message', 'Item added successfully.');
+    }
 }

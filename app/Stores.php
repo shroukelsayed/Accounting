@@ -11,4 +11,9 @@ class Stores extends Model
         return $this->hasOne(CurrentAssets::class); 
     }
 
+    public function storeItems()
+    {
+        return $this->hasMany(StoreItems::class,'parent');
+    }
+
 }

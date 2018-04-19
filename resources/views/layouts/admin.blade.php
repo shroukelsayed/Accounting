@@ -165,8 +165,33 @@
                 </a>
               </li>
               <li>
+                <a href="{{URL::to('add-expenses-item')}}">
+                  <i class="fa fa-plus"></i> <span>@lang('validation.add-expenses-item')</span> 
+                </a>
+              </li>
+              <li>
                 <a href="{{URL::to('add-fawry-item')}}">
-                  <i class="fa fa-plus"></i> <span>@lang('validation.add')</span> 
+                  <i class="fa fa-plus"></i> <span>@lang('validation.add-fawry-item')</span> 
+                </a>
+              </li>
+              <li>
+                <a href="{{URL::to('add-fawry-bank')}}">
+                  <i class="fa fa-plus"></i> <span>@lang('validation.add-fawry-bank')</span> 
+                </a>
+              </li>
+              <li>
+                <a href="{{URL::to('add-bank-account-item')}}">
+                  <i class="fa fa-plus"></i> <span>@lang('validation.add-bank-account-item')</span> 
+                </a>
+              </li>
+              <li>
+                <a href="{{URL::to('add-worker')}}">
+                  <i class="fa fa-plus"></i> <span>@lang('validation.add-worker')</span> 
+                </a>
+              </li>
+              <li>
+                <a href="{{URL::to('add-accured-item')}}">
+                  <i class="fa fa-plus"></i> <span>@lang('validation.add-worker')</span> 
                 </a>
               </li>
               <!-- // Start of Links to create new case ... by shrouk -->

@@ -17,6 +17,7 @@ class CreateAccuredExpenseItemTable extends Migration
         Schema::create('accured_expense_items', function(Blueprint $table)
         {
             $table->increments('id');
+            $table->string('code');
             
             $table->integer('accured_expense_id')->unsigned()->nullable();
             $table->foreign('accured_expense_id')->references('id')

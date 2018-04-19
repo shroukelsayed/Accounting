@@ -16,6 +16,7 @@ class CreateAdvancedExpensesExpensesItemTable extends Migration
         Schema::create('advanced_expense_expenses_items', function(Blueprint $table)
         {
             $table->increments('id');
+            $table->string('code');
             
             $table->integer('advanced_expense_id')->unsigned()->nullable();
             $table->foreign('advanced_expense_id')->references('id')

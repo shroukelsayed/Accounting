@@ -165,8 +165,33 @@
                 </a>
               </li>
               <li>
+                <a href="<?php echo e(URL::to('add-expenses-item')); ?>">
+                  <i class="fa fa-plus"></i> <span><?php echo app('translator')->get('validation.add-expenses-item'); ?></span> 
+                </a>
+              </li>
+              <li>
                 <a href="<?php echo e(URL::to('add-fawry-item')); ?>">
-                  <i class="fa fa-plus"></i> <span><?php echo app('translator')->get('validation.add'); ?></span> 
+                  <i class="fa fa-plus"></i> <span><?php echo app('translator')->get('validation.add-fawry-item'); ?></span> 
+                </a>
+              </li>
+              <li>
+                <a href="<?php echo e(URL::to('add-fawry-bank')); ?>">
+                  <i class="fa fa-plus"></i> <span><?php echo app('translator')->get('validation.add-fawry-bank'); ?></span> 
+                </a>
+              </li>
+              <li>
+                <a href="<?php echo e(URL::to('add-bank-account-item')); ?>">
+                  <i class="fa fa-plus"></i> <span><?php echo app('translator')->get('validation.add-bank-account-item'); ?></span> 
+                </a>
+              </li>
+              <li>
+                <a href="<?php echo e(URL::to('add-worker')); ?>">
+                  <i class="fa fa-plus"></i> <span><?php echo app('translator')->get('validation.add-worker'); ?></span> 
+                </a>
+              </li>
+              <li>
+                <a href="<?php echo e(URL::to('add-accured-item')); ?>">
+                  <i class="fa fa-plus"></i> <span><?php echo app('translator')->get('validation.add-worker'); ?></span> 
                 </a>
               </li>
               <!-- // Start of Links to create new case ... by shrouk -->

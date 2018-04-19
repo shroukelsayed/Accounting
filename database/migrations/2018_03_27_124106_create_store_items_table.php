@@ -22,6 +22,7 @@ class CreateStoreItemsTable extends Migration
             $table->boolean('debit');
             $table->boolean('credit');
 
+            $table->foreign('parent')->references('id')->on('stores')->onDelete('cascade');
             $table->timestamps();
         });
     }

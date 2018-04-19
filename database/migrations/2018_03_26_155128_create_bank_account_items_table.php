@@ -17,12 +17,11 @@ class CreateBankAccountItemsTable extends Migration
             $table->increments('id');
             $table->string('code');
             $table->string('title');
-            $table->integer('parent')->unsigned();
+            // $table->integer('parent')->unsigned();
             $table->integer('level');
             $table->boolean('debit');
             $table->boolean('credit');
 
-            $table->foreign('parent')->references('id')->on('bank_accounts')->onDelete('cascade');
             $table->timestamps();
         });
     }

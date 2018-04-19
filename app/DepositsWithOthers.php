@@ -11,4 +11,8 @@ class DepositsWithOthers extends Model
         return $this->hasOne(CurrentAssets::class); 
     }
 
+    public function depositsWithOtherItems()
+    {
+        return $this->hasMany(DepositsWithOtherItems::class,'parent');
+    }
 }

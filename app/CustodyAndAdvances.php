@@ -11,4 +11,8 @@ class CustodyAndAdvances extends Model
         return $this->hasOne(CurrentAssets::class); 
     }
 
+    public function workers()
+    {
+    	return $this->belongsToMany(Workers::class, 'custody_and_advance_workers', 'custody_and_advance_id', 'worker_id');
+    }
 }

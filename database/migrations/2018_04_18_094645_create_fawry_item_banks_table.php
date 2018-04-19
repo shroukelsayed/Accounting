@@ -16,10 +16,11 @@ class CreateFawryItemBanksTable extends Migration
         Schema::create('fawry_item_banks', function(Blueprint $table)
         {
             $table->increments('id');
+            $table->string('code');
            
             $table->integer('fawry_item_id')->unsigned()->nullable();
             $table->foreign('fawry_item_id')->references('id')
-                ->on('fawry_items')->onDelete('cascade');
+                ->on('fawry_fawry_items')->onDelete('cascade');
 
             $table->integer('fawry_bank_id')->unsigned()->nullable();
             $table->foreign('fawry_bank_id')->references('id')

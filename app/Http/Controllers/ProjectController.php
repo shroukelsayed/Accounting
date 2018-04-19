@@ -212,11 +212,13 @@ class ProjectController extends Controller {
                 $advancedExpenseExpensesItem = new AdvancedExpenseExpensesItems();
                 $advancedExpenseExpensesItem->advanced_expense_id = $advancedExpense->id;
                 $advancedExpenseExpensesItem->expenses_item_id = $item->id;
+                $advancedExpenseExpensesItem->code = $advancedExpense->code."".$item->code;
                 $advancedExpenseExpensesItem->save();
             
                 $AccuredExpenseItem = new AccuredExpenseItems();
                 $AccuredExpenseItem->accured_expense_id = $accuredExpense->id;
                 $AccuredExpenseItem->expenses_item_id = $item->id;
+                $AccuredExpenseItem->code = $accuredExpense->code."".$item->code;
                 $AccuredExpenseItem->save();
             }
 			// Adding project to every level in Current Liabilities of Accountinng tree .. 

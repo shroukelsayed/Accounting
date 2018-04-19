@@ -32,7 +32,7 @@
                             <ul class="nav  md-pills pills-primary flex-column" role="tablist">
                                 @foreach($level_two->fixedAssets as $fixedAsset)
                                     <li class="nav-item">
-                                        <a class="nav-link " data-toggle="tab" role="tab"><i class="fa fa-download ml-2"></i> &nbsp {{$fixedAsset->title}}</a>
+                                        <h5><i class="fa fa-download ml-2"></i> {{$fixedAsset->code}} &nbsp&nbsp {{$fixedAsset->title}} </h5>
                                     </li>
                                 @endforeach
                                 <li class="nav-item">
@@ -57,7 +57,7 @@
                                                 <!--Panel 1-->
                                                 <div class="tab-pane fade  " id="panel-{{$currentAsset->code}}" role="tabpanel">
                                                     @foreach($currentAsset->treasury as $treasury)
-                                                        <h5 class="my-2 h5">{{$treasury->title}}</h5>
+                                                        <h5 class="my-2 h5">{{$treasury->code}} &nbsp&nbsp {{$treasury->title}}</h5>
                                                     @endforeach 
                                                     @foreach($currentAsset->banks as $bank)
                                                         <a style="color: darkred;" class="nav-link " data-toggle="tab" href="#panel-{{$bank->code}}" role="tab"> <i class="fa fa-download ml-2"></i> &nbsp{{$bank->title}}</a>
@@ -67,15 +67,16 @@
                                                             <a style="color: darkblue;" class="nav-link " data-toggle="tab" href="#panel-{{$bankAccount->code}}" role="tab"> <i class="fa fa-download ml-2"></i> &nbsp{{$bankAccount->title}}</a>
                                                             <div class="tab-pane fade  " id="panel-{{$bankAccount->code}}" role="tabpanel">
                                                                 @foreach($bankAccount->bankAccountItems as $bankAccountItem)
-                                                                    <h5 class="my-2 h5">{{$bankAccountItem->title}}</h5>
+                                                                    <h5 class="my-2 h5">{{$bankAccount->code}}{{$bankAccountItem->code}}{{$bankAccountItem->title}}</h5>
                                                                 @endforeach 
                                                             </div>
                                                         @endforeach
-                                                           
+                                                       <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal" onclick="drawdev({{ $bank->id }},{{ $bank->code }},{{ $bank->level }});"><i class="glyphicon glyphicon-plus"></i> Add New </button>
+                                                        <div id="addChild-{{$bank->code}}"></div>
                                                         </div>
                                                     @endforeach
                                                     @foreach($currentAsset->advancedExpenses as $advancedExpense)
-                                                    <a style="color: darkred;" class="nav-link " data-toggle="tab" href="#panel-{{$advancedExpense->code}}" role="tab"> <i class="fa fa-download ml-2"></i> &nbsp{{$advancedExpense->title}}</a>
+                                                        <a style="color: darkred;" class="nav-link " data-toggle="tab" href="#panel-{{$advancedExpense->code}}" role="tab"> <i class="fa fa-download ml-2"></i> &nbsp{{$advancedExpense->title}}</a>
                                                         <div class="tab-pane fade  " id="panel-{{$advancedExpense->code}}" role="tabpanel">
                                                             @foreach($advancedExpense->expensesItems as $expensesItem)
                                                                 <h5 class="my-2 h5">{{$expensesItem->title}}</h5>
@@ -85,13 +86,35 @@
                                                         </div>
                                                     @endforeach 
                                                     @foreach($currentAsset->depositsWithOthers as $depositsWithOther)
-                                                        <h5 class="my-2 h5">{{$depositsWithOther->title}}</h5>
+                                                        <a style="color: darkred;" class="nav-link " data-toggle="tab" href="#panel-{{$depositsWithOther->code}}" role="tab"> <i class="fa fa-download ml-2"></i> &nbsp{{$depositsWithOther->title}}</a>
+
+                                                        <div class="tab-pane fade  " id="panel-{{$depositsWithOther->code}}" role="tabpanel">
+                                                            @foreach($depositsWithOther->depositsWithOtherItems as $depositsWithOtherItem)
+                                                                <h5> &nbsp{{$depositsWithOtherItem->title}}</h5>
+                                                                
+                                                            @endforeach
+                                                            <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal" onclick="drawdev({{ $depositsWithOther->id }},{{ $depositsWithOther->code }},{{ $depositsWithOther->level }});"><i class="glyphicon glyphicon-plus"></i> Add New </button>
+                                                            <div id="addChild-{{$depositsWithOther->code}}"></div>
+                                                        </div>
                                                     @endforeach 
                                                     @foreach($currentAsset->custodyAndAdvances as $custodyAndAdvance)
-                                                        <h5 class="my-2 h5">{{$custodyAndAdvance->title}}</h5>
+                                                        <a style="color: darkred;" class="nav-link " data-toggle="tab" href="#panel-{{$custodyAndAdvance->code}}" role="tab"> <i class="fa fa-download ml-2"></i> &nbsp{{$custodyAndAdvance->title}}</a>
+                                                        <div class="tab-pane fade  " id="panel-{{$custodyAndAdvance->code}}" role="tabpanel">
+                                                            @foreach($custodyAndAdvance->workers as $worker)
+                                                                <h5 class="my-2 h5">{{$worker->title}}</h5>
+                                                            @endforeach
+                                                        <hr> 
+                                                        </div>
                                                     @endforeach 
                                                     @foreach($currentAsset->accuredRevenues as $accuredRevenue)
-                                                        <h5 class="my-2 h5">{{$accuredRevenue->title}}</h5>
+                                                        <a style="color: darkred;" class="nav-link " data-toggle="tab" href="#panel-{{$accuredRevenue->code}}" role="tab"> <i class="fa fa-download ml-2"></i> &nbsp{{$accuredRevenue->title}}</a>
+                                                        <div class="tab-pane fade  " id="panel-{{$accuredRevenue->code}}" role="tabpanel">
+                                                            @foreach($accuredRevenue->accuredRevenuesItems as $accuredRevenuesItem)
+                                                                <h5 class="my-2 h5">{{$accuredRevenuesItem->code}} &nbsp{{$accuredRevenuesItem->title}}</h5>
+                                                            @endforeach
+                                                            
+                                                        <hr> 
+                                                        </div>
                                                     @endforeach 
                                                     @foreach($currentAsset->variousDebitors as $variousDebitor)
                                                         <h5 class="my-2 h5">{{$variousDebitor->title}}</h5>
@@ -100,13 +123,21 @@
                                                         <h5 class="my-2 h5">{{$otherDebitBalance->title}}</h5>
                                                     @endforeach 
                                                     @foreach($currentAsset->stores as $store)
-                                                        <h5 class="my-2 h5">{{$store->title}}</h5>
+                                                        <a style="color: darkred;" class="nav-link " data-toggle="tab" href="#panel-{{$store->code}}" role="tab"> <i class="fa fa-download ml-2"></i> &nbsp{{$store->title}}</a>
+
+                                                        <div class="tab-pane fade  " id="panel-{{$store->code}}" role="tabpanel">
+                                                            @foreach($store->storeItems as $storeItem)
+                                                                <h5> &nbsp{{$storeItem->title}}</h5>
+                                                                
+                                                            @endforeach
+                                                            <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal" onclick="drawdev({{ $store->id }},{{ $store->code }},{{ $store->level }});"><i class="glyphicon glyphicon-plus"></i> Add New </button>
+                                                            <div id="addChild-{{$store->code}}"></div>
+                                                        </div>
                                                     @endforeach 
                                                     @foreach($currentAsset->receivableCheques as $receivableCheque)
                                                         <h5 class="my-2 h5">{{$receivableCheque->title}}</h5>
                                                     @endforeach 
-
-                                                     @foreach($currentAsset->fawry as $fawry)
+                                                    @foreach($currentAsset->fawry as $fawry)
                                                         <a style="color: darkred;" class="nav-link " data-toggle="tab" href="#panel-{{$fawry->code}}" role="tab"> <i class="fa fa-download ml-2"></i> &nbsp{{$fawry->title}}</a>
 
                                                         <div class="tab-pane fade  " id="panel-{{$fawry->code}}" role="tabpanel">
@@ -121,10 +152,6 @@
                                                             @endforeach
                                                         </div>
                                                     @endforeach
-
-
-
-                                                    
                                                     @foreach($currentAsset->sms as $sms)
                                                         <h5 class="my-2 h5">{{$sms->title}}</h5>
                                                     @endforeach 
@@ -163,7 +190,16 @@
                                                 <!--Panel 1-->
                                                 <div class="tab-pane fade  " id="panel-{{$currentLiability->code}}" role="tabpanel">
                                                     @foreach($currentLiability->suppliers as $supplier)
-                                                        <h5 class="my-2 h5">{{$supplier->title}}</h5>
+                                                        <a style="color: darkred;" class="nav-link " data-toggle="tab" href="#panel-{{$supplier->code}}" role="tab"> <i class="fa fa-download ml-2"></i> &nbsp{{$supplier->title}}</a>
+
+                                                        <div class="tab-pane fade  " id="panel-{{$supplier->code}}" role="tabpanel">
+                                                            @foreach($supplier->suppliersCreditors as $suppliersCreditor)
+                                                                <h5> &nbsp{{$suppliersCreditor->title}}</h5>
+                                                                
+                                                            @endforeach
+                                                            <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal" onclick="drawdev({{ $supplier->id }},{{ $supplier->code }},{{ $supplier->level }});"><i class="glyphicon glyphicon-plus"></i> Add New </button>
+                                                            <div id="addChild-{{$supplier->code}}"></div>
+                                                        </div>
                                                     @endforeach
 
                                                     @foreach($currentLiability->accuredExpenses as $accuredExpense)
@@ -249,7 +285,7 @@ function drawdev(parent_id,parent_code,parent_level){
 
              html +='<div class="modal-body"><input type="hidden" name="parent_id" value="'+parent_id+'"><input type="hidden" name="parent_code" value="'+parent_code+'"><input type="hidden" name="parent_level" value="'+parent_level+'"><input type="hidden" name="_token" value="{{ csrf_token() }}">';
 
-             html += '<div class="row"><div class="col-md-3"><label> Level Title</label></div><div class="col-md-9"><input type="text" name="level_title" class="form-control" required></div></div>';
+             html += '<div class="row"><div class="col-md-3"><label> Level Title</label></div><div class="col-md-9"><input type="text" name="level_title" class="form-control" required autofocus></div></div>';
 
              html += '<div class="row"><div class="col-md-3"></div><div class="col-md-6"><input type="radio" name="type" value="credit"> دائن<input type="radio" name="type" value="debit" > مدين <br></div><div class="col-md-3"></div></div></div>'; 
 

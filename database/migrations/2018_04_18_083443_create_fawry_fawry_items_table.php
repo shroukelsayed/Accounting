@@ -16,6 +16,7 @@ class CreateFawryFawryItemsTable extends Migration
          Schema::create('fawry_fawry_items', function(Blueprint $table)
         {
             $table->increments('id');
+            $table->string('code');
             
             $table->integer('fawry_id')->unsigned()->nullable();
             $table->foreign('fawry_id')->references('id')

@@ -11,4 +11,9 @@ class AccuredRevenues extends Model
         return $this->hasOne(CurrentAssets::class); 
     }
 
+    public function accuredRevenuesItems()
+    {
+    	return $this->belongsToMany(AccuredRevenuesItems::class, 'accured_items','accured_revenue_id' ,'accured_revenues_item_id');
+    }
+
 }

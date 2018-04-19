@@ -11,4 +11,8 @@ class Suppliers extends Model
         return $this->hasOne(CurrentLiabilities::class); 
     }
 
+    public function suppliersCreditors()
+    {
+        return $this->hasMany(SuppliersCreditors::class,'parent');
+    }
 }
