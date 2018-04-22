@@ -40,8 +40,17 @@ use App\PayableCheques;
 use App\PenalitiesFunds;
 use App\FriendshipFunds;
 use App\SocialInsurances;
+use App\SocialInsuranceItems;
 use App\Taxes;
 use App\Suppliers;
+use App\SuppliersCreditors;
+
+use App\LevelThreeOperationExpenses;
+use App\LevelThreeGeneralExpenses;
+use App\LevelFourOperationExpenses;
+use App\LevelFourGeneralExpenses;
+use App\OperationExpenseItems;
+use App\GeneralExpenseItems;
 
 use App\AdvancedExpenseExpensesItems; 
 use App\AccuredExpenseItems;
@@ -52,6 +61,9 @@ use App\StoreItems;
 use App\CustodyAndAdvanceWorkers;
 use App\AccuredRevenuesItems;
 use App\AccuredItems;
+use App\PenalitiesFundWorkers;
+use App\FriendshipFundWorkers;
+use App\InsuranceItems;
 
 use App\Role;
 use DateTime;
@@ -87,9 +99,9 @@ class AccountingTreeController extends Controller
         //                     // var_dump($fawry->fawryItems);
         //                 foreach($fawry->fawryItems as $fawryItem) {
         //                         var_dump($fawryItem->title);
-        //                    foreach ($fawryItem->fawryBanks as $bank){
-        //                     var_dump($bank->title);
-        //                    } 
+        //                    // foreach ($fawryItem->fawryBanks as $bank){
+        //                    //  var_dump($bank->title);
+        //                    // } 
 
                             
         //                 }
@@ -228,168 +240,230 @@ class AccountingTreeController extends Controller
         // var_dump();
         // var_dump($request->all());die;
 
-        if($request->input('parent_level') == '2'){
-            if($request->input('parent_code') == '11'){
-                $level = new FixedAssets();
-                $last_level = FixedAssets::orderby('id', 'desc')->first();
-            }else if($request->input('parent_code') == '12'){
-                $level = new CurrentAssets();
-                $last_level = CurrentAssets::orderby('id', 'desc')->first();
-            }else if($request->input('parent_code') == '21'){
-                $level = new CurrentLiabilities();
-                $last_level = CurrentLiabilities::orderby('id', 'desc')->first();
-            }else if($request->input('parent_code') == '31'){
-                $level = new FixedAssets();
-                $last_level = FixedAssets::orderby('id', 'desc')->first();
-            }else if($request->input('parent_code') == '32'){
-                $level = new FixedAssets();
-                $last_level = FixedAssets::orderby('id', 'desc')->first();
-            }
-        }elseif($request->input('parent_level') == '3'){
-            //// Current Assets Level 4 
-            if($request->input('parent_code') == '1201'){
-                $level = new Treasury();
-                $last_level = Treasury::orderby('id', 'desc')->first();
-            }else if($request->input('parent_code') == '1202'){
-                $level = new Banks();
-                $last_level = Banks::orderby('id', 'desc')->first();
-            }else if($request->input('parent_code') == '1203'){
-                $level = new AdvancedExpenses();
-                $last_level = AdvancedExpenses::orderby('id', 'desc')->first();
-            }else if($request->input('parent_code') == '1204'){
-                $level = new DepositsWithOthers();
-                $last_level = DepositsWithOthers::orderby('id', 'desc')->first();
-            }else if($request->input('parent_code') == '1205'){
-                $level = new CustodyAndAdvances();
-                $last_level = CustodyAndAdvances::orderby('id', 'desc')->first();
-            }else if($request->input('parent_code') == '1206'){
-                $level = new AccuredRevenues();
-                $last_level = AccuredRevenues::orderby('id', 'desc')->first();
-            }else if($request->input('parent_code') == '1207'){
-                $level = new VariousDebitors();
-                $last_level = VariousDebitors::orderby('id', 'desc')->first();
-            }else if($request->input('parent_code') == '1208'){
-                $level = new OtherDebitBalances();
-                $last_level = OtherDebitBalances::orderby('id', 'desc')->first();
-            }else if($request->input('parent_code') == '1209'){
-                $level = new Stores();
-                $last_level = Stores::orderby('id', 'desc')->first();
-            }else if($request->input('parent_code') == '1210'){
-                $level = new ReceivableCheques();
-                $last_level = ReceivableCheques::orderby('id', 'desc')->first();
-            }else if($request->input('parent_code') == '1211'){
-                $level = new Fawry();
-                $last_level = Fawry::orderby('id', 'desc')->first();
-            }else if($request->input('parent_code') == '1212'){
-                $level = new Sms();
-                $last_level = Sms::orderby('id', 'desc')->first();
-            }else if($request->input('parent_code') == '1213'){
-                $level = new CibMachine();
-                $last_level = CibMachine::orderby('id', 'desc')->first();
-            }
-            //// Current Assets Level 4 
+        // Start transaction!
+        DB::beginTransaction();
 
-            //// Current Liabilities Level 4 
-            elseif($request->input('parent_code') == '2101'){
-                $level = new Suppliers();
-                $last_level = Suppliers::orderby('id', 'desc')->first();
-            }else if($request->input('parent_code') == '2102'){
-                $level = new AccuredExpenses();
-                $last_level = AccuredExpenses::orderby('id', 'desc')->first();
-            }else if($request->input('parent_code') == '2103'){
-                $level = new PayableCheques();
-                $last_level = PayableCheques::orderby('id', 'desc')->first();
-            }else if($request->input('parent_code') == '2104'){
-                $level = new Taxes();
-                $last_level = Taxes::orderby('id', 'desc')->first();
-            }else if($request->input('parent_code') == '2105'){
-                $level = new SocialInsurances();
-                $last_level = SocialInsurances::orderby('id', 'desc')->first();
-            }else if($request->input('parent_code') == '2106'){
-                $level = new PenalitiesFunds();
-                $last_level = PenalitiesFunds::orderby('id', 'desc')->first();
-            }else if($request->input('parent_code') == '2107'){
-                $level = new FriendshipFunds();
-                $last_level = FriendshipFunds::orderby('id', 'desc')->first();
-            }else if($request->input('parent_code') == '2108'){
-                $level = new AmountsUnderAdjustments();
-                $last_level = AmountsUnderAdjustments::orderby('id', 'desc')->first();
-            }else if($request->input('parent_code') == '2109'){
-                $level = new Creditors();
-                $last_level = Creditors::orderby('id', 'desc')->first();
-            }
+        try {
+            if($request->input('parent_level') == '2'){
+                if($request->input('parent_code') == '11'){
+                    $level = new FixedAssets();
+                    $last_level = FixedAssets::orderby('id', 'desc')->first();
+                }else if($request->input('parent_code') == '12'){
+                    $level = new CurrentAssets();
+                    $last_level = CurrentAssets::orderby('id', 'desc')->first();
+                }else if($request->input('parent_code') == '21'){
+                    $level = new CurrentLiabilities();
+                    $last_level = CurrentLiabilities::orderby('id', 'desc')->first();
+                }else if($request->input('parent_code') == '31'){
+                    $level = new LevelThreeGeneralExpenses();
+                    $last_level = LevelThreeGeneralExpenses::orderby('id', 'desc')->first();
+                }else if($request->input('parent_code') == '32'){
+                    $level = new LevelThreeOperationExpenses();
+                    $last_level = LevelThreeOperationExpenses::orderby('id', 'desc')->first();
+                }
+            }elseif($request->input('parent_level') == '3'){
+                //// Current Assets Level 4 
+                if($request->input('parent_code') == '1201'){
+                    $level = new Treasury();
+                    $last_level = Treasury::orderby('id', 'desc')->first();
+                }else if($request->input('parent_code') == '1202'){
+                    $level = new Banks();
+                    $last_level = Banks::orderby('id', 'desc')->first();
+                }else if($request->input('parent_code') == '1203'){
+                    $level = new AdvancedExpenses();
+                    $last_level = AdvancedExpenses::orderby('id', 'desc')->first();
+                }else if($request->input('parent_code') == '1204'){
+                    $level = new DepositsWithOthers();
+                    $last_level = DepositsWithOthers::orderby('id', 'desc')->first();
+                }else if($request->input('parent_code') == '1205'){
+                    $level = new CustodyAndAdvances();
+                    $last_level = CustodyAndAdvances::orderby('id', 'desc')->first();
+                }else if($request->input('parent_code') == '1206'){
+                    $level = new AccuredRevenues();
+                    $last_level = AccuredRevenues::orderby('id', 'desc')->first();
+                }else if($request->input('parent_code') == '1207'){
+                    $level = new VariousDebitors();
+                    $last_level = VariousDebitors::orderby('id', 'desc')->first();
+                }else if($request->input('parent_code') == '1208'){
+                    $level = new OtherDebitBalances();
+                    $last_level = OtherDebitBalances::orderby('id', 'desc')->first();
+                }else if($request->input('parent_code') == '1209'){
+                    $level = new Stores();
+                    $last_level = Stores::orderby('id', 'desc')->first();
+                }else if($request->input('parent_code') == '1210'){
+                    $level = new ReceivableCheques();
+                    $last_level = ReceivableCheques::orderby('id', 'desc')->first();
+                }else if($request->input('parent_code') == '1211'){
+                    $level = new Fawry();
+                    $last_level = Fawry::orderby('id', 'desc')->first();
+                }else if($request->input('parent_code') == '1212'){
+                    $level = new Sms();
+                    $last_level = Sms::orderby('id', 'desc')->first();
+                }else if($request->input('parent_code') == '1213'){
+                    $level = new CibMachine();
+                    $last_level = CibMachine::orderby('id', 'desc')->first();
+                }
+                //// Current Assets Level 4 
 
-            //// Current Liabilities Level 4 
-        }elseif($request->input('parent_level') == '4'){
-            if(strpos($request->input('parent_code'), '1202')){
-                $level = new BankAccounts();
-                $last_level = BankAccounts::orderby('id', 'desc')->first();
-                //Add all items to new account ..
-                // $items = BankAccounts::all();
-                // foreach ($items as $item) {
-                //     $accountItem = new AccountItems();
-                //     $accountItem->bank_account_id = $level->id;
-                //     $accountItem->bank_account_item_id = $item->id;
-                //     $accountItem->code = $level->code."".$item->code;
+                //// Current Liabilities Level 4 
+                elseif($request->input('parent_code') == '2101'){
+                    $level = new Suppliers();
+                    $last_level = Suppliers::orderby('id', 'desc')->first();
+                }else if($request->input('parent_code') == '2102'){
+                    $level = new AccuredExpenses();
+                    $last_level = AccuredExpenses::orderby('id', 'desc')->first();
+                }else if($request->input('parent_code') == '2103'){
+                    $level = new PayableCheques();
+                    $last_level = PayableCheques::orderby('id', 'desc')->first();
+                }else if($request->input('parent_code') == '2104'){
+                    $level = new Taxes();
+                    $last_level = Taxes::orderby('id', 'desc')->first();
+                }else if($request->input('parent_code') == '2105'){
+                    $level = new SocialInsurances();
+                    $last_level = SocialInsurances::orderby('id', 'desc')->first();
+                }else if($request->input('parent_code') == '2106'){
+                    $level = new PenalitiesFunds();
+                    $last_level = PenalitiesFunds::orderby('id', 'desc')->first();
+                }else if($request->input('parent_code') == '2107'){
+                    $level = new FriendshipFunds();
+                    $last_level = FriendshipFunds::orderby('id', 'desc')->first();
+                }else if($request->input('parent_code') == '2108'){
+                    $level = new AmountsUnderAdjustments();
+                    $last_level = AmountsUnderAdjustments::orderby('id', 'desc')->first();
+                }else if($request->input('parent_code') == '2109'){
+                    $level = new Creditors();
+                    $last_level = Creditors::orderby('id', 'desc')->first();
+                }
+                //// Current Liabilities Level 4 
 
-                //     $accountItem->save();
-                // }
-            }elseif($request->input('parent_code') == '121101'){
-                $level = new FawryItems();
-                $last_level = FawryItems::orderby('id', 'desc')->first();
-            }elseif($request->input('parent_code') == '120401'){
-                $level = new DepositsWithOtherItems();
-                $last_level = DepositsWithOtherItems::orderby('id', 'desc')->first();
-            }elseif(strpos($request->input('parent_code'), '1209') !== false){
-                $level = new StoreItems();
-                $last_level = StoreItems::orderby('id', 'desc')->first();
-            }
+                //// Expenses Level 4 
+                elseif(strpos($request->input('parent_code'), '31') !== false){
+                    $level = new LevelFourGeneralExpenses();
+                    $last_level = LevelFourGeneralExpenses::orderby('id', 'desc')->first();
 
-        }elseif($request->input('parent_level') == '5'){
-            if($request->input('parent_code') == '120201001'){
-                $level = new BankAccountItems();
-                $last_level = BankAccountItems::orderby('id', 'desc')->first();
-            }elseif($request->input('parent_code') == '121101002'){
-                $level = new FawryBanks();
-                $last_level = FawryBanks::orderby('id', 'desc')->first();
-            }
+                    $items = ExpensesItems::all();
+                    foreach ($items as $item) {
+                        $GeneralExpenseItem = new GeneralExpenseItems();
+                        $GeneralExpenseItem->general_expense_id = $level->id;
+                        $GeneralExpenseItem->expenses_item_id = $item->id;
+                        $GeneralExpenseItem->code = $level->code.''.$item->code;
 
-        }
+                        $GeneralExpenseItem->save();
+                    }
 
+                }else if(strpos($request->input('parent_code'), '32') !== false){
+                    $level = new LevelFourOperationExpenses();
+                    $last_level = LevelFourOperationExpenses::orderby('id', 'desc')->first();
+                }
+                //// Expenses Level 4 
 
-
-
-        if(!is_null($last_level)){
-            $new_level_code = $last_level->code + 1;
-        }else{
-            if($request->input('parent_level') == '3' || $request->input('parent_level') == '2'){
-                $new_level_code  = $request->input('parent_code')."01";
             }elseif($request->input('parent_level') == '4'){
-                $new_level_code  = $request->input('parent_code')."001";
+                if(strpos($request->input('parent_code'), '1202') !== false){
+                    $level = new BankAccounts();
+                    $last_level = BankAccounts::orderby('id', 'desc')->first();
+                }elseif($request->input('parent_code') == '121101'){
+                    $level = new FawryItems();
+                    $last_level = FawryItems::orderby('id', 'desc')->first();
+                }elseif($request->input('parent_code') == '120401'){
+                    $level = new DepositsWithOtherItems();
+                    $last_level = DepositsWithOtherItems::orderby('id', 'desc')->first();
+                }elseif(strpos($request->input('parent_code'), '1209') !== false){
+                    $level = new StoreItems();
+                    $last_level = StoreItems::orderby('id', 'desc')->first();
+                }elseif(strpos($request->input('parent_code'), '2101') !== false){
+                    $level = new SuppliersCreditors();
+                    $last_level = SuppliersCreditors::orderby('id', 'desc')->first();
+                }
+
             }elseif($request->input('parent_level') == '5'){
-                $new_level_code  = $request->input('parent_code')."0001";
+                if($request->input('parent_code') == '120201001'){
+                    $level = new BankAccountItems();
+                    $last_level = BankAccountItems::orderby('id', 'desc')->first();
+                }elseif($request->input('parent_code') == '121101002'){
+                    $level = new FawryBanks();
+                    $last_level = FawryBanks::orderby('id', 'desc')->first();
+                }
+
             }
-            // var_dump($new_level_code);die;
+
+            if(!is_null($last_level)){
+                $new_level_code = $last_level->code + 1;
+            }else{
+                if($request->input('parent_level') == '3' || $request->input('parent_level') == '2'){
+                    $new_level_code  = $request->input('parent_code')."01";
+                }elseif($request->input('parent_level') == '4'){
+                    $new_level_code  = $request->input('parent_code')."001";
+                }elseif($request->input('parent_level') == '5'){
+                    $new_level_code  = $request->input('parent_code')."0001";
+                }
+                // var_dump($new_level_code);die;
+            }
+
+            $level->level = $request->input('parent_level') +1;
+            $level->parent = $request->input('parent_id');
+            $level->code = $new_level_code;
+            $level->title = $request->input('level_title');
+
+            if($request->input('type') == 'credit'){
+                $level->debit = false;
+                $level->credit = true;
+            }else{
+                $level->debit = true;
+                $level->credit = false;
+            }
+            
+            $level->save();
+
+            if($request->input('parent_level') == '4' ){
+                if(strpos($request->input('parent_code'), '1202') !== false){
+                    // Add all items to new account ..
+                    $items = BankAccountItems::all();
+                    foreach ($items as $item) {
+                        $accountItem = new AccountItems();
+                        $accountItem->bank_account_id = $level->id;
+                        $accountItem->bank_account_item_id = $item->id;
+                        $accountItem->code = $level->code."".$item->code;
+
+                        $accountItem->save();
+                    }
+                // }elseif(strpos($request->input('parent_code'), '2106') !== false){
+                //     $items = Workers::all();
+                //     foreach ($items as $item) {
+                //         $PenalitiesFundWorkers = new PenalitiesFundWorkers();
+                //         $PenalitiesFundWorkers->general_expense_id = $level->id;
+                //         $PenalitiesFundWorkers->expenses_item_id = $item->id;
+                //         $PenalitiesFundWorkers->code = $level->code.''.$item->code;
+
+                //         $PenalitiesFundWorkers->save();
+                //     }
+                // }elseif(strpos($request->input('parent_code'), '2107') !== false){
+                    
+                }
+
+            }elseif($request->input('parent_level') == '3'){
+                if(strpos($request->input('parent_code'), '31') !== false){
+                    $items = ExpensesItems::all();
+                    foreach ($items as $item) {
+                        $GeneralExpenseItem = new GeneralExpenseItems();
+                        $GeneralExpenseItem->general_expense_id = $level->id;
+                        $GeneralExpenseItem->expenses_item_id = $item->id;
+                        $GeneralExpenseItem->code = $level->code.''.$item->code;
+
+                        $GeneralExpenseItem->save();
+                    }
+                }
+            }
+        } catch(\Exception $e){
+            DB::rollback();
+            throw $e;
         }
 
-        $level->level = $request->input('parent_level') +1;
-        $level->parent = $request->input('parent_id');
-        $level->code = $new_level_code;
-        $level->title = $request->input('level_title');
-    
+        // If we reach here, then
+        // data is valid and working.
+        // Commit the queries!
+        DB::commit();
 
-        if($request->input('type') == 'credit'){
-            $level->debit = false;
-            $level->credit = true;
-        }else{
-            $level->debit = true;
-            $level->credit = false;
-        }
         
-        // var_dump($level);die();
-        $level->save();
-
-       
         return Redirect::back();
     }
 
@@ -579,9 +653,9 @@ class AccountingTreeController extends Controller
         /// Add new bank to all items ..
         $fawryItems = FawryFawryItems::all();
         foreach ($fawryItems as $fawryItem) {
-            if($fawryItem->fawry_item_id == 6){
+            if($fawryItem->fawry_item_id == 2){
                 $fawryItemBank = new FawryItemBanks();
-                $fawryItemBank->fawry_item_id = $fawryItem->fawry_item_id;
+                $fawryItemBank->fawry_item_id = $fawryItem->id;
                 $fawryItemBank->fawry_bank_id = $item->id;
                 $fawryItemBank->code = $fawryItem->code.''.$item->code;
 
@@ -591,7 +665,6 @@ class AccountingTreeController extends Controller
         }
 
         return view('accounting-tree.add-fawry-bank')->with('message', 'Item deleted successfully.');
-
     }
 
     /**
@@ -669,18 +742,6 @@ class AccountingTreeController extends Controller
      */
     public function worker()
     {
-        // $items = BankAccountItems::all();
-        // $BankAccounts = BankAccounts::all();
-        // foreach ($BankAccounts as $bankAccount) {
-        //         foreach ($items as $item) {
-        //             $accountItem = new AccountItems();
-        //             $accountItem->bank_account_id = $bankAccount->id;
-        //             $accountItem->bank_account_item_id = $item->id;
-        //             $accountItem->code = $bankAccount->code."".$item->code;
-
-        //             $accountItem->save();
-        //         }
-        //     }
         return view('accounting-tree.add-worker');
     }
 
@@ -711,15 +772,32 @@ class AccountingTreeController extends Controller
 
 
         $CustodyAndAdvances = CustodyAndAdvances::all();
-
+        $PenalitiesFunds = PenalitiesFunds::all();
+        $FriendshipFunds = FriendshipFunds::all();
         foreach ($CustodyAndAdvances as $CustodyAndAdvance) {
             $CustodyAndAdvanceWorker = new CustodyAndAdvanceWorkers();
             $CustodyAndAdvanceWorker->custody_and_advance_id = $CustodyAndAdvance->id;
             $CustodyAndAdvanceWorker->worker_id = $item->id;
             $CustodyAndAdvanceWorker->code = $CustodyAndAdvance->code."".$item->code;
-
             $CustodyAndAdvanceWorker->save();
         }
+
+        foreach ($PenalitiesFunds as $PenalitiesFunds) {
+            $PenalitiesFundWorker = new PenalitiesFundWorkers();
+            $PenalitiesFundWorker->penalities_fund_id = $PenalitiesFunds->id;
+            $PenalitiesFundWorker->worker_id = $item->id;
+            $PenalitiesFundWorker->code = $PenalitiesFunds->code.''.$item->code;
+            $PenalitiesFundWorker->save();
+        }
+
+        foreach ($FriendshipFunds as $FriendshipFunds) {
+            $FriendshipFundWorker = new FriendshipFundWorkers();
+            $FriendshipFundWorker->friendship_fund_id = $FriendshipFunds->id;
+            $FriendshipFundWorker->worker_id = $item->id;
+            $FriendshipFundWorker->code = $FriendshipFunds->code.''.$item->code;
+            $FriendshipFundWorker->save();            
+        }
+
         // var_dump("done");
         // die;
 
@@ -779,5 +857,58 @@ class AccountingTreeController extends Controller
 
 
         return view('accounting-tree.add-revenue-item')->with('message', 'Item added successfully.');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function insuranceItem()
+    {
+        return view('accounting-tree.add-insurance-item');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function addInsuranceItem(Request $request)
+    {
+        // var_dump($request->all());die;
+        $last_item = SocialInsuranceItems::orderby('id', 'desc')->first();
+        $item = new SocialInsuranceItems();
+
+
+        if(!is_null($last_item)){
+            $new_level_code = str_pad($last_item->code + 1, 3, '0', STR_PAD_LEFT);
+        }else{
+            $new_level_code = "001";
+        }
+        $item->level = 5;
+        $item->code = $new_level_code;
+        $item->title = $request->input('title');
+        $item->debit = false;
+        $item->credit = true;
+        $item->save();
+
+
+        $SocialInsurances = SocialInsurances::all();
+
+        foreach ($SocialInsurances as $SocialInsurance) {
+            $InsuranceItem = new InsuranceItems();
+            $InsuranceItem->social_insurance_id  = $SocialInsurance->id;
+            $InsuranceItem->social_insurance_item_id = $item->id;
+            $InsuranceItem->code = $SocialInsurance->code."".$item->code;
+
+            $InsuranceItem->save();
+        }
+        // var_dump("done");
+        // die;
+
+        return view('accounting-tree.add-insurance-item')->with('message', 'Item added successfully.');
     }
 }

@@ -191,7 +191,12 @@
               </li>
               <li>
                 <a href="<?php echo e(URL::to('add-accured-item')); ?>">
-                  <i class="fa fa-plus"></i> <span><?php echo app('translator')->get('validation.add-worker'); ?></span> 
+                  <i class="fa fa-plus"></i> <span><?php echo app('translator')->get('validation.add-accured-item'); ?></span> 
+                </a>
+              </li>
+              <li>
+                <a href="<?php echo e(URL::to('add-insurance-item')); ?>">
+                  <i class="fa fa-plus"></i> <span><?php echo app('translator')->get('validation.add-insurance-item'); ?></span> 
                 </a>
               </li>
               <!-- // Start of Links to create new case ... by shrouk -->

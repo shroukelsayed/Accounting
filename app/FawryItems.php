@@ -11,9 +11,6 @@ class FawryItems extends Model
     	return $this->belongsToMany(Fawry::class, 'fawry_fawry_items', 'fawry_item_id','fawry_id');
     }
 
-    public function fawryBanks()
-    {
-    	return $this->belongsToMany(FawryBanks::class, 'fawry_item_banks','fawry_item_id', 'fawry_bank_id');
-    }
+    
 
 }

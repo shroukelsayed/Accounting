@@ -11,4 +11,8 @@ class PenalitiesFunds extends Model
         return $this->hasOne(CurrentLiabilities::class); 
     }
 
+    public function workers()
+    {
+    	return $this->belongsToMany(Workers::class, 'penalities_fund_workers', 'penalities_fund_id', 'worker_id');
+    }
 }

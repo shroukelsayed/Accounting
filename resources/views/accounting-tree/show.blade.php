@@ -28,7 +28,7 @@
                     <div class="col-md-3"></div>
                     <div class="col-md-9">
                         <!-- Fixed Assets View  -->
-                       @if(!empty($level_two->fixedAssets->toArray()))
+                        @if(!empty($level_two->fixedAssets->toArray()))
                             <ul class="nav  md-pills pills-primary flex-column" role="tablist">
                                 @foreach($level_two->fixedAssets as $fixedAsset)
                                     <li class="nav-item">
@@ -145,9 +145,7 @@
                                                             @foreach($fawry->fawryItems as $fawryItem)
                                                             <a style="color: darkblue;" class="nav-link " data-toggle="tab" href="#panel-{{$fawryItem->code}}" role="tab"> <i class="fa fa-download ml-2"></i> &nbsp{{$fawryItem->title}}</a>
                                                             <div class="tab-pane fade  " id="panel-{{$fawryItem->code}}" role="tabpanel">
-                                                                @foreach($fawryItem->fawryBanks as $fawryBank)
-                                                                    <h5 class="my-2 h5">{{$fawryBank->title}}</h5>
-                                                                @endforeach 
+                                                                
                                                             </div>
                                                             @endforeach
                                                         </div>
@@ -213,36 +211,48 @@
                                                         </div>
                                                     @endforeach
 
-
                                                     @foreach($currentLiability->payableCheques as $payableCheque)
                                                         <h5 class="my-2 h5">{{$payableCheque->title}}</h5>
                                                     @endforeach
-
 
                                                     @foreach($currentLiability->taxes as $tax)
                                                         <h5 class="my-2 h5">{{$tax->title}}</h5>
                                                     @endforeach
 
-
                                                     @foreach($currentLiability->socialInsurances as $socialInsurance)
-                                                        <h5 class="my-2 h5">{{$socialInsurance->title}}</h5>
+                                                        <a style="color: darkred;" class="nav-link " data-toggle="tab" href="#panel-{{$socialInsurance->code}}" role="tab"> <i class="fa fa-download ml-2"></i> &nbsp{{$socialInsurance->title}}</a>
+                                                        <div class="tab-pane fade  " id="panel-{{$socialInsurance->code}}" role="tabpanel">
+                                                            @foreach($socialInsurance->socialInsuranceItems as $socialInsuranceItem)
+                                                                <h5 class="my-2 h5">{{$socialInsuranceItem->title}}</h5>
+                                                            @endforeach
+                                                            
+                                                        <hr> 
+                                                        </div>
                                                     @endforeach
-
 
                                                     @foreach($currentLiability->penalitiesFunds as $penalitiesFund)
-                                                        <h5 class="my-2 h5">{{$penalitiesFund->title}}</h5>
+                                                        <a style="color: darkred;" class="nav-link " data-toggle="tab" href="#panel-{{$penalitiesFund->code}}" role="tab"> <i class="fa fa-download ml-2"></i> &nbsp{{$penalitiesFund->title}}</a>
+                                                        <div class="tab-pane fade  " id="panel-{{$penalitiesFund->code}}" role="tabpanel">
+                                                            @foreach($penalitiesFund->workers as $worker)
+                                                                <h5 class="my-2 h5">{{$worker->title}}</h5>
+                                                            @endforeach
+                                                        <hr> 
+                                                        </div>
                                                     @endforeach
-
 
                                                     @foreach($currentLiability->friendshipFunds as $friendshipFund)
-                                                        <h5 class="my-2 h5">{{$friendshipFund->title}}</h5>
+                                                        <a style="color: darkred;" class="nav-link " data-toggle="tab" href="#panel-{{$friendshipFund->code}}" role="tab"> <i class="fa fa-download ml-2"></i> &nbsp{{$friendshipFund->title}}</a>
+                                                        <div class="tab-pane fade  " id="panel-{{$friendshipFund->code}}" role="tabpanel">
+                                                            @foreach($friendshipFund->workers as $worker)
+                                                                <h5 class="my-2 h5">{{$worker->title}}</h5>
+                                                            @endforeach
+                                                        <hr> 
+                                                        </div>
                                                     @endforeach
-
 
                                                     @foreach($currentLiability->amountsUnderAdjustments as $amountsUnderAdjustment)
                                                         <h5 class="my-2 h5">{{$amountsUnderAdjustment->title}}</h5>
                                                     @endforeach
-
 
                                                     @foreach($currentLiability->creditors as $creditor)
                                                         <h5 class="my-2 h5">{{$creditor->title}}</h5>
@@ -264,10 +274,59 @@
                         @endif                        
                         <!-- Current Liabilities View  -->
 
+                        <!-- level Three Operation Expenses  View  -->
+                        @if(!empty($level_two->levelThreeOperationExpenses->toArray()))
+                            <ul class="nav  md-pills pills-primary flex-column" role="tablist">
+                                @foreach($level_two->levelThreeOperationExpenses as $levelThreeOperationExpense)
+                                    <a style="color: darkred;" class="nav-link " data-toggle="tab" href="#panel-{{$levelThreeOperationExpense->code}}" role="tab"> <i class="fa fa-download ml-2"></i> &nbsp{{$levelThreeOperationExpense->title}}</a>
+                                    <div class="tab-pane fade  " id="panel-{{$levelThreeOperationExpense->code}}" role="tabpanel">
+                                        @foreach($levelThreeOperationExpense->LevelFour as $levelFour)
+                                            <a style="color: darkred;" class="nav-link " data-toggle="tab" href="#panel-{{$levelFour->code}}" role="tab"> <i class="fa fa-download ml-2"></i> &nbsp{{$levelFour->title}}</a>
+                                            <div class="tab-pane fade  " id="panel-{{$levelFour->code}}" role="tabpanel">
+                                                @foreach($levelFour->expensesItems as $expensesItem)
+                                                    <h5 class="my-2 h5">{{$expensesItem->title}}</h5>
+                                                @endforeach
+                                                
+                                            <hr> 
+                                            </div>
+                                        @endforeach
+                                        <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal" onclick="drawdev({{ $levelThreeOperationExpense->id }},{{ $levelThreeOperationExpense->code }},{{ $levelThreeOperationExpense->level }});"><i class="glyphicon glyphicon-plus"></i> Add New </button>
+                                        <div id="addChild-{{$levelThreeOperationExpense->code}}"></div>
+                                    </div>
+                                @endforeach
+                            </ul>
+                        @endif
+                        <!-- level Three Operation Expenses  View  -->
 
-                       <!--  <button type="button" id="btn-{{$level_two->code}}" class="btn btn-xs btn-primary" onclick="drawNewChild({{ $level_two->id }},{{ $level_two->code }},{{ $level_two->level }});"><i class="glyphicon glyphicon-trash"></i> Add New</button>
-                                    <div id="addChild-{{$level_two->code}}"></div>     
- -->
+                        <!-- level Three General Expenses  View  -->
+                        @if(!empty($level_two->levelThreeGeneralExpenses->toArray()))
+                            <ul class="nav  md-pills pills-primary flex-column" role="tablist">
+                                @foreach($level_two->levelThreeGeneralExpenses as $levelThreeGeneralExpense)
+                                    <a style="color: darkred;" class="nav-link " data-toggle="tab" href="#panel-{{$levelThreeGeneralExpense->code}}" role="tab"> <i class="fa fa-download ml-2"></i> &nbsp{{$levelThreeGeneralExpense->title}}</a>
+                                    <div class="tab-pane fade  " id="panel-{{$levelThreeGeneralExpense->code}}" role="tabpanel">
+                                        @foreach($levelThreeGeneralExpense->LevelFour as $levelFour)
+                                            <a style="color: darkred;" class="nav-link " data-toggle="tab" href="#panel-{{$levelFour->code}}" role="tab"> <i class="fa fa-download ml-2"></i> &nbsp{{$levelFour->title}}</a>
+                                            <div class="tab-pane fade  " id="panel-{{$levelFour->code}}" role="tabpanel">
+                                                @foreach($levelFour->expensesItems as $expensesItem)
+                                                    <h5 class="my-2 h5">{{$expensesItem->title}}</h5>
+                                                @endforeach
+                                                
+                                            <hr> 
+                                            </div>
+                                        @endforeach
+                                        <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal" onclick="drawdev({{ $levelThreeGeneralExpense->id }},{{ $levelThreeGeneralExpense->code }},{{ $levelThreeGeneralExpense->level }});"><i class="glyphicon glyphicon-plus"></i> Add New </button>
+                                        <div id="addChild-{{$levelThreeGeneralExpense->code}}"></div>
+                                    </div>
+                                @endforeach
+                            </ul>
+                        @endif
+                        <!-- level Three General Expenses  View  -->
+
+
+
+                        <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal" onclick="drawdev({{ $level_two->id }},{{ $level_two->code }},{{ $level_two->level }});"><i class="glyphicon glyphicon-plus"></i> Add New </button>
+                        <div id="addChild-{{$level_two->code}}"></div>
+
                     </div>
                 </div>
                 <!-- Nav tabs -->

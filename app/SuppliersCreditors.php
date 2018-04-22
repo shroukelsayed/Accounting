@@ -8,7 +8,7 @@ class SuppliersCreditors extends Model
 {
     //
     public function suppliers(){
-        return $this->hasOne(SuppliersCreditors::class); 
+        return $this->hasOne(Suppliers::class); 
     }
 
 }

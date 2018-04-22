@@ -11,4 +11,14 @@ class Workers extends Model
     {
     	return $this->belongsToMany(CustodyAndAdvances::class, 'custody_and_advance_workers', 'worker_id', 'custody_and_advance_id');
     }
+
+    public function penalitiesFunds()
+    {
+    	return $this->belongsToMany(PenalitiesFunds::class, 'penalities_fund_workers' , 'worker_id' , 'penalities_fund_id');
+    }
+
+    public function friendshipFunds()
+    {
+    	return $this->belongsToMany(FriendshipFunds::class, 'friendship_fund_workers' , 'worker_id' , 'friendship_fund_id');
+    }
 }

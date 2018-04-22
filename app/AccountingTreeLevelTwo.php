@@ -25,4 +25,14 @@ class AccountingTreeLevelTwo extends Model
     {
         return $this->hasMany(CurrentLiabilities::class,'parent');
     }
+
+    public function levelThreeOperationExpenses()
+    {
+        return $this->hasMany(LevelThreeOperationExpenses::class,'parent');
+    }
+
+    public function levelThreeGeneralExpenses()
+    {
+        return $this->hasMany(LevelThreeGeneralExpenses::class,'parent');
+    }
 }

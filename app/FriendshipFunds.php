@@ -11,4 +11,8 @@ class FriendshipFunds extends Model
         return $this->hasOne(CurrentLiabilities::class); 
     }
 
+    public function workers()
+    {
+    	return $this->belongsToMany(Workers::class, 'friendship_fund_workers', 'friendship_fund_id', 'worker_id');
+    }
 }

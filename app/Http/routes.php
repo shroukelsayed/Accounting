@@ -41,6 +41,8 @@ Route::group(['middleware' => ['web']], function () {
 		Route::post("add-worker","AccountingTreeController@addWorker");
 		Route::get("add-revenue-item","AccountingTreeController@revenueItem");
 		Route::post("add-revenue-item","AccountingTreeController@addRevenueItem");
+		Route::get("add-insurance-item","AccountingTreeController@insuranceItem");
+		Route::post("add-insurance-item","AccountingTreeController@addInsuranceItem");
 
 	});
 

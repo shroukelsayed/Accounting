@@ -11,4 +11,7 @@ class SocialInsurances extends Model
         return $this->hasOne(CurrentLiabilities::class); 
     }
 
+    public function socialInsuranceItems(){
+    	return $this->belongsToMany(SocialInsuranceItems::class, 'insurance_items', 'social_insurance_id','social_insurance_item_id');
+    }
 }
