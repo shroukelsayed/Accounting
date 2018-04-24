@@ -12,6 +12,6 @@ class SocialInsurances extends Model
     }
 
     public function socialInsuranceItems(){
-    	return $this->belongsToMany(SocialInsuranceItems::class, 'insurance_items', 'social_insurance_id','social_insurance_item_id');
+    	return $this->belongsToMany(SocialInsuranceItems::class, 'insurance_items', 'social_insurance_id','social_insurance_item_id')->withPivot('code');
     }
 }

@@ -8,7 +8,7 @@ class FawryItems extends Model
 {
     //
     public function fawry(){
-    	return $this->belongsToMany(Fawry::class, 'fawry_fawry_items', 'fawry_item_id','fawry_id');
+    	return $this->belongsToMany(Fawry::class, 'fawry_fawry_items', 'fawry_item_id','fawry_id')->withPivot('code');
     }
 
     

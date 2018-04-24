@@ -13,7 +13,7 @@ class AdvancedExpenses extends Model
 
     public function expensesItems()
     {
-    	return $this->belongsToMany(ExpensesItems::class, 'advanced_expense_expenses_items', 'advanced_expense_id', 'expenses_item_id');
+    	return $this->belongsToMany(ExpensesItems::class, 'advanced_expense_expenses_items', 'advanced_expense_id', 'expenses_item_id')->withPivot('code');
     }
 
 }

@@ -190,8 +190,8 @@
                 </a>
               </li>
               <li>
-                <a href="{{URL::to('add-accured-item')}}">
-                  <i class="fa fa-plus"></i> <span>@lang('validation.add-accured-item')</span> 
+                <a href="{{URL::to('add-revenue-item')}}">
+                  <i class="fa fa-plus"></i> <span>@lang('validation.add-revenue-item')</span> 
                 </a>
               </li>
               <li>

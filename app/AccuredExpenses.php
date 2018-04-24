@@ -14,7 +14,7 @@ class AccuredExpenses extends Model
 
     public function expensesItems()
     {
-    	return $this->belongsToMany(ExpensesItems::class, 'accured_expense_items', 'accured_expense_id', 'expenses_item_id');
+    	return $this->belongsToMany(ExpensesItems::class, 'accured_expense_items', 'accured_expense_id', 'expenses_item_id')->withPivot('code');
     }
 
 }

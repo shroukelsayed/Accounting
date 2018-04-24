@@ -190,8 +190,8 @@
                 </a>
               </li>
               <li>
-                <a href="<?php echo e(URL::to('add-accured-item')); ?>">
-                  <i class="fa fa-plus"></i> <span><?php echo app('translator')->get('validation.add-accured-item'); ?></span> 
+                <a href="<?php echo e(URL::to('add-revenue-item')); ?>">
+                  <i class="fa fa-plus"></i> <span><?php echo app('translator')->get('validation.add-revenue-item'); ?></span> 
                 </a>
               </li>
               <li>

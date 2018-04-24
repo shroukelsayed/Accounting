@@ -476,24 +476,7 @@ class AccountingTreeController extends Controller
      */
     public function expensesItem()
     {
-        // $items = ExpensesItems::all();
-        // // $advancedExpenses = AccuredExpenses::all();
-
-        // // foreach ($advancedExpenses as $advancedExpense) {
-        //     foreach ($items as $item) {
-        //         $advancedExpenseExpensesItem = new AccuredExpenseItems();
-        //         $advancedExpenseExpensesItem->accured_expense_id = 2;
-        //         $advancedExpenseExpensesItem->expenses_item_id = $item->id;
-
-        //         $advancedExpenseExpensesItem->save();
-        //     }
-        // // }
-        // // var_dump($advancedExpenses);
-        // var_dump("done");
-        // die;
-
         return view('accounting-tree.add-expenses-item');
-
     }
 
     /**
@@ -505,26 +488,75 @@ class AccountingTreeController extends Controller
     public function addExpensesItem(Request $request)
     {
         // var_dump($request);die;
-        $last_item = ExpensesItems::orderby('id', 'desc')->first();
-        $item = new ExpensesItems();
+
+        // Start transaction!
+        DB::beginTransaction();
+
+        try {
+            $last_item = ExpensesItems::orderby('id', 'desc')->first();
+            $item = new ExpensesItems();
 
 
-        if(!is_null($last_item)){
-            $new_level_code = str_pad($last_item->code + 1, 3, '0', STR_PAD_LEFT);
-        }else{
-            $new_level_code = "001";
+            if(!is_null($last_item)){
+                $new_level_code = str_pad($last_item->code + 1, 3, '0', STR_PAD_LEFT);
+            }else{
+                $new_level_code = "001";
+            }
+            $item->level = 5;
+            $item->parent = 0;
+            $item->code = $new_level_code;
+            $item->title = $request->input('title');
+            $item->debit = false;
+            $item->credit = true;
+            $item->save();
+
+            $AccuredExpenses = AccuredExpenses::all();
+            foreach ($AccuredExpenses as $AccuredExpense) {
+                $AccuredExpenseItem = new AccuredExpenseItems();
+                $AccuredExpenseItem->accured_expense_id = $AccuredExpense->id;
+                $AccuredExpenseItem->expenses_item_id = $item->id;
+                $AccuredExpenseItem->code = $AccuredExpense->code .''. $item->code;
+                $AccuredExpenseItem->save();
+            }
+
+            $advancedExpenses = AdvancedExpenses::all();
+            foreach ($advancedExpenses as $advancedExpense) {
+                $advancedExpenseExpensesItem = new AdvancedExpenseExpensesItems();
+                $advancedExpenseExpensesItem->advanced_expense_id = $advancedExpense->id;
+                $advancedExpenseExpensesItem->expenses_item_id = $item->id;
+                $advancedExpenseExpensesItem->code = $advancedExpense->code .''. $item->code;
+                $advancedExpenseExpensesItem->save();
+            }
+
+            $LevelFourOperationExpenses = LevelFourOperationExpenses::all();
+            foreach ($LevelFourOperationExpenses as $LevelFourOperationExpense) {
+                $OperationExpenseItem = new OperationExpenseItems();
+                $OperationExpenseItem->operation_expense_id = $LevelFourOperationExpense->id;
+                $OperationExpenseItem->expenses_item_id = $item->id;
+                $OperationExpenseItem->code = $LevelFourOperationExpense->code."".$item->code;
+                $OperationExpenseItem->save();
+            }
+
+            $LevelFourGeneralExpenses = LevelFourGeneralExpenses::all();
+            foreach ($LevelFourGeneralExpenses as $LevelFourGeneralExpense) {
+                $GeneralExpenseItem = new GeneralExpenseItems();
+                $GeneralExpenseItem->general_expense_id = $LevelFourGeneralExpense->id;
+                $GeneralExpenseItem->expenses_item_id = $item->id;
+                $GeneralExpenseItem->code = $LevelFourGeneralExpense->code."".$item->code;
+                $GeneralExpenseItem->save();
+            }
+            // var_dump("done");
+            // die;
+
+        } catch(\Exception $e){
+            DB::rollback();
+            throw $e;
         }
-// var_dump($new_level_code);die;
-        $item->level = 5;
-        $item->parent = 0;
-        $item->code = $new_level_code;
-        $item->title = $request->input('title');
-        $item->debit = false;
-        $item->credit = true;
-        $item->save();
 
-        // $advancedExpenseExpensesItem = new AdvancedExpenseExpensesItem();
-
+        // If we reach here, then
+        // data is valid and working.
+        // Commit the queries!
+        DB::commit();
 
         return view('accounting-tree.add-expenses-item')->with('message', 'Item deleted successfully.');
 
@@ -538,25 +570,7 @@ class AccountingTreeController extends Controller
      */
     public function fawryItem()
     {
-        // $items = FawryItems::all();
-        // $advancedExpenses = Fawry::all();
-
-        // foreach ($advancedExpenses as $advancedExpense) {
-        //     foreach ($items as $item) {
-        //         $advancedExpenseExpensesItem = new FawryFawryItems();
-        //         $advancedExpenseExpensesItem->fawry_id = $advancedExpense->id;
-        //         $advancedExpenseExpensesItem->fawry_item_id = $item->id;
-        //         $advancedExpenseExpensesItem->code = $advancedExpense->code."".$item->code;
-
-        //         $advancedExpenseExpensesItem->save();
-        //     }
-        // }
-        // var_dump($advancedExpenses);
-        // var_dump("done");
-        // die;
-
         return view('accounting-tree.add-fawry-item');
-
     }
 
     /**
@@ -571,14 +585,12 @@ class AccountingTreeController extends Controller
         $last_item = FawryItems::orderby('id', 'desc')->first();
         $item = new FawryItems();
 
-
         if(!is_null($last_item)){
             $new_level_code = str_pad($last_item->code + 1, 3, '0', STR_PAD_LEFT);
         }else{
             $new_level_code = "001";
         }
         $item->level = 5;
-
         $item->code = $new_level_code;
         $item->title = $request->input('title');
         $item->debit = false;
@@ -586,19 +598,15 @@ class AccountingTreeController extends Controller
         $item->save();
 
         $fawries = Fawry::all();
-
         foreach ($fawries as $fawry) {
             $FawryFawryItem = new FawryFawryItems();
             $FawryFawryItem->fawry_id = $fawry->id;
             $FawryFawryItem->fawry_item_id = $item->id;
             $FawryFawryItem->code = $fawry->code."".$item->code;
-
             $FawryFawryItem->save();
         }
 
-
         return view('accounting-tree.add-fawry-item')->with('message', 'Item deleted successfully.');
-
     }
     
     /**
@@ -609,19 +617,6 @@ class AccountingTreeController extends Controller
      */
     public function fawryBank()
     {
-        // $fawryItems = FawryFawryItems::all();
-        // foreach ($fawryItems as $fawryItem) {
-        //     var_dump($fawryItem->fawry_item_id);
-
-        //     // if($fawryItem->fawry_item_id == 6){
-        //         // $fawryItemBank = new FawryItemBanks();
-        //         // $fawryItemBank->fawry_item_id = $fawryItem->fawry_item_id;
-        //         // $fawryItemBank->fawry_bank_id = $item->id;
-
-        //         // $fawryItemBank->save();
-        //     // }
-        // }
-        // die;
         return view('accounting-tree.add-fawry-bank');
     }
 
@@ -637,7 +632,6 @@ class AccountingTreeController extends Controller
         $last_item = FawryBanks::orderby('id', 'desc')->first();
         $item = new FawryBanks();
 
-
         if(!is_null($last_item)){
             $new_level_code = str_pad($last_item->code + 1, 4, '0', STR_PAD_LEFT);
         }else{
@@ -649,7 +643,6 @@ class AccountingTreeController extends Controller
         $item->debit = false;
         $item->credit = true;
         $item->save();
-
         /// Add new bank to all items ..
         $fawryItems = FawryFawryItems::all();
         foreach ($fawryItems as $fawryItem) {
@@ -658,7 +651,6 @@ class AccountingTreeController extends Controller
                 $fawryItemBank->fawry_item_id = $fawryItem->id;
                 $fawryItemBank->fawry_bank_id = $item->id;
                 $fawryItemBank->code = $fawryItem->code.''.$item->code;
-
                 $fawryItemBank->save();
                 break;
             }
@@ -675,18 +667,6 @@ class AccountingTreeController extends Controller
      */
     public function bankAccountItem()
     {
-        // $items = BankAccountItems::all();
-        // $BankAccounts = BankAccounts::all();
-        // foreach ($BankAccounts as $bankAccount) {
-        //         foreach ($items as $item) {
-        //             $accountItem = new AccountItems();
-        //             $accountItem->bank_account_id = $bankAccount->id;
-        //             $accountItem->bank_account_item_id = $item->id;
-        //             $accountItem->code = $bankAccount->code."".$item->code;
-
-        //             $accountItem->save();
-        //         }
-        //     }
         return view('accounting-tree.add-bank-account-item');
     }
 
@@ -702,7 +682,6 @@ class AccountingTreeController extends Controller
         $last_item = BankAccountItems::orderby('id', 'desc')->first();
         $item = new BankAccountItems();
 
-
         if(!is_null($last_item)){
             $new_level_code = str_pad($last_item->code + 1, 4, '0', STR_PAD_LEFT);
         }else{
@@ -715,23 +694,15 @@ class AccountingTreeController extends Controller
         $item->credit = true;
         $item->save();
 
-
         $BankAccounts = BankAccounts::all();
-
         foreach ($BankAccounts as $BankAccount) {
             $accountItem = new AccountItems();
             $accountItem->bank_account_id = $BankAccount->id;
             $accountItem->bank_account_item_id = $item->id;
             $accountItem->code = $BankAccount->code."".$item->code;
-
             $accountItem->save();
         }
-        // var_dump("done");
-        // die;
-
-
         return view('accounting-tree.add-bank-account-item')->with('message', 'Item added successfully.');
-
     }
 
     /**
@@ -757,7 +728,6 @@ class AccountingTreeController extends Controller
         $last_item = Workers::orderby('id', 'desc')->first();
         $item = new Workers();
 
-
         if(!is_null($last_item)){
             $new_level_code = str_pad($last_item->code + 1, 3, '0', STR_PAD_LEFT);
         }else{
@@ -769,7 +739,6 @@ class AccountingTreeController extends Controller
         $item->debit = false;
         $item->credit = true;
         $item->save();
-
 
         $CustodyAndAdvances = CustodyAndAdvances::all();
         $PenalitiesFunds = PenalitiesFunds::all();
@@ -797,11 +766,6 @@ class AccountingTreeController extends Controller
             $FriendshipFundWorker->code = $FriendshipFunds->code.''.$item->code;
             $FriendshipFundWorker->save();            
         }
-
-        // var_dump("done");
-        // die;
-
-
         return view('accounting-tree.add-worker')->with('message', 'Item added successfully.');
     }
 
@@ -828,7 +792,6 @@ class AccountingTreeController extends Controller
         $last_item = AccuredRevenuesItems::orderby('id', 'desc')->first();
         $item = new AccuredRevenuesItems();
 
-
         if(!is_null($last_item)){
             $new_level_code = str_pad($last_item->code + 1, 3, '0', STR_PAD_LEFT);
         }else{
@@ -841,21 +804,14 @@ class AccountingTreeController extends Controller
         $item->credit = true;
         $item->save();
 
-
         $AccuredRevenues = AccuredRevenues::all();
-
         foreach ($AccuredRevenues as $AccuredRevenue) {
             $AccountItem = new AccuredItems();
             $AccountItem->accured_revenue_id  = $AccuredRevenue->id;
             $AccountItem->accured_revenues_item_id = $item->id;
             $AccountItem->code = $AccuredRevenue->code."".$item->code;
-
             $AccountItem->save();
         }
-        // var_dump("done");
-        // die;
-
-
         return view('accounting-tree.add-revenue-item')->with('message', 'Item added successfully.');
     }
 
@@ -882,7 +838,6 @@ class AccountingTreeController extends Controller
         $last_item = SocialInsuranceItems::orderby('id', 'desc')->first();
         $item = new SocialInsuranceItems();
 
-
         if(!is_null($last_item)){
             $new_level_code = str_pad($last_item->code + 1, 3, '0', STR_PAD_LEFT);
         }else{
@@ -891,13 +846,11 @@ class AccountingTreeController extends Controller
         $item->level = 5;
         $item->code = $new_level_code;
         $item->title = $request->input('title');
-        $item->debit = false;
-        $item->credit = true;
+        $item->debit = true;
+        $item->credit = false;
         $item->save();
 
-
         $SocialInsurances = SocialInsurances::all();
-
         foreach ($SocialInsurances as $SocialInsurance) {
             $InsuranceItem = new InsuranceItems();
             $InsuranceItem->social_insurance_id  = $SocialInsurance->id;
@@ -906,9 +859,6 @@ class AccountingTreeController extends Controller
 
             $InsuranceItem->save();
         }
-        // var_dump("done");
-        // die;
-
         return view('accounting-tree.add-insurance-item')->with('message', 'Item added successfully.');
     }
 }

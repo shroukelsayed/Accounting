@@ -143,8 +143,8 @@
                                                         <div class="tab-pane fade  " id="panel-{{$fawry->code}}" role="tabpanel">
 
                                                             @foreach($fawry->fawryItems as $fawryItem)
-                                                            <a style="color: darkblue;" class="nav-link " data-toggle="tab" href="#panel-{{$fawryItem->code}}" role="tab"> <i class="fa fa-download ml-2"></i> &nbsp{{$fawryItem->title}}</a>
-                                                            <div class="tab-pane fade  " id="panel-{{$fawryItem->code}}" role="tabpanel">
+                                                            <a style="color: darkblue;" class="nav-link " data-toggle="tab" href="#panel-{{$fawryItem->pivot->code}}" role="tab"> <i class="fa fa-download ml-2"></i> &nbsp{{$fawryItem->title}}</a>
+                                                            <div class="tab-pane fade  " id="panel-{{$fawryItem->pivot->code}}" role="tabpanel">
                                                                 
                                                             </div>
                                                             @endforeach

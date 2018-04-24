@@ -9,7 +9,7 @@ class AccuredRevenuesItems extends Model
     //
     public function accuredRevenue()
     {
-    	return $this->belongsToMany(AccuredRevenues::class, 'accured_items','accured_revenues_item_id','accured_revenue_id');
+    	return $this->belongsToMany(AccuredRevenues::class, 'accured_items','accured_revenues_item_id','accured_revenue_id')->withPivot('code');
     }
 
 }

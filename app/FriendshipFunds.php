@@ -13,6 +13,6 @@ class FriendshipFunds extends Model
 
     public function workers()
     {
-    	return $this->belongsToMany(Workers::class, 'friendship_fund_workers', 'friendship_fund_id', 'worker_id');
+    	return $this->belongsToMany(Workers::class, 'friendship_fund_workers', 'friendship_fund_id', 'worker_id')->withPivot('code');
     }
 }

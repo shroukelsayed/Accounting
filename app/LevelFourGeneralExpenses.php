@@ -13,7 +13,7 @@ class LevelFourGeneralExpenses extends Model
 
     public function expensesItems()
     {
-    	return $this->belongsToMany(ExpensesItems::class, 'general_expense_items', 'general_expense_id', 'expenses_item_id');
+    	return $this->belongsToMany(ExpensesItems::class, 'general_expense_items', 'general_expense_id', 'expenses_item_id')->withPivot('code');
     }
 
 }
