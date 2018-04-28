@@ -24,9 +24,9 @@
             <!--Panel 1-->
             <div class="tab-pane fade in" id="panel-{{$level_two->code}}" role="tabpanel">
                 <!-- Nav tabs -->
-                <div class="row pull-right">
-                    <div class="col-md-3"></div>
-                    <div class="col-md-9">
+                <div class="row push-left">
+                <div class="col-md-7"></div>
+                    <div class="col-md-4">
                         <!-- Fixed Assets View  -->
                         @if(!empty($level_two->fixedAssets->toArray()))
                             <ul class="nav  md-pills pills-primary flex-column" role="tablist">
@@ -48,43 +48,55 @@
                             <ul class="nav  md-pills pills-primary flex-column" role="tablist">
                                 @foreach($level_two->currentAssets as $currentAsset)
                                     <li class="nav-item">
-                                        <a class="nav-link " data-toggle="tab" href="#panel-{{$currentAsset->code}}" role="tab"> <i class="fa fa-download ml-2"></i> &nbsp{{$currentAsset->title}}</a>
+                                        <a class="nav-link " data-toggle="collapse" data-target="#panel-{{$currentAsset->code}}" href="#panel-{{$currentAsset->code}}" role="tab"> <i class="fa fa-download ml-2"></i> &nbsp{{$currentAsset->title}}</a>
                                     </li>
                                     <div class="row">
                                         <div class="col-md-3"></div>
                                         <div class="col-md-9">
-                                            <div class="tab-content">
+                                            <div id="panel-{{$currentAsset->code}}" class="collapse">
                                                 <!--Panel 1-->
-                                                <div class="tab-pane fade  " id="panel-{{$currentAsset->code}}" role="tabpanel">
+                                                <div class="tab-pane" id="panel-{{$currentAsset->code}}" role="tabpanel">
                                                     @foreach($currentAsset->treasury as $treasury)
                                                         <h5 class="my-2 h5">{{$treasury->code}} &nbsp&nbsp {{$treasury->title}}</h5>
                                                     @endforeach 
+                                                    <ul>
                                                     @foreach($currentAsset->banks as $bank)
-                                                        <a style="color: darkred;" class="nav-link " data-toggle="tab" href="#panel-{{$bank->code}}" role="tab"> <i class="fa fa-download ml-2"></i> &nbsp{{$bank->title}}</a>
+                                                        <li>
+                                                        <a style="color: darkred;" class="nav-link " data-toggle="collapse" data-target="#panel-{{$bank->code}}" role="tab"> <i class="fa fa-download ml-2"></i> &nbsp{{$bank->title}}</a>
 
-                                                        <div class="tab-pane fade  " id="panel-{{$bank->code}}" role="tabpanel">
+                                                        <div class="collapse  " id="panel-{{$bank->code}}" role="tabpanel">
+                                                        <ul>
                                                         @foreach($bank->bankAccounts as $bankAccount)
-                                                            <a style="color: darkblue;" class="nav-link " data-toggle="tab" href="#panel-{{$bankAccount->code}}" role="tab"> <i class="fa fa-download ml-2"></i> &nbsp{{$bankAccount->title}}</a>
-                                                            <div class="tab-pane fade  " id="panel-{{$bankAccount->code}}" role="tabpanel">
+                                                            <li>
+                                                            <a style="color: darkblue;" class="nav-link " data-toggle="collapse" data-target="#panel-{{$bankAccount->code}}" role="tab"> <i class="fa fa-download ml-2"></i> &nbsp{{$bankAccount->title}}</a>
+                                                            <div class="collapse" id="panel-{{$bankAccount->code}}" role="tabpanel">
                                                                 @foreach($bankAccount->bankAccountItems as $bankAccountItem)
                                                                     <h5 class="my-2 h5">{{$bankAccount->code}}{{$bankAccountItem->code}}{{$bankAccountItem->title}}</h5>
                                                                 @endforeach 
                                                             </div>
+                                                            </li>
                                                         @endforeach
+                                                        </ul>
                                                        <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal" onclick="drawdev({{ $bank->id }},{{ $bank->code }},{{ $bank->level }});"><i class="glyphicon glyphicon-plus"></i> Add New </button>
                                                         <div id="addChild-{{$bank->code}}"></div>
                                                         </div>
+                                                        </li>
                                                     @endforeach
+                                                    </ul>
+                                                    <ul>
                                                     @foreach($currentAsset->advancedExpenses as $advancedExpense)
-                                                        <a style="color: darkred;" class="nav-link " data-toggle="tab" href="#panel-{{$advancedExpense->code}}" role="tab"> <i class="fa fa-download ml-2"></i> &nbsp{{$advancedExpense->title}}</a>
-                                                        <div class="tab-pane fade  " id="panel-{{$advancedExpense->code}}" role="tabpanel">
+                                                        <li>
+                                                        <a style="color: darkred;" class="nav-link " data-toggle="collapse" data-target="#panel-{{$advancedExpense->code}}" role="tab"> <i class="fa fa-download ml-2"></i> &nbsp{{$advancedExpense->title}}</a>
+                                                        <div class="collapse" id="panel-{{$advancedExpense->code}}" role="tabpanel">
                                                             @foreach($advancedExpense->expensesItems as $expensesItem)
                                                                 <h5 class="my-2 h5">{{$expensesItem->title}}</h5>
                                                             @endforeach
                                                             
                                                         <hr> 
                                                         </div>
-                                                    @endforeach 
+                                                        </li>
+                                                    @endforeach
+                                                    </ul> 
                                                     @foreach($currentAsset->depositsWithOthers as $depositsWithOther)
                                                         <a style="color: darkred;" class="nav-link " data-toggle="tab" href="#panel-{{$depositsWithOther->code}}" role="tab"> <i class="fa fa-download ml-2"></i> &nbsp{{$depositsWithOther->title}}</a>
 
