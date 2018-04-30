@@ -13,7 +13,7 @@ class CreateInsuranceItemsTable extends Migration
     public function up()
     {
         //
-         Schema::create('insurance_items', function(Blueprint $table)
+        Schema::create('insurance_items', function(Blueprint $table)
         {
             $table->increments('id');
             $table->string('code');

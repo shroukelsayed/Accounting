@@ -6,21 +6,15 @@
 @section('content')
     
     <br><br><br>
-
-     @foreach($fawryBankitems->fawryBanks as $item)
-                                                                    <h5> {{ $item->title}} </h5>
-                                                                @endforeach
-
-    
     <div class="page-header">
-        <h1><i class="glyphicon glyphicon-plus"></i> Add Fawry Bank </h1>
+        <h1><i class="glyphicon glyphicon-plus"></i> Add Coupon </h1>
     </div>
     <br><br><br>
    
     <div class="row">
         <div class="col-md-12">
 
-            <form action="{{ url('add-fawry-bank') }}" method="POST">
+            <form action="{{ url('add-coupon') }}" method="POST">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                 <div class="row">
                     <div class="col-md-9">
@@ -32,7 +26,7 @@
                         @endif
                     </div>
                     <div class="col-md-3">
-                        <label style="float: right;">bank name</label>
+                        <label style="float: right;">item name</label>
                     </div>
                 </div>
                 <br>

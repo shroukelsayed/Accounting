@@ -495,7 +495,13 @@
 					<div class="form-group" style="text-align: right;">
 						<div class="row">
 							<div class="col-sm-3">
-							    <?php echo Form::select('receipt_writter_id', ['Under 18', '19 to 30', 'Over 30'],null,['class' => 'form-control']); ?>
+								<?php if(isset($receipt) and $receipt->receipt_writter_id): ?>
+									<?php echo e(Form::select('receipt_writter_id', $workers,$receipt->receipt_writter_id,['class' => 'form-control' , 'placeholder' => 'اختر بند المشروع'])); ?>
+
+								<?php else: ?>
+									<?php echo e(Form::select('receipt_writter_id', $workers,null,['class' => 'form-control' , 'placeholder' => 'اختر اسم محرر اﻻيصال'])); ?>
+
+								<?php endif; ?>
 
 							    <?php if($errors->has('receipt_writter_id')): ?>
                                     <span class="alert-danger">
@@ -513,8 +519,13 @@
 					<div class="form-group" style="text-align: right;">
 						<div class="row">
 							<div class="col-sm-3">
-							    <?php echo Form::select('receipt_delegate_id', ['Under 18', '19 to 30', 'Over 30'],null,['class' => 'form-control']); ?>
+								<?php if(isset($receipt) and $receipt->receipt_delegate_id): ?>
+									<?php echo e(Form::select('receipt_delegate_id', $workers,$receipt->receipt_delegate_id,['class' => 'form-control' , 'placeholder' => 'اختر بند المشروع'])); ?>
 
+								<?php else: ?>
+									<?php echo e(Form::select('receipt_delegate_id', $workers,null,['class' => 'form-control' , 'placeholder' => 'اختر اسم المندوب'])); ?>
+
+								<?php endif; ?>
 							    <?php if($errors->has('receipt_delegate_id')): ?>
                                     <span class="alert-danger">
                                         <strong><?php echo e($errors->first('receipt_delegate_id')); ?></strong>

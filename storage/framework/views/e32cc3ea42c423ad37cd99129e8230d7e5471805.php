@@ -29,6 +29,8 @@
 
      <link href="/Admin/jquery-ui.css" rel="stylesheet" type="text/css"/>
 
+     <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
     <style>
       #profile{
           border:2px solid white;
@@ -197,6 +199,26 @@
               <li>
                 <a href="<?php echo e(URL::to('add-insurance-item')); ?>">
                   <i class="fa fa-plus"></i> <span><?php echo app('translator')->get('validation.add-insurance-item'); ?></span> 
+                </a>
+              </li>
+              <li>
+                <a href="<?php echo e(URL::to('add-coupon')); ?>">
+                  <i class="fa fa-plus"></i> <span><?php echo app('translator')->get('validation.add-coupon'); ?></span> 
+                </a>
+              </li>
+               <li>
+                <a href="<?php echo e(URL::to('add-revenue-bank-account')); ?>">
+                  <i class="fa fa-plus"></i> <span><?php echo app('translator')->get('validation.add-revenue-bank-account'); ?></span> 
+                </a>
+              </li>
+               <li>
+                <a href="<?php echo e(URL::to('add-revenue-benefit-item')); ?>">
+                  <i class="fa fa-plus"></i> <span><?php echo app('translator')->get('validation.add-revenue-benefit-item'); ?></span> 
+                </a>
+              </li>
+               <li>
+                <a href="<?php echo e(URL::to('add-revenue-fawry-item')); ?>">
+                  <i class="fa fa-plus"></i> <span><?php echo app('translator')->get('validation.add-revenue-fawry-item'); ?></span> 
                 </a>
               </li>
               <!-- // Start of Links to create new case ... by shrouk -->

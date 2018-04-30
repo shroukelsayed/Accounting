@@ -31,6 +31,24 @@ use App\SocialInsurances;
 use App\SocialInsuranceItems;
 use App\InsuranceItems;
 
+use App\AccountingTreeLevelTwo;
+use App\LevelThreeRevenues;
+use App\LevelFourRevenues;
+use App\NotebookLicenses;
+use App\Coupons;
+use App\RevenueCoupons;
+use App\RBankAccounts;
+use App\RBenefitItems;
+use App\RFawryItems;
+use App\RevenueBanks;
+use App\RevenueBankAccounts;
+use App\RevenueBenefits;
+use App\RevenueBenefitItems;
+use App\RevenueFawries;
+use App\RevenueFawryItems;
+use App\RevenueMalls;
+use App\RevenueSms;
+
 use Illuminate\Http\Request;
 use Auth;
 use Carbon\Carbon;
@@ -59,6 +77,8 @@ class ProjectController extends Controller {
 	 */
 	public function create()
 	{
+		
+										// var_dump($last_level_two_revenue);die;
 		return view('projects.create');
 	}
 
@@ -90,7 +110,7 @@ class ProjectController extends Controller {
 			if(!is_null($last_project)){
 	            $new_level_code = $last_project->code + 1;
 	        }else{
-	            $new_level_code  = 01;
+	            $new_level_code  = 1;
            	}
            	$project = new Project();
 
@@ -337,6 +357,81 @@ class ProjectController extends Controller {
             }
  			// Adding Expenses Items in All levels of Accountinng tree ...
 
+ 			// Adding new Revenues Level of Accountinng tree ...
+ 				// Level 2
+            $level_two = new AccountingTreeLevelTwo();
+            $last_level_two_revenue = DB::table('accounting_tree_level_twos')
+										->where('code', 'like', '4%' )->orderBy('id', 'desc')->first();
+            if(!empty($last_level_two_revenue)){
+	            $new_level_code = $last_level_two_revenue->code + 1;
+	        }else{
+	            $new_level_code  = "4" . $project->code;
+            }
+            $level_two->code = $new_level_code;
+            $level_two->title = $project->name;
+           	$level_two->level = 2;
+	        $level_two->accounting_tree_level_one_id = 4;    
+	        $level_two->debit = false;
+ 			$level_two->credit = true;
+ 			$level_two->save();
+
+ 				// Level 3
+            $last_level_three_revenue = LevelThreeRevenues::orderby('id', 'desc')->first();
+            if(!empty($last_level_three_revenue)){
+	            $new_level_code = $last_level_three_revenue->code + 1;
+	        }else{
+	            $new_level_code  = $level_two->code . "01";
+            }
+ 			$level_three_revenue = new LevelThreeRevenues(); 
+            $level_three_revenue->code = $new_level_code;
+            $level_three_revenue->title = $project->name  . ' مؤسسة';
+           	$level_three_revenue->level = 3;
+	        $level_three_revenue->parent = $level_two->id;    
+	        $level_three_revenue->debit = false;
+ 			$level_three_revenue->credit = true;
+ 			$level_three_revenue->save();
+
+ 			$level_three_revenue2 = new LevelThreeRevenues(); 
+            $level_three_revenue2->code = $new_level_code + 1 ;
+            $level_three_revenue2->title = $project->name . ' تراخيص';
+           	$level_three_revenue2->level = 3;
+	        $level_three_revenue2->parent = $level_two->id;    
+	        $level_three_revenue2->debit = false;
+ 			$level_three_revenue2->credit = true;
+ 			$level_three_revenue2->save();
+
+ 				// Level 4
+ 			$array = array(' مندوبين ',' مندوبين فاند ');
+ 			$array2 = array(' دفاتر ',' كوبونات ',' تبرعات مباشرة بالبنك ',' فوائد وعوائد ',' مولات ',' رسائل قصيرة ',' فورى ');
+			
+	        $new_level_code  = $level_three_revenue->code . "01";
+ 			foreach ($array as $arr) {
+	 			$level_four_revenue = new LevelFourRevenues(); 
+	            $level_four_revenue->code = $new_level_code;
+	            $level_four_revenue->title = $level_three_revenue->title  . $arr;
+	           	$level_four_revenue->level = 4;
+		        $level_four_revenue->parent = $level_three_revenue->id;    
+		        $level_four_revenue->debit = false;
+	 			$level_four_revenue->credit = true;
+	 			$level_four_revenue->save();
+	 			$new_level_code += 1;
+	 		}
+
+	        $new_level_code  = $level_three_revenue2->code . "01";
+	 		foreach ($array2 as $arr2) {
+	 			$level_four_revenue = new LevelFourRevenues(); 
+	            $level_four_revenue->code = $new_level_code;
+	            $level_four_revenue->title = $level_three_revenue2->title  . $arr2;
+	           	$level_four_revenue->level = 4;
+		        $level_four_revenue->parent = $level_three_revenue2->id;    
+		        $level_four_revenue->debit = false;
+	 			$level_four_revenue->credit = true;
+	 			$level_four_revenue->save();
+	 			$this->insertRevenueLevelFive($arr2,$level_four_revenue->id,$level_four_revenue->code,$level_four_revenue->title);
+	 			$new_level_code += 1;
+	 		}
+ 			
+ 			// Adding new Revenues Level of Accountinng tree ...
 
 
 
@@ -351,6 +446,115 @@ class ProjectController extends Controller {
 		DB::commit();
 
 		return redirect()->route('projects.index')->with('message', 'Item created successfully.');
+	}
+
+
+	private function insertRevenueLevelFive($type,$parent_id,$parent_code,$parent_title)
+	{
+		if($type == ' دفاتر '){
+	        $new_level_code  = $parent_code . "001";
+
+			$notebookLicense = new NotebookLicenses();
+            $notebookLicense->title = $parent_title . ' مندوبين ';
+            $notebookLicense->code = $new_level_code;
+           	$notebookLicense->level = 5;
+	        $notebookLicense->parent = $parent_id;    
+	        $notebookLicense->debit = true;
+ 			$notebookLicense->credit = false;
+ 			$notebookLicense->save();
+
+ 			$notebookLicense = new NotebookLicenses();
+            $notebookLicense->title = $parent_title . ' فاند ';
+            $notebookLicense->code = $new_level_code+1;
+           	$notebookLicense->level = 5;
+	        $notebookLicense->parent = $parent_id;    
+	        $notebookLicense->debit = true;
+ 			$notebookLicense->credit = false;
+ 			$notebookLicense->save();
+		}elseif($type == ' كوبونات '){
+        	$items = Coupons::all();
+			foreach ($items as $item) {
+                $RevenueCoupon = new RevenueCoupons();
+                $RevenueCoupon->level_four_revenue_id  = $parent_id;
+                $RevenueCoupon->coupon_id = $item->id;
+                $RevenueCoupon->code = $parent_code."".$item->code;
+                $RevenueCoupon->save();
+            }
+		}elseif($type == ' تبرعات مباشرة بالبنك '){
+
+			$new_level_code  = $parent_code . "001";
+
+			$RevenueBank = new RevenueBanks();
+            $RevenueBank->title = $parent_title . ' المصرف المتحد ';
+            $RevenueBank->code = $new_level_code;
+           	$RevenueBank->level = 5;
+	        $RevenueBank->parent = $parent_id;    
+	        $RevenueBank->debit = true;
+ 			$RevenueBank->credit = false;
+ 			$RevenueBank->save();
+
+ 			$RevenueBank2 = new RevenueBanks();
+            $RevenueBank2->title = $parent_title . ' التجاري الدولي ';
+            $RevenueBank2->code = $new_level_code + 1;
+           	$RevenueBank2->level = 5;
+	        $RevenueBank2->parent = $parent_id;    
+	        $RevenueBank2->debit = true;
+ 			$RevenueBank2->credit = false;
+ 			$RevenueBank2->save();
+
+
+		}elseif($type == ' فوائد وعوائد '){
+			$new_level_code  = $parent_code . "001";
+
+			$RevenueBenefit = new RevenueBenefits();
+            $RevenueBenefit->title = $parent_title . ' المصرف المتحد ';
+            $RevenueBenefit->code = $new_level_code;
+           	$RevenueBenefit->level = 5;
+	        $RevenueBenefit->parent = $parent_id;    
+	        $RevenueBenefit->debit = true;
+ 			$RevenueBenefit->credit = false;
+ 			$RevenueBenefit->save();
+
+ 			$RevenueBenefit = new RevenueBenefits();
+            $RevenueBenefit->title = $parent_title . ' التجاري الدولي ';
+            $RevenueBenefit->code = $new_level_code + 1;
+           	$RevenueBenefit->level = 5;
+	        $RevenueBenefit->parent = $parent_id;    
+	        $RevenueBenefit->debit = true;
+ 			$RevenueBenefit->credit = false;
+ 			$RevenueBenefit->save();
+		}elseif($type == ' مولات '){
+			$new_level_code  = $parent_code . "001";
+
+			$RevenueMall = new RevenueMalls();
+            $RevenueMall->title = $parent_title . ' مول العرب ';
+            $RevenueMall->code = $new_level_code;
+           	$RevenueMall->level = 5;
+	        $RevenueMall->parent = $parent_id;    
+	        $RevenueMall->debit = true;
+ 			$RevenueMall->credit = false;
+ 			$RevenueMall->save();
+		}elseif($type == ' فورى '){
+			$new_level_code  = $parent_code . "001";
+
+			$RevenueFawry = new RevenueFawries();
+            $RevenueFawry->title = $parent_title . ' المصرف المتحد ';
+            $RevenueFawry->code = $new_level_code;
+           	$RevenueFawry->level = 5;
+	        $RevenueFawry->parent = $parent_id;    
+	        $RevenueFawry->debit = true;
+ 			$RevenueFawry->credit = false;
+ 			$RevenueFawry->save();
+
+ 			$RevenueFawry = new RevenueFawries();
+            $RevenueFawry->title = $parent_title . ' التجاري الدولي ';
+            $RevenueFawry->code = $new_level_code + 1;
+           	$RevenueFawry->level = 5;
+	        $RevenueFawry->parent = $parent_id;    
+	        $RevenueFawry->debit = true;
+ 			$RevenueFawry->credit = false;
+ 			$RevenueFawry->save();
+		}
 	}
 
 	/**

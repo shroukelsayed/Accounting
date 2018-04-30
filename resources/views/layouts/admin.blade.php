@@ -201,6 +201,26 @@
                   <i class="fa fa-plus"></i> <span>@lang('validation.add-insurance-item')</span> 
                 </a>
               </li>
+              <li>
+                <a href="{{URL::to('add-coupon')}}">
+                  <i class="fa fa-plus"></i> <span>@lang('validation.add-coupon')</span> 
+                </a>
+              </li>
+               <li>
+                <a href="{{URL::to('add-revenue-bank-account')}}">
+                  <i class="fa fa-plus"></i> <span>@lang('validation.add-revenue-bank-account')</span> 
+                </a>
+              </li>
+               <li>
+                <a href="{{URL::to('add-revenue-benefit-item')}}">
+                  <i class="fa fa-plus"></i> <span>@lang('validation.add-revenue-benefit-item')</span> 
+                </a>
+              </li>
+               <li>
+                <a href="{{URL::to('add-revenue-fawry-item')}}">
+                  <i class="fa fa-plus"></i> <span>@lang('validation.add-revenue-fawry-item')</span> 
+                </a>
+              </li>
               <!-- // Start of Links to create new case ... by shrouk -->
 
 

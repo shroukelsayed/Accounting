@@ -14,6 +14,9 @@ use App\Http\Requests;
 use App\Project;
 use App\DonationReceipt;
 use App\Receipt;
+
+use App\Workers;
+
 use Illuminate\Support\Facades\Redirect;
 
 class IndexController extends Controller
@@ -129,8 +132,9 @@ class IndexController extends Controller
 		}
 
 		$projects = Project::lists('name','id');
+		$workers = Workers::lists('title','id');
 
-		return view('donation-receipt', compact('projects','receipt','last_id','notebook'));
+		return view('donation-receipt', compact('projects','receipt','last_id','notebook','workers'));
 	}
 
 

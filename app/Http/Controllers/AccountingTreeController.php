@@ -65,6 +65,22 @@ use App\PenalitiesFundWorkers;
 use App\FriendshipFundWorkers;
 use App\InsuranceItems;
 
+use App\LevelThreeRevenues;
+use App\LevelFourRevenues;
+use App\NotebookLicenses;
+use App\Coupons;
+use App\RevenueCoupons;
+use App\RBankAccounts;
+use App\RBenefitItems;
+use App\RFawryItems;
+use App\RevenueBanks;
+use App\RevenueBankAccounts;
+use App\RevenueBenefits;
+use App\RevenueBenefitItems;
+use App\RevenueFawryItems;
+use App\RevenueMalls;
+use App\RevenueSms;
+
 use App\Role;
 use DateTime;
 use DB;
@@ -174,8 +190,9 @@ class AccountingTreeController extends Controller
     {
         //
         $level = AccountingTreeLevelOne::findOrFail($id);
+        $fawryBankitems = FawryBanks::all();
 
-        return view('accounting-tree.show', compact('level'));
+        return view('accounting-tree.show', compact('level','fawryBankitems'));
     }
 
     /**
@@ -617,7 +634,9 @@ class AccountingTreeController extends Controller
      */
     public function fawryBank()
     {
-        return view('accounting-tree.add-fawry-bank');
+        $fawryBankitems = FawryFawryItems::all();
+
+        return view('accounting-tree.add-fawry-bank',compact('fawryBankitems'));
     }
 
     /**
@@ -860,5 +879,216 @@ class AccountingTreeController extends Controller
             $InsuranceItem->save();
         }
         return view('accounting-tree.add-insurance-item')->with('message', 'Item added successfully.');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function coupon()
+    {
+        return view('accounting-tree.add-coupon');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function addCoupon(Request $request)
+    {
+        // var_dump($request->all());die;
+        $last_item = Coupons::orderby('id', 'desc')->first();
+        $item = new Coupons();
+        // $items = Coupons::all();
+
+        if(!is_null($last_item)){
+            $new_level_code = str_pad($last_item->code + 1, 3, '0', STR_PAD_LEFT);
+        }else{
+            $new_level_code = "001";
+        }
+        $item->level = 5;
+        $item->code = $new_level_code;
+        $item->title = $request->input('title');
+        $item->parent = 40;
+        $item->debit = true;
+        $item->credit = false;
+        $item->save();
+
+        $LevelFourRevenues = DB::table('level_four_revenues')
+                                ->where('title', 'like', '% كوبونات %' )->get();
+        // foreach ($items as $item) {
+            
+            foreach ($LevelFourRevenues as $LevelFourRevenue) {
+                $RevenueCoupon = new RevenueCoupons();
+                $RevenueCoupon->level_four_revenue_id  = $LevelFourRevenue->id;
+                $RevenueCoupon->coupon_id = $item->id;
+                $RevenueCoupon->code = $LevelFourRevenue->code."".$item->code;
+
+                $RevenueCoupon->save();
+            }
+        // }
+        return view('accounting-tree.add-coupon')->with('message', 'Item added successfully.');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function revenueBankAccount()
+    {
+        return view('accounting-tree.add-revenue-bank-account');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function addRevenueBankAccount(Request $request)
+    {
+        // var_dump($request->all());die;
+        $last_item = RevenueBankAccounts::orderby('id', 'desc')->first();
+        $item = new RevenueBankAccounts();
+        // $items = Coupons::all();
+
+        if(!is_null($last_item)){
+            $new_level_code = str_pad($last_item->code + 1, 4, '0', STR_PAD_LEFT);
+        }else{
+            $new_level_code = "0001";
+        }
+        $item->level = 6;
+        $item->code = $new_level_code;
+        $item->title = $request->input('title');
+        // $item->parent = 10;
+        $item->debit = true;
+        $item->credit = false;
+        $item->save();
+
+        $RevenueBanks = RevenueBanks::all();
+        // foreach ($items as $item) {
+            
+            foreach ($RevenueBanks as $RevenueBank) {
+                $RevenueCoupon = new RBankAccounts();
+                $RevenueCoupon->revenue_bank_id  = $RevenueBank->id;
+                $RevenueCoupon->revenue_bank_account_id = $item->id;
+                $RevenueCoupon->code = $RevenueBank->code."".$item->code;
+
+                $RevenueCoupon->save();
+            }
+        // }
+        return view('accounting-tree.add-revenue-bank-account')->with('message', 'Item added successfully.');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function revenueBenefitItem()
+    {
+        return view('accounting-tree.add-revenue-benefit-item');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function addRevenueBenefitItem(Request $request)
+    {
+        // var_dump($request->all());die;
+        $last_item = Coupons::orderby('id', 'desc')->first();
+        $item = new Coupons();
+        // $items = Coupons::all();
+
+        if(!is_null($last_item)){
+            $new_level_code = str_pad($last_item->code + 1, 3, '0', STR_PAD_LEFT);
+        }else{
+            $new_level_code = "001";
+        }
+        $item->level = 5;
+        $item->code = $new_level_code;
+        $item->title = $request->input('title');
+        $item->parent = 10;
+        $item->debit = true;
+        $item->credit = false;
+        $item->save();
+
+        $LevelFourRevenues = DB::table('level_four_revenues')
+                                ->where('title', 'like', '% كوبونات %' )->get();
+        // foreach ($items as $item) {
+            
+            foreach ($LevelFourRevenues as $LevelFourRevenue) {
+                $RevenueCoupon = new RevenueCoupons();
+                $RevenueCoupon->level_four_revenue_id  = $LevelFourRevenue->id;
+                $RevenueCoupon->coupon_id = $item->id;
+                $RevenueCoupon->code = $LevelFourRevenue->code."".$item->code;
+
+                $RevenueCoupon->save();
+            }
+        // }
+        return view('accounting-tree.add-revenue-benefit-item')->with('message', 'Item added successfully.');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function revenueFawryItem()
+    {
+        return view('accounting-tree.add-revenue-fawry-item');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function addRevenueFawryItem(Request $request)
+    {
+        // var_dump($request->all());die;
+        $last_item = Coupons::orderby('id', 'desc')->first();
+        $item = new Coupons();
+        // $items = Coupons::all();
+
+        if(!is_null($last_item)){
+            $new_level_code = str_pad($last_item->code + 1, 3, '0', STR_PAD_LEFT);
+        }else{
+            $new_level_code = "001";
+        }
+        $item->level = 5;
+        $item->code = $new_level_code;
+        $item->title = $request->input('title');
+        $item->parent = 10;
+        $item->debit = true;
+        $item->credit = false;
+        $item->save();
+
+        $LevelFourRevenues = DB::table('level_four_revenues')
+                                ->where('title', 'like', '% كوبونات %' )->get();
+        // foreach ($items as $item) {
+            
+            foreach ($LevelFourRevenues as $LevelFourRevenue) {
+                $RevenueCoupon = new RevenueCoupons();
+                $RevenueCoupon->level_four_revenue_id  = $LevelFourRevenue->id;
+                $RevenueCoupon->coupon_id = $item->id;
+                $RevenueCoupon->code = $LevelFourRevenue->code."".$item->code;
+
+                $RevenueCoupon->save();
+            }
+        // }
+        return view('accounting-tree.add-revenue-fawry-item')->with('message', 'Item added successfully.');
     }
 }
