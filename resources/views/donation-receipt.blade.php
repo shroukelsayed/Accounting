@@ -104,6 +104,7 @@
     <!-- @include('error') -->
         <div class="container">
             <div class="content" style="border-style: solid; border-color:black; margin: 5px;padding: 25px; height: 1200px;">
+      <!--       <div class="content" style="border-style: solid; border-color:black; margin: 5px;padding: 25px; height: 1200px;background-image:url('../img/2.png'); "> -->
 
             @if(isset($receipt) and $receipt->id != null)
             	{!! Form::open(['url' => 'save-receipt/'.$receipt->id , 'class' => 'form']) !!}

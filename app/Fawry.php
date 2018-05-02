@@ -13,6 +13,6 @@ class Fawry extends Model
 
     public function fawryItems()
     {
-    	return $this->belongsToMany(FawryItems::class, 'fawry_fawry_items', 'fawry_id','fawry_item_id')->withPivot('code');
+    	return $this->hasMany(FawryItems::class, 'parent');
     }
 }

@@ -103,6 +103,7 @@
     <!-- <?php echo $__env->make('error', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?> -->
         <div class="container">
             <div class="content" style="border-style: solid; border-color:black; margin: 5px;padding: 25px; height: 1200px;">
+      <!--       <div class="content" style="border-style: solid; border-color:black; margin: 5px;padding: 25px; height: 1200px;background-image:url('../img/2.png'); "> -->
 
             <?php if(isset($receipt) and $receipt->id != null): ?>
             	<?php echo Form::open(['url' => 'save-receipt/'.$receipt->id , 'class' => 'form']); ?>

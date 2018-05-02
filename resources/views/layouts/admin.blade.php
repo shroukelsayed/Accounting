@@ -172,6 +172,11 @@
                 </a>
               </li>
               <li>
+                <a href="{{URL::to('add-currency')}}">
+                  <i class="fa fa-plus"></i> <span>@lang('validation.add-currency')</span> 
+                </a>
+              </li>
+              <li>
                 <a href="{{URL::to('add-fawry-item')}}">
                   <i class="fa fa-plus"></i> <span>@lang('validation.add-fawry-item')</span> 
                 </a>

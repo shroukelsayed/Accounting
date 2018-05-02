@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateBankAccountItemsTable extends Migration
+class CreateTreasuryCurrenciesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,18 @@ class CreateBankAccountItemsTable extends Migration
     public function up()
     {
         //
-        Schema::create('bank_account_items', function(Blueprint $table) {
+        Schema::create('treasury_currencies', function(Blueprint $table) {
             $table->increments('id');
             $table->string('code');
             $table->string('title');
+            $table->string('currency_code');
             $table->integer('level');
             $table->boolean('debit');
             $table->boolean('credit');
 
             $table->timestamps();
         });
+
     }
 
     /**
@@ -33,6 +35,6 @@ class CreateBankAccountItemsTable extends Migration
     public function down()
     {
         //
-        Schema::drop('bank_account_items');
+        Schema::drop('treasury_currencies');
     }
 }

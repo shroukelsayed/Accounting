@@ -13,7 +13,6 @@ class CreateAccuredExpenseItemTable extends Migration
     public function up()
     {
         //
-         //
         Schema::create('accured_expense_items', function(Blueprint $table)
         {
             $table->increments('id');

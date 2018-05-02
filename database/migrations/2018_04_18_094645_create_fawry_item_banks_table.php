@@ -20,7 +20,7 @@ class CreateFawryItemBanksTable extends Migration
            
             $table->integer('fawry_item_id')->unsigned()->nullable();
             $table->foreign('fawry_item_id')->references('id')
-                ->on('fawry_fawry_items')->onDelete('cascade');
+                ->on('fawry_items')->onDelete('cascade');
 
             $table->integer('fawry_bank_id')->unsigned()->nullable();
             $table->foreign('fawry_bank_id')->references('id')

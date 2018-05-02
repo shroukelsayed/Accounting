@@ -43,15 +43,17 @@ Route::group(['middleware' => ['web']], function () {
 		Route::post("add-revenue-item","AccountingTreeController@addRevenueItem");
 		Route::get("add-insurance-item","AccountingTreeController@insuranceItem");
 		Route::post("add-insurance-item","AccountingTreeController@addInsuranceItem");
+
 		Route::get("add-coupon","AccountingTreeController@coupon");
 		Route::post("add-coupon","AccountingTreeController@addCoupon");
-
 		Route::get("add-revenue-bank-account","AccountingTreeController@revenueBankAccount");
 		Route::post("add-revenue-bank-account","AccountingTreeController@addRevenueBankAccount");
 		Route::get("add-revenue-benefit-item","AccountingTreeController@revenueBenefitItem");
 		Route::post("add-revenue-benefit-item","AccountingTreeController@addRevenueBenefitItem");
 		Route::get("add-revenue-fawry-item","AccountingTreeController@revenueFawryItem");
 		Route::post("add-revenue-fawry-item","AccountingTreeController@addRevenueFawryItem");
+		Route::get("add-currency","AccountingTreeController@currency");
+		Route::post("add-currency","AccountingTreeController@addCurrency");
 
 	});
 

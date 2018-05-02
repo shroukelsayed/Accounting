@@ -21,7 +21,6 @@ use App\ExpensesItems;
 
 use App\FawryItems;
 use App\FawryBanks;
-use App\FawryFawryItems;
 use App\FawryItemBanks;
 
 use App\LevelThreeOperationExpenses;
@@ -198,28 +197,34 @@ class ProjectController extends Controller {
  			$fawry->credit = false;
  			$fawry->save();
 
- 			$FawryItems = FawryItems::all();
+ 			$fawryItem = new FawryItems();
+	        $fawryItem->level = 5;
+	        $fawryItem->code = $fawry->code ."" . "001";
+	        $fawryItem->title = " تجزئة ";
+	        $fawryItem->debit = false;
+	        $fawryItem->credit = true;
+	        $fawryItem->save();
+
+	        $fawryItem2 = new FawryItems();
+	        $fawryItem2->level = 5;
+	        $fawryItem2->code = $fawry->code ."" . "002";
+	        $fawryItem2->title = " بنك ";
+	        $fawryItem2->debit = false;
+	        $fawryItem2->credit = true;
+	        $fawryItem2->save();
+
+
+
 	        $fawryBanks = FawryBanks::all();
-
-	        foreach ($FawryItems as $FawryItem) {
-	            $fawryFawryItem = new FawryFawryItems();
-	            $fawryFawryItem->fawry_id = $fawry->id;
-	            $fawryFawryItem->fawry_item_id = $FawryItem->id;
-	            $fawryFawryItem->code = $fawry->code."".$FawryItem->code;
-	            $fawryFawryItem->save();
-
-	            foreach ($fawryBanks as $fawryBank) {
-		            if($fawryFawryItem->fawry_item_id == 2){
-		                $fawryItemBank = new FawryItemBanks();
-		                $fawryItemBank->fawry_item_id = $fawryFawryItem->id;
-		                $fawryItemBank->fawry_bank_id = $fawryBank->id;
-		                $fawryItemBank->code = $fawryFawryItem->code.''.$fawryBank->code;
-		                $fawryItemBank->save();
-		                break;
-		            }
-		        }
-
+            foreach ($fawryBanks as $fawryBank) {
+	            $fawryItemBank = new FawryItemBanks();
+	            $fawryItemBank->fawry_item_id = $fawryItem2->id;
+	            $fawryItemBank->fawry_bank_id = $fawryBank->id;
+	            $fawryItemBank->code = $fawryItem2->code.''.$fawryBank->code;
+	            $fawryItemBank->save();
 	        }
+
+	        
  			// 5- Sms
             $sms = new Sms();
             $lastSms = Sms::orderby('id', 'desc')->first();

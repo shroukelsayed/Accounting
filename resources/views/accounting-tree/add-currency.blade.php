@@ -6,17 +6,15 @@
 @section('content')
     
     <br><br><br>
-
-    
     <div class="page-header">
-        <h1><i class="glyphicon glyphicon-plus"></i> Add Fawry Bank </h1>
+        <h1><i class="glyphicon glyphicon-plus"></i> Add Currency </h1>
     </div>
     <br><br><br>
    
     <div class="row">
         <div class="col-md-12">
 
-            <form action="{{ url('add-fawry-bank') }}" method="POST">
+            <form action="{{ url('add-currency') }}" method="POST">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                 <div class="row">
                     <div class="col-md-9">
@@ -28,7 +26,21 @@
                         @endif
                     </div>
                     <div class="col-md-3">
-                        <label style="float: right;">bank name</label>
+                        <label style="float: right;">item name</label>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-md-9">
+                        <input type="text" name="currency_code" class="form-control" dir="rtl" autofocus>
+                        @if ($errors->has('currency_code'))
+                            <span class="alert-danger">
+                                <strong>{{ $errors->first('currency_code') }}</strong>
+                            </span>
+                        @endif
+                    </div>
+                    <div class="col-md-3">
+                        <label style="float: right;">Currency Code</label>
                     </div>
                 </div>
                 <br>

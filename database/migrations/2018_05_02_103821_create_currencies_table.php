@@ -15,11 +15,20 @@ class CreateCurrenciesTable extends Migration
         //
         Schema::create('currencies', function(Blueprint $table) {
             $table->increments('id');
-            $table->string('currency_name');
-            $table->string('currency_code');
+            $table->string('code');
             $table->float('rate');
+            
+            $table->integer('treasury_id')->unsigned()->nullable();
+            $table->foreign('treasury_id')->references('id')
+                ->on('treasuries')->onDelete('cascade');
+
+            $table->integer('treasury_currency_id')->unsigned()->nullable();
+            $table->foreign('treasury_currency_id')->references('id')
+                ->on('treasury_currencies')->onDelete('cascade');
+
             $table->timestamps();
         });
+
     }
 
     /**

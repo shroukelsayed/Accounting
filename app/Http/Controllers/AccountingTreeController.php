@@ -10,11 +10,14 @@ use App\User;
 use App\AccountingTreeLevelOne;
 use App\AccountingTreeLevelTwo;
 use App\FixedAssets;
+
 use App\CurrentAssets;
 use App\Banks;
 use App\BankAccounts;
 use App\BankAccountItems;
 use App\Treasury;
+use App\TreasuryCurrencies;
+use App\Currency;
 use App\AdvancedExpenses;
 use App\ExpensesItems;
 use App\DepositsWithOthers;
@@ -54,7 +57,6 @@ use App\GeneralExpenseItems;
 
 use App\AdvancedExpenseExpensesItems; 
 use App\AccuredExpenseItems;
-use App\FawryFawryItems;
 use App\FawryItemBanks;
 use App\AccountItems;
 use App\StoreItems;
@@ -190,8 +192,7 @@ class AccountingTreeController extends Controller
     {
         //
         $level = AccountingTreeLevelOne::findOrFail($id);
-        $fawryBankitems = FawryBanks::all();
-
+       
         return view('accounting-tree.show', compact('level','fawryBankitems'));
     }
 
@@ -520,7 +521,6 @@ class AccountingTreeController extends Controller
                 $new_level_code = "001";
             }
             $item->level = 5;
-            $item->parent = 0;
             $item->code = $new_level_code;
             $item->title = $request->input('title');
             $item->debit = false;
@@ -578,53 +578,6 @@ class AccountingTreeController extends Controller
         return view('accounting-tree.add-expenses-item')->with('message', 'Item deleted successfully.');
 
     }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function fawryItem()
-    {
-        return view('accounting-tree.add-fawry-item');
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function addFawryItem(Request $request)
-    {
-        // var_dump($request);die;
-        $last_item = FawryItems::orderby('id', 'desc')->first();
-        $item = new FawryItems();
-
-        if(!is_null($last_item)){
-            $new_level_code = str_pad($last_item->code + 1, 3, '0', STR_PAD_LEFT);
-        }else{
-            $new_level_code = "001";
-        }
-        $item->level = 5;
-        $item->code = $new_level_code;
-        $item->title = $request->input('title');
-        $item->debit = false;
-        $item->credit = true;
-        $item->save();
-
-        $fawries = Fawry::all();
-        foreach ($fawries as $fawry) {
-            $FawryFawryItem = new FawryFawryItems();
-            $FawryFawryItem->fawry_id = $fawry->id;
-            $FawryFawryItem->fawry_item_id = $item->id;
-            $FawryFawryItem->code = $fawry->code."".$item->code;
-            $FawryFawryItem->save();
-        }
-
-        return view('accounting-tree.add-fawry-item')->with('message', 'Item deleted successfully.');
-    }
     
     /**
      * Remove the specified resource from storage.
@@ -634,9 +587,8 @@ class AccountingTreeController extends Controller
      */
     public function fawryBank()
     {
-        $fawryBankitems = FawryFawryItems::all();
 
-        return view('accounting-tree.add-fawry-bank',compact('fawryBankitems'));
+        return view('accounting-tree.add-fawry-bank');
     }
 
     /**
@@ -663,7 +615,7 @@ class AccountingTreeController extends Controller
         $item->credit = true;
         $item->save();
         /// Add new bank to all items ..
-        $fawryItems = FawryFawryItems::all();
+        $fawryItems = FawryItems::all();
         foreach ($fawryItems as $fawryItem) {
             if($fawryItem->fawry_item_id == 2){
                 $fawryItemBank = new FawryItemBanks();
@@ -913,7 +865,6 @@ class AccountingTreeController extends Controller
         $item->level = 5;
         $item->code = $new_level_code;
         $item->title = $request->input('title');
-        $item->parent = 40;
         $item->debit = true;
         $item->credit = false;
         $item->save();
@@ -966,7 +917,6 @@ class AccountingTreeController extends Controller
         $item->level = 6;
         $item->code = $new_level_code;
         $item->title = $request->input('title');
-        // $item->parent = 10;
         $item->debit = true;
         $item->credit = false;
         $item->save();
@@ -1018,7 +968,6 @@ class AccountingTreeController extends Controller
         $item->level = 5;
         $item->code = $new_level_code;
         $item->title = $request->input('title');
-        $item->parent = 10;
         $item->debit = true;
         $item->credit = false;
         $item->save();
@@ -1071,7 +1020,6 @@ class AccountingTreeController extends Controller
         $item->level = 5;
         $item->code = $new_level_code;
         $item->title = $request->input('title');
-        $item->parent = 10;
         $item->debit = true;
         $item->credit = false;
         $item->save();
@@ -1090,5 +1038,54 @@ class AccountingTreeController extends Controller
             }
         // }
         return view('accounting-tree.add-revenue-fawry-item')->with('message', 'Item added successfully.');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function currency()
+    {
+        return view('accounting-tree.add-currency');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function addCurrency(Request $request)
+    {
+        $treasuries = Treasury::all();
+
+        $last_item = TreasuryCurrencies::orderby('id', 'desc')->first();
+        $item = new TreasuryCurrencies();
+
+        if(!is_null($last_item)){
+            $new_level_code = str_pad($last_item->code + 1, 3, '0', STR_PAD_LEFT);
+        }else{
+            $new_level_code = "001";
+        }
+        $item->level = 5;
+        $item->code = $new_level_code;
+        $item->title = $request->input('title');
+        $item->currency_code = $request->input('currency_code');
+        $item->debit = true;
+        $item->credit = false;
+        $item->save();
+
+        foreach ($treasuries as $treasury) {
+            $currency = new Currency();
+            $currency->treasury_id  = $treasury->id;
+            $currency->treasury_currency_id = $item->id;
+            $currency->code = $treasury->code."".$item->code;
+            $currency->rate = 0.0;
+
+            $currency->save();
+        }
+        return view('accounting-tree.add-currency')->with('message', 'Item added successfully.');
     }
 }
