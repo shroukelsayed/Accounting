@@ -108,27 +108,9 @@ class AccountingTreeController extends Controller
      */
     public function index()
     {
+       
         //
         $levels = AccountingTreeLevelOne::orderBy('id', 'asc')->paginate(10);
-        // foreach ($levels as $l) {
-        //     foreach ($l->levelTwo as $l_2) {
-        //         foreach ($l_2->currentAssets as $c) {
-        //             foreach ($c->fawry as $fawry) {
-        //                     // var_dump($fawry->fawryItems);
-        //                 foreach($fawry->fawryItems as $fawryItem) {
-        //                         var_dump($fawryItem->title);
-        //                    // foreach ($fawryItem->fawryBanks as $bank){
-        //                    //  var_dump($bank->title);
-        //                    // } 
-
-                            
-        //                 }
-        //             }
-        //         }
-        //     }
-        // }
-        // die;
-
         return view('accounting-tree.index', compact('levels'));
     }
 
@@ -192,8 +174,27 @@ class AccountingTreeController extends Controller
     {
         //
         $level = AccountingTreeLevelOne::findOrFail($id);
+        // foreach ($level->levelTwo as $level_two ) {
+        //     foreach ($level_two->currentAssets as $currentAsset ) {
+        //        foreach ($currentAsset->fawry as $fawry) {
+        //            foreach ($fawry->fawryItems as $item) {
+        //                # code...
+        //             // var_dump($item->fawryItemBanks);
+        //                 if(!is_null($item->fawryItemBanks)){
+        //                     foreach ($item->fawryItemBanks as $bank) {
+        //                         var_dump($bank->title);
+                            
+        //                     }
+        //                 }
+                        
+        //            }
+
+        //        }
+        //     }
+        // }
        
-        return view('accounting-tree.show', compact('level','fawryBankitems'));
+        // die;
+        return view('accounting-tree.show', compact('level'));
     }
 
     /**
@@ -255,8 +256,7 @@ class AccountingTreeController extends Controller
      */
     public function addChild(Request $request)
     {
-        // var_dump();
-        // var_dump($request->all());die;
+        var_dump($request->all());die;
 
         // Start transaction!
         DB::beginTransaction();
@@ -359,15 +359,15 @@ class AccountingTreeController extends Controller
                     $level = new LevelFourGeneralExpenses();
                     $last_level = LevelFourGeneralExpenses::orderby('id', 'desc')->first();
 
-                    $items = ExpensesItems::all();
-                    foreach ($items as $item) {
-                        $GeneralExpenseItem = new GeneralExpenseItems();
-                        $GeneralExpenseItem->general_expense_id = $level->id;
-                        $GeneralExpenseItem->expenses_item_id = $item->id;
-                        $GeneralExpenseItem->code = $level->code.''.$item->code;
+                    // $items = ExpensesItems::all();
+                    // foreach ($items as $item) {
+                    //     $GeneralExpenseItem = new GeneralExpenseItems();
+                    //     $GeneralExpenseItem->general_expense_id = $level->id;
+                    //     $GeneralExpenseItem->expenses_item_id = $item->id;
+                    //     $GeneralExpenseItem->code = $level->code.''.$item->code;
 
-                        $GeneralExpenseItem->save();
-                    }
+                    //     $GeneralExpenseItem->save();
+                    // }
 
                 }else if(strpos($request->input('parent_code'), '32') !== false){
                     $level = new LevelFourOperationExpenses();
@@ -400,6 +400,10 @@ class AccountingTreeController extends Controller
                 }elseif($request->input('parent_code') == '121101002'){
                     $level = new FawryBanks();
                     $last_level = FawryBanks::orderby('id', 'desc')->first();
+                }elseif (preg_match('^4[0-9]{1}0203001^','420203001') || preg_match('^4[0-9]{1}0203001^','420203002')) {
+                    # code...
+                    var_dump("jhjhh");
+                    die;
                 }
 
             }
@@ -466,8 +470,16 @@ class AccountingTreeController extends Controller
                         $GeneralExpenseItem->general_expense_id = $level->id;
                         $GeneralExpenseItem->expenses_item_id = $item->id;
                         $GeneralExpenseItem->code = $level->code.''.$item->code;
-
                         $GeneralExpenseItem->save();
+                    }
+                }elseif ($request->input('parent_code') == '1203') {
+                    $items = ExpensesItems::all();
+                    foreach ($items as $item) {
+                        $advancedExpenseExpensesItem = new AdvancedExpenseExpensesItems();
+                        $advancedExpenseExpensesItem->advanced_expense_id = $level->id;
+                        $advancedExpenseExpensesItem->expenses_item_id = $item->id;
+                        $advancedExpenseExpensesItem->code = $level->code."".$item->code;
+                        $advancedExpenseExpensesItem->save();
                     }
                 }
             }
@@ -617,7 +629,7 @@ class AccountingTreeController extends Controller
         /// Add new bank to all items ..
         $fawryItems = FawryItems::all();
         foreach ($fawryItems as $fawryItem) {
-            if($fawryItem->fawry_item_id == 2){
+            if($fawryItem->title == ' بنك '){
                 $fawryItemBank = new FawryItemBanks();
                 $fawryItemBank->fawry_item_id = $fawryItem->id;
                 $fawryItemBank->fawry_bank_id = $item->id;
@@ -638,7 +650,8 @@ class AccountingTreeController extends Controller
      */
     public function bankAccountItem()
     {
-        return view('accounting-tree.add-bank-account-item');
+        $all_items = BankAccountItems::all();
+        return view('accounting-tree.add-bank-account-item',compact('all_items'));
     }
 
     /**
@@ -650,6 +663,7 @@ class AccountingTreeController extends Controller
     public function addBankAccountItem(Request $request)
     {
         // var_dump($request->all());die;
+
         $last_item = BankAccountItems::orderby('id', 'desc')->first();
         $item = new BankAccountItems();
 

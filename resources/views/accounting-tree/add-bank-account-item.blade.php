@@ -4,11 +4,17 @@
 @endsection
 
 @section('content')
-    
-    <br><br><br>
     <div class="page-header">
-        <h1><i class="glyphicon glyphicon-plus"></i> Add Bank Account Item </h1>
+        <h1><i class="glyphicon glyphicon-plus"></i> All Bank Account Item </h1>
     </div>
+    <ul class="pull-right" dir="rtl">
+        @foreach($all_items as $item)
+            <li>
+                <h5>{{$item->title}}</h5>
+            </li>
+        @endforeach
+    </ul>
+    
     <br><br><br>
    
     <div class="row">

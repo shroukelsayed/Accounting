@@ -6,7 +6,9 @@
         <h1 class="pull-right"> {{$level->title}} &nbsp <i class="fa fa-th-large"></i></h1><br>
     </div>
 
-
+<?php
+    // var_dump(in_array($currentAsset->code,array('1202','1203,'1204','1207','1208','1210'))))
+?>
     <!-- Nav tabs -->
     <ul class="nav nav-tabs nav-justified indigo" role="tablist">
         @foreach($level->levelTwo as $level_two)
@@ -63,7 +65,6 @@
                                                             <div class="collapse" id="panel-{{$treasury->code}}" role="tabpanel">
                                                                 @foreach($treasury->treasuryCurrencies as $treasuryCurrencie)
                                                                     <h5> &nbsp{{$treasuryCurrencie->title}}</h5>
-                                                                    
                                                                 @endforeach
                                                             </div>
                                                         </li>
@@ -82,22 +83,22 @@
                                                                 <li>
                                                                 <a style="color: darkblue;" class="nav-link " data-toggle="collapse" data-target="#panel-{{$bankAccount->code}}" role="tab"> <i class="fa fa-download ml-2"></i> &nbsp{{$bankAccount->title}}</a>
                                                                 <div class="collapse" id="panel-{{$bankAccount->code}}" role="tabpanel">
-                                                                    @foreach($bankAccount->bankAccountItems as $bankAccountItem)
-                                                                        <h5 class="my-2 h5">{{$bankAccount->code}}{{$bankAccountItem->code}}{{$bankAccountItem->title}}</h5>
-                                                                    @endforeach 
+                                                                    <ul>
+                                                                        @foreach($bankAccount->bankAccountItems as $bankAccountItem)
+                                                                            <li>
+                                                                                <h5 class="my-2 h5">{{$bankAccount->code}}{{$bankAccountItem->code}}{{$bankAccountItem->title}}</h5>
+                                                                            </li>
+                                                                        @endforeach
+                                                                    </ul> 
                                                                 </div>
                                                                 </li>
                                                             @endforeach
                                                             </ul>
-                                                           <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal" onclick="drawdev({{ $bank->id }},{{ $bank->code }},{{ $bank->level }});"><i class="glyphicon glyphicon-plus"></i> Add New </button>
+                                                            <br><button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal" onclick="drawdev({{ $bank->id }},{{ $bank->code }},{{ $bank->level }});"><i class="glyphicon glyphicon-plus"></i> Add New Account</button>
                                                             <div id="addChild-{{$bank->code}}"></div>
                                                             </div>
                                                             </li>
                                                         @endforeach
-                                                            <li>
-                                                                <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal" onclick="drawdev({{ $level_two->id }},{{ $level_two->code }},{{ $level_two->level }});"><i class="glyphicon glyphicon-plus"></i> Add New </button>
-                                                                <div id="addChild-{{$level_two->code}}"></div>
-                                                            </li>
                                                         </ul>
                                                     @endif
                                                     <ul>
@@ -108,6 +109,8 @@
                                                             @foreach($advancedExpense->expensesItems as $expensesItem)
                                                                 <h5 class="my-2 h5">{{$expensesItem->title}}</h5>
                                                             @endforeach
+                                                            <br><button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal" onclick="drawdev({{ $advancedExpense->id }},{{ $advancedExpense->code }},{{ $advancedExpense->level }});"><i class="glyphicon glyphicon-plus"></i> Add New Currency</button>
+                                                            <div id="addChild-{{$advancedExpense->code}}"></div>
                                                         <hr> 
                                                         </div>
                                                         </li>
@@ -182,11 +185,16 @@
                                                             <ul>
                                                                 @foreach($fawry->fawryItems as $fawryItem)
                                                                 <li>
-                                                                    <a style="color: darkblue;" class="nav-link " data-toggle="collapse" data-target="#panel-{{$fawryItem->pivot->code}}" role="tab"> <i class="fa fa-download ml-2"></i> &nbsp{{$fawryItem->title}}</a>
-                                                                    <div class="collapse" id="panel-{{$fawryItem->pivot->code}}" role="tabpanel">
-                                                                        
-                                                                
-                                                                    </div>
+                                                                    <a style="color: darkblue;" class="nav-link " data-toggle="collapse" data-target="#panel-{{$fawryItem->code}}" role="tab"> <i class="fa fa-download ml-2"></i> &nbsp{{$fawryItem->title}}</a>
+                                                                    @if(!is_null($fawryItem->fawryItemBanks))
+                                                                        <div class="collapse" id="panel-{{$fawryItem->code}}" role="tabpanel">
+                                                                            <ul>
+                                                                                @foreach ($fawryItem->fawryItemBanks as $bank)
+                                                                                    <li><h5>{{$bank->title}}</h5></li>
+                                                                                @endforeach
+                                                                            </ul>
+                                                                        </div>
+                                                                    @endif
                                                                 </li>
                                                                 @endforeach
                                                             </ul>
@@ -200,6 +208,10 @@
                                                     @foreach($currentAsset->cibMachine as $cibMachine)
                                                         <h5 class="my-2 h5">{{$cibMachine->title}}</h5>
                                                     @endforeach 
+                                                    @if(in_array($currentAsset->code,array('1202','1203' ,'1204','1207','1208','1210')))
+                                                        <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal" onclick="drawdev({{ $currentAsset->id }},{{ $currentAsset->code }},{{ $currentAsset->level }});"><i class="glyphicon glyphicon-plus"></i> Add New </button>
+                                                        <div id="addChild-{{$currentAsset->code}}"></div>
+                                                    @endif
                                                 </div>
                                                 <!--/.Panel 1-->
                                             </div>
@@ -307,8 +319,11 @@
                                                         <h5 class="my-2 h5">{{$creditor->title}}</h5>
                                                     @endforeach
 
-                                                    <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal" onclick="drawdev({{ $currentLiability->id }},{{ $currentLiability->code }},{{ $currentLiability->level }});"><i class="glyphicon glyphicon-plus"></i> Add New </button>
-                                                    <div id="addChild-{{$currentLiability->code}}"></div>
+                                                    @if(in_array($currentLiability->code,array('2102','2103' ,'2104','2108','2109')))
+                                                        <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal" onclick="drawdev({{ $currentLiability->id }},{{ $currentLiability->code }},{{ $currentLiability->level }});"><i class="glyphicon glyphicon-plus"></i> Add New </button>
+                                                        <div id="addChild-{{$currentLiability->code}}"></div>
+                                                    @endif
+                                                    
                                                 </div>
                                                 <!--/.Panel 1-->
                                             </div>
@@ -420,19 +435,23 @@
 
                                                 <ul>
                                                 @foreach($levelFour->revenueBanks as $revenueBank)
-                                                    <li>
+                                                    <!-- <li>
                                                     <h5 class="my-2 h5">&nbsp&nbsp{{$revenueBank->code}} &nbsp&nbsp{{$revenueBank->title}}</h5>
+                                                    </li> -->
+                                                    <li>
+                                                        <a style="color: darkblue;" class="nav-link " data-toggle="collapse" data-target="#panel-{{$revenueBank->code}}" role="tab"> <i class="fa fa-download ml-2"></i> &nbsp{{$revenueBank->title}}</a>
+                                                        <div class="collapse" id="panel-{{$revenueBank->code}}" role="tabpanel">
+                                                            <!-- <ul>
+                                                            @foreach($revenueBank->revenueBankAccounts as $revenueBankAccount)
+                                                                <li>
+                                                                <h5 class="my-2 h5">&nbsp&nbsp{{$revenueBankAccount->pivot->code}} &nbsp&nbsp{{$revenueBankAccount->title}}</h5>
+                                                                </li>
+                                                            @endforeach 
+                                                            </ul> -->
+                                                            <!-- <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal" onclick="drawdev({{ $revenueBank->id }},{{ $revenueBank->code }},{{ $revenueBank->level }});"><i class="glyphicon glyphicon-plus"></i> Add New </button>
+                                                            <div id="addChild-{{$revenueBank->code}}"></div> -->
+                                                        </div>
                                                     </li>
-                                                    <!-- <a style="color: darkblue;" class="nav-link " data-toggle="collapse" data-target="#panel-{{$revenueBank->code}}" role="tab"> <i class="fa fa-download ml-2"></i> &nbsp{{$revenueBank->title}}</a>
-                                                    <div class="collapse" id="panel-{{$revenueBank->code}}" role="tabpanel">
-                                                        <ul>
-                                                        @foreach($revenueBank->revenueBankAccounts as $revenueBankAccount)
-                                                            <li>
-                                                            <h5 class="my-2 h5">&nbsp&nbsp{{$revenueBankAccount->pivot->code}} &nbsp&nbsp{{$revenueBankAccount->title}}</h5>
-                                                            </li>
-                                                        @endforeach 
-                                                        </ul>
-                                                    </div> -->
                                                 @endforeach
                                                 </ul>
 
@@ -481,7 +500,7 @@ function drawdev(parent_id,parent_code,parent_level){
 
              html += '<div class="row"><div class="col-md-3"><label> Level Title</label></div><div class="col-md-9"><input type="text" name="level_title" class="form-control" required autofocus></div></div>';
 
-             html += '<div class="row"><div class="col-md-3"></div><div class="col-md-6"><input type="radio" name="type" value="credit"> دائن<input type="radio" name="type" value="debit" > مدين <br></div><div class="col-md-3"></div></div></div>'; 
+             html += '<div class="row"><div class="col-md-3"></div><div class="col-md-6"><input type="radio" name="type" value="credit" checked> دائن<input type="radio" name="type" value="debit" > مدين <br></div><div class="col-md-3"></div></div></div>'; 
 
             html +="<div class='modal-footer'><button type='submit' class='btn btn-primary'>Save changes</button><button type='button' class='btn btn-default' data-dismiss='modal'>Close</button></div></div></div></form></div>";
            

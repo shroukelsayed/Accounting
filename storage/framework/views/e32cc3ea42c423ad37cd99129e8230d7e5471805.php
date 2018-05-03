@@ -176,10 +176,6 @@
                   <i class="fa fa-plus"></i> <span><?php echo app('translator')->get('validation.add-currency'); ?></span> 
                 </a>
               </li>
-              <li>
-                <a href="<?php echo e(URL::to('add-fawry-item')); ?>">
-                  <i class="fa fa-plus"></i> <span><?php echo app('translator')->get('validation.add-fawry-item'); ?></span> 
-                </a>
               </li>
               <li>
                 <a href="<?php echo e(URL::to('add-fawry-bank')); ?>">

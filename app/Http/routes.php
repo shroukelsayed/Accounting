@@ -31,8 +31,6 @@ Route::group(['middleware' => ['web']], function () {
 
 		Route::get("add-expenses-item","AccountingTreeController@expensesItem");
 		Route::post("add-expenses-item","AccountingTreeController@addExpensesItem");
-		Route::get("add-fawry-item","AccountingTreeController@fawryItem");
-		Route::post("add-fawry-item","AccountingTreeController@addFawryItem");
 		Route::get("add-fawry-bank","AccountingTreeController@fawryBank");
 		Route::post("add-fawry-bank","AccountingTreeController@addFawryBank");
 		Route::get("add-bank-account-item","AccountingTreeController@bankAccountItem");

@@ -199,6 +199,7 @@ class ProjectController extends Controller {
 
  			$fawryItem = new FawryItems();
 	        $fawryItem->level = 5;
+	        $fawryItem->parent = $fawry->id;    
 	        $fawryItem->code = $fawry->code ."" . "001";
 	        $fawryItem->title = " تجزئة ";
 	        $fawryItem->debit = false;
@@ -207,6 +208,7 @@ class ProjectController extends Controller {
 
 	        $fawryItem2 = new FawryItems();
 	        $fawryItem2->level = 5;
+	        $fawryItem2->parent = $fawry->id;    
 	        $fawryItem2->code = $fawry->code ."" . "002";
 	        $fawryItem2->title = " بنك ";
 	        $fawryItem2->debit = false;
