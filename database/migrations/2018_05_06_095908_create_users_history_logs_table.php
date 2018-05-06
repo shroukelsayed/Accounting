@@ -12,7 +12,8 @@ class CreateUsersHistoryLogsTable extends Migration
      */
     public function up()
     {
-        Schema::create('users_history_logs', function(Blueprint $table) {
+        //
+         Schema::create('users_history_logs', function(Blueprint $table) {
             $table->increments('id');
             
             $table->timestamps();
