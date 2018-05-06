@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateAccountingTreeLevelTwoTable extends Migration
+class CreateAccountingTreeLevelTwosTable extends Migration
 {
     /**
      * Run the migrations.

@@ -8,8 +8,8 @@ $baseDir = dirname($vendorDir);
 return array(
     'CreateAccountItemTable' => $baseDir . '/database/migrations/2018_04_17_120059_create_account_item_table.php',
     'CreateAccountSheetsTable' => $baseDir . '/database/migrations/2018_02_21_094849_create_account_sheets_table.php',
-    'CreateAccountingTreeLevelOneTable' => $baseDir . '/database/migrations/2018_03_26_153832_create_accounting_tree_level_ones_table.php',
-    'CreateAccountingTreeLevelTwoTable' => $baseDir . '/database/migrations/2018_03_26_154715_create_accounting_tree_level_twos_table.php',
+    'CreateAccountingTreeLevelOnesTable' => $baseDir . '/database/migrations/2018_03_26_153832_create_accounting_tree_level_ones_table.php',
+    'CreateAccountingTreeLevelTwosTable' => $baseDir . '/database/migrations/2018_03_26_154715_create_accounting_tree_level_twos_table.php',
     'CreateAccuredExpenseItemTable' => $baseDir . '/database/migrations/2018_04_17_113308_create_accured_expense_item_table.php',
     'CreateAccuredExpensesTable' => $baseDir . '/database/migrations/2018_03_27_133102_create_accured_expenses_table.php',
     'CreateAccuredItemsTable' => $baseDir . '/database/migrations/2018_04_19_112012_create_accured_items_table.php',
