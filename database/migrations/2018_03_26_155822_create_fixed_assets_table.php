@@ -23,7 +23,6 @@ class CreateFixedAssetsTable extends Migration
             $table->boolean('credit');
 
             $table->foreign('parent')->references('id')->on('accounting_tree_level_twos')->onDelete('cascade');
-
             $table->timestamps();
         });
     }
@@ -36,6 +35,6 @@ class CreateFixedAssetsTable extends Migration
     public function down()
     {
         //
-        Schema::drop('fixed_assets');
+        // Schema::drop('fixed_assets');
     }
 }
