@@ -787,6 +787,7 @@ class AccountingTreeController extends Controller
         $item->title = $request->input('title');
         $item->debit = false;
         $item->credit = true;
+        $item->parent = 0;
         $item->save();
 
         $AccuredRevenues = AccuredRevenues::all();

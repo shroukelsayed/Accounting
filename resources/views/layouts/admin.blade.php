@@ -207,7 +207,7 @@
                   <i class="fa fa-plus"></i> <span>@lang('validation.add-coupon')</span> 
                 </a>
               </li>
-               <li>
+              <!--  <li>
                 <a href="{{URL::to('add-revenue-bank-account')}}">
                   <i class="fa fa-plus"></i> <span>@lang('validation.add-revenue-bank-account')</span> 
                 </a>
@@ -221,7 +221,7 @@
                 <a href="{{URL::to('add-revenue-fawry-item')}}">
                   <i class="fa fa-plus"></i> <span>@lang('validation.add-revenue-fawry-item')</span> 
                 </a>
-              </li>
+              </li> -->
               <!-- // Start of Links to create new case ... by shrouk -->
 
 
