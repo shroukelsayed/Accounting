@@ -33,6 +33,6 @@ class CreateAccountingTreeLevelTwoTable extends Migration
      */
     public function down()
     {
-        Schema::drop('accounting_tree_level_twos');
+        // Schema::drop('accounting_tree_level_twos');
     }
 }
