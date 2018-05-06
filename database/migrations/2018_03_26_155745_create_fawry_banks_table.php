@@ -33,6 +33,6 @@ class CreateFawryBanksTable extends Migration
     public function down()
     {
         //
-        Schema::drop('fawry_banks');
+        // Schema::drop('fawry_banks');
     }
 }
