@@ -29,7 +29,7 @@ return array(
     'CreateCurrentLiabilitiesTable' => $baseDir . '/database/migrations/2018_03_27_133031_create_current_liabilities_table.php',
     'CreateCustodyAndAdvanceWorkersTable' => $baseDir . '/database/migrations/2018_04_19_124832_create_custody_and_advance_workers_table.php',
     'CreateCustodyAndAdvancesTable' => $baseDir . '/database/migrations/2018_03_27_132551_create_custody_and_advances_table.php',
-    'CreateCustodySheetTable' => $baseDir . '/database/migrations/2018_02_21_094943_create_custody_sheets_table.php',
+    'CreateCustodySheetsTable' => $baseDir . '/database/migrations/2018_02_21_094943_create_custody_sheets_table.php',
     'CreateDepositsWithOtherItemsTable' => $baseDir . '/database/migrations/2018_03_27_130526_create_deposits_with_other_items_table.php',
     'CreateDepositsWithOthersTable' => $baseDir . '/database/migrations/2018_03_27_130517_create_deposits_with_others_table.php',
     'CreateDonationReceiptsTable' => $baseDir . '/database/migrations/2018_02_21_094751_create_donation_receipts_table.php',

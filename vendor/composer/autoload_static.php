@@ -319,7 +319,7 @@ class ComposerStaticInitd862fef8e29d86cf3144b8ef6aacc142
         'CreateCurrentLiabilitiesTable' => __DIR__ . '/../..' . '/database/migrations/2018_03_27_133031_create_current_liabilities_table.php',
         'CreateCustodyAndAdvanceWorkersTable' => __DIR__ . '/../..' . '/database/migrations/2018_04_19_124832_create_custody_and_advance_workers_table.php',
         'CreateCustodyAndAdvancesTable' => __DIR__ . '/../..' . '/database/migrations/2018_03_27_132551_create_custody_and_advances_table.php',
-        'CreateCustodySheetTable' => __DIR__ . '/../..' . '/database/migrations/2018_02_21_094943_create_custody_sheets_table.php',
+        'CreateCustodySheetsTable' => __DIR__ . '/../..' . '/database/migrations/2018_02_21_094943_create_custody_sheets_table.php',
         'CreateDepositsWithOtherItemsTable' => __DIR__ . '/../..' . '/database/migrations/2018_03_27_130526_create_deposits_with_other_items_table.php',
         'CreateDepositsWithOthersTable' => __DIR__ . '/../..' . '/database/migrations/2018_03_27_130517_create_deposits_with_others_table.php',
         'CreateDonationReceiptsTable' => __DIR__ . '/../..' . '/database/migrations/2018_02_21_094751_create_donation_receipts_table.php',
