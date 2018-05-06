@@ -109,8 +109,6 @@
                                                             @foreach($advancedExpense->expensesItems as $expensesItem)
                                                                 <h5 class="my-2 h5">{{$expensesItem->title}}</h5>
                                                             @endforeach
-                                                            <br><button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal" onclick="drawdev({{ $advancedExpense->id }},{{ $advancedExpense->code }},{{ $advancedExpense->level }});"><i class="glyphicon glyphicon-plus"></i> Add New Currency</button>
-                                                            <div id="addChild-{{$advancedExpense->code}}"></div>
                                                         <hr> 
                                                         </div>
                                                         </li>
@@ -147,7 +145,7 @@
                                                         <a style="color: darkred;" class="nav-link " data-toggle="collapse" data-target="#panel-{{$accuredRevenue->code}}" role="tab"> <i class="fa fa-download ml-2"></i> &nbsp{{$accuredRevenue->title}}</a>
                                                         <div class="collapse" id="panel-{{$accuredRevenue->code}}" role="tabpanel">
                                                             @foreach($accuredRevenue->accuredRevenuesItems as $accuredRevenuesItem)
-                                                                <h5 class="my-2 h5">{{$accuredRevenuesItem->code}} &nbsp{{$accuredRevenuesItem->title}}</h5>
+                                                                <h5 class="my-2 h5">{{$accuredRevenuesItem->title}}</h5>
                                                             @endforeach  
                                                         <hr> 
                                                         </div>
@@ -168,7 +166,7 @@
                                                             @foreach($store->storeItems as $storeItem)
                                                                 <h5> &nbsp{{$storeItem->title}}</h5>
                                                             @endforeach
-                                                            <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal" onclick="drawdev({{ $store->id }},{{ $store->code }},{{ $store->level }});"><i class="glyphicon glyphicon-plus"></i> Add New </button>
+                                                            <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal" onclick="drawdev({{ $store->id }},{{ $store->code }},{{ $store->level }});"><i class="glyphicon glyphicon-plus"></i> Add Store Item </button>
                                                             <div id="addChild-{{$store->code}}"></div>
                                                         </div>
                                                         </li>
