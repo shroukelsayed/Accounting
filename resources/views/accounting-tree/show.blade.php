@@ -478,9 +478,9 @@
                         @endif
                         <!-- level Revenues  View  -->
 
-                        <!-- <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal" onclick="drawdev({{ $level_two->id }},{{ $level_two->code }},{{ $level_two->level }});"><i class="glyphicon glyphicon-plus"></i> Add New </button>
+                        <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal" onclick="drawdev({{ $level_two->id }},{{ $level_two->code }},{{ $level_two->level }});"><i class="glyphicon glyphicon-plus"></i> Add New </button>
                         <div id="addChild-{{$level_two->code}}"></div>
- -->
+
                     </div>
                 </div>
                 <!-- Nav tabs -->
