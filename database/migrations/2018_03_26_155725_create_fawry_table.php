@@ -35,6 +35,6 @@ class CreateFawryTable extends Migration
     public function down()
     {
         //
-        // Schema::drop('fawries');
+        Schema::drop('fawries');
     }
 }

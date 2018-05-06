@@ -35,6 +35,6 @@ class CreateBankAccountTable extends Migration
     public function down()
     {
         //
-        // Schema::drop('bank_accounts');
+        Schema::drop('bank_accounts');
     }
 }

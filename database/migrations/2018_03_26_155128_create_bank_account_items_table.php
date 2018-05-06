@@ -33,6 +33,6 @@ class CreateBankAccountItemsTable extends Migration
     public function down()
     {
         //
-        // Schema::drop('bank_account_items');
+        Schema::drop('bank_account_items');
     }
 }

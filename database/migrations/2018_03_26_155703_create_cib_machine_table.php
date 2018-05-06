@@ -35,6 +35,6 @@ class CreateCibMachineTable extends Migration
     public function down()
     {
         //
-        // Schema::drop('cib_machines');
+        Schema::drop('cib_machines');
     }
 }

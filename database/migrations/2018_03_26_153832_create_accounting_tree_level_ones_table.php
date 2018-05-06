@@ -33,7 +33,7 @@ class CreateAccountingTreeLevelOneTable extends Migration
     public function down()
     {
         //
-        // Schema::drop('accounting_tree_level_ones');
+        Schema::drop('accounting_tree_level_ones');
 
     }
 }

@@ -34,6 +34,6 @@ class CreateCustodySheetTable extends Migration
     public function down()
     {
         //
-        // Schema::drop('custody_sheets');
+        Schema::drop('custody_sheets');
     }
 }

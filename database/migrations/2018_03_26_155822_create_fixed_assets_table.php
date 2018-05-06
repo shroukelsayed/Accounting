@@ -35,6 +35,6 @@ class CreateFixedAssetsTable extends Migration
     public function down()
     {
         //
-        // Schema::drop('fixed_assets');
+        Schema::drop('fixed_assets');
     }
 }
