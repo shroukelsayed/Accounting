@@ -36,7 +36,7 @@ class CreateCurrentAssetsTable extends Migration
     public function down()
     {
         //
-        Schema::drop('current_assets');
+        // Schema::drop('current_assets');
 
     }
 }
