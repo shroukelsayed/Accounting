@@ -249,12 +249,29 @@ class IndexController extends Controller
 				$query .= $where;
 			$query .= "donator_address LIKE  '%" .$request->input('donator_address') ."%'";
 		}
+		if($request->input('donator_mobile') != ''){
+			if($query != '')
+				$query .= ' and ';
+			else
+				$query .= $where;
+			$query .= "donator_mobile LIKE  '%" .$request->input('donator_mobile') ."%'";
+		}
 		if($request->input('donator_name') != ''){
 			if($query != '')
 				$query .= ' and ';
 			else
 				$query .= $where;
 			$query .= "donator_name LIKE  '%" .$request->input('donator_name') ."%'";
+		}
+		if($request->input('project_name') != ''){
+			// $project = DB::table('projects')->where(" name ",$request->input('project_name'))->get();
+			var_dump($request->input('project_name'));
+			var_dump($project);die;
+			if($query != '')
+				$query .= ' and ';
+			else
+				$query .= $where;
+			$query .= "project_id LIKE  '%" .$request->input('project_name') ."%'";
 		}
 		if($request->input('receipt_date') != ''){
 			if($query != '')

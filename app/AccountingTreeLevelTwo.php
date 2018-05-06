@@ -8,7 +8,7 @@ class AccountingTreeLevelTwo extends Model
 {
     //
     public function levelOne(){
-        return $this->hasOne(AccountingTreeLevelOne::class,'accounting_tree_level_one_id'); 
+        return $this->hasOne(AccountingTreeLevelOne::class,'parent'); 
     }
 
     public function fixedAssets()

@@ -26,7 +26,9 @@
                 type: "POST",
                 data: {'receipt_id': $(":input[id='receipt_id']").val(),
                         'donator_address': $(":input[id='donator_address']").val(),
+                        'donator_mobile': $(":input[id='donator_mobile']").val(),
                         'donator_name': $(":input[id='donator_name']").val(),
+                        'project_name': $(":input[id='project_name']").val(),
                         'receipt_date': $(":input[id='receipt_date']").val(),
                         'amount': $(":input[id='amount']").val(),
                         'type': $(":input[id='type']").val(),
@@ -77,7 +79,9 @@
                         <tr>
                             <th class="text-center">اختر</th>
                             <th class="text-center">عنوان المتبرع</th>
+                            <th class="text-center">تليفون المتبرع</th>
                             <th class="text-center">اسم المتبرع</th>
+                            <th class="text-center">اسم المشروع</th>
                             <th class="text-center">تاريخ اﻹيصال</th>
                             <th class="text-center">النوع</th>
                             <th class="text-center">المبلغ</th>
@@ -94,8 +98,14 @@
                             <td>
                                 <input class="form-control" placeholder="عنوان المتبرع" type="textbox" dir="rtl" name="search" id="donator_address">
                             </td>
+                             <td>
+                                <input class="form-control" placeholder="تليفون المتبرع" type="textbox" dir="rtl" name="search" id="donator_mobile">
+                            </td>
                             <td>
                                 <input class="form-control" placeholder="اسم المتبرع" type="textbox" dir="rtl" name="search" id="donator_name">
+                            </td>
+                            <td>
+                                <input class="form-control" placeholder="اسم المشروع" type="textbox" dir="rtl" name="search" id="project_name">
                             </td>
                             <td>
                                 <input class="form-control" placeholder="" type="date" name="search" id="receipt_date">

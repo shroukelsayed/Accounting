@@ -31,7 +31,9 @@
                 @endif
             </td>
             <td style="text-align: center;">{{$receipt->donator_address}}</td>
+            <td style="text-align: center;">{{$receipt->donator_mobile}}</td>
             <td style="text-align: center;">{{$receipt->donator_name}}</td>
+            <td style="text-align: center;">{{$receipt->project->name}}</td>
             <td width="100 px;" style="text-align: center;">{{ Carbon\Carbon::parse($receipt->receipt_date)->format('d-m-Y')}}</td>
             @if($receipt->type ==4 )
                 <td style="text-align: center;">مشطوب</td>
