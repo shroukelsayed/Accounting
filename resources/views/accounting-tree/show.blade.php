@@ -317,8 +317,10 @@
                                                         <h5 class="my-2 h5">{{$creditor->title}}</h5>
                                                     @endforeach
 
+                                                    @if(in_array($currentLiability->code,array('2102','2103' ,'2104','2108','2109')))
                                                         <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal" onclick="drawdev({{ $currentLiability->id }},{{ $currentLiability->code }},{{ $currentLiability->level }});"><i class="glyphicon glyphicon-plus"></i> Add New </button>
                                                         <div id="addChild-{{$currentLiability->code}}"></div>
+                                                    @endif
                                                     
                                                 </div>
                                                 <!--/.Panel 1-->
