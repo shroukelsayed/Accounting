@@ -208,8 +208,10 @@
                                                     @foreach($currentAsset->cibMachine as $cibMachine)
                                                         <h5 class="my-2 h5">{{$cibMachine->title}}</h5>
                                                     @endforeach 
+                                                    @if(in_array($currentAsset->code,array('1202','1203' ,'1204','1207','1208','1210')))
                                                         <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal" onclick="drawdev({{ $currentAsset->id }},{{ $currentAsset->code }},{{ $currentAsset->level }});"><i class="glyphicon glyphicon-plus"></i> Add New </button>
                                                         <div id="addChild-{{$currentAsset->code}}"></div>
+                                                    @endif
                                                 </div>
                                                 <!--/.Panel 1-->
                                             </div>
@@ -317,8 +319,10 @@
                                                         <h5 class="my-2 h5">{{$creditor->title}}</h5>
                                                     @endforeach
 
+                                                    @if(in_array($currentLiability->code,array('2102','2103' ,'2104','2108','2109')))
                                                         <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal" onclick="drawdev({{ $currentLiability->id }},{{ $currentLiability->code }},{{ $currentLiability->level }});"><i class="glyphicon glyphicon-plus"></i> Add New </button>
                                                         <div id="addChild-{{$currentLiability->code}}"></div>
+                                                    @endif
                                                     
                                                 </div>
                                                 <!--/.Panel 1-->
@@ -474,9 +478,9 @@
                         @endif
                         <!-- level Revenues  View  -->
 
-                        <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal" onclick="drawdev({{ $level_two->id }},{{ $level_two->code }},{{ $level_two->level }});"><i class="glyphicon glyphicon-plus"></i> Add New </button>
+                        <!-- <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal" onclick="drawdev({{ $level_two->id }},{{ $level_two->code }},{{ $level_two->level }});"><i class="glyphicon glyphicon-plus"></i> Add New </button>
                         <div id="addChild-{{$level_two->code}}"></div>
-
+ -->
                     </div>
                 </div>
                 <!-- Nav tabs -->
