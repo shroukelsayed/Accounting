@@ -256,7 +256,7 @@ class AccountingTreeController extends Controller
      */
     public function addChild(Request $request)
     {
-        var_dump($request->all());die;
+        // var_dump($request->all());die;
 
         // Start transaction!
         DB::beginTransaction();
