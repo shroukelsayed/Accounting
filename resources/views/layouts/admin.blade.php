@@ -197,11 +197,11 @@
                   <i class="fa fa-plus"></i> <span>@lang('validation.add-revenue-item')</span> 
                 </a>
               </li>
-              <li>
+              <!-- <li>
                 <a href="{{URL::to('add-insurance-item')}}">
                   <i class="fa fa-plus"></i> <span>@lang('validation.add-insurance-item')</span> 
                 </a>
-              </li>
+              </li> -->
               <li>
                 <a href="{{URL::to('add-coupon')}}">
                   <i class="fa fa-plus"></i> <span>@lang('validation.add-coupon')</span> 
