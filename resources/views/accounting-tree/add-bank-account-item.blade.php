@@ -4,16 +4,18 @@
 @endsection
 
 @section('content')
-    <div class="page-header">
-        <h1><i class="glyphicon glyphicon-plus"></i> All Bank Account Item </h1>
-    </div>
-    <ul class="pull-right" dir="rtl">
-        @foreach($all_items as $item)
-            <li>
-                <h5>{{$item->title}}</h5>
-            </li>
-        @endforeach
-    </ul>
+    @if(!empty($all_items->toArray()))
+        <div class="page-header">
+            <h1><i class="glyphicon glyphicon-plus"></i> All Bank Account Item </h1>
+        </div>
+        <ul class="pull-right" dir="rtl">
+            @foreach($all_items as $item)
+                <li>
+                    <h5>{{$item->title}}</h5>
+                </li>
+            @endforeach
+        </ul>
+    @endif
     
     <br><br><br>
    
