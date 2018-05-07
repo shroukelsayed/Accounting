@@ -110,9 +110,9 @@
         </nav>
       </header>
       <!-- Left side column. contains the logo and sidebar -->
-      <aside class="main-sidebar" style="width: 270px;">
+      <aside class="main-sidebar" style="width: 290px;">
         <!-- sidebar: style can be found in sidebar.less -->
-        <section class="sidebar" style="width: 270px;">
+        <section class="sidebar" style="width: 290px;">
           <!-- Sidebar user panel -->
           <div class="user-panel">
             <div class="pull-left image">
