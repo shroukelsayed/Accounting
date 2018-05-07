@@ -161,11 +161,11 @@
                   <i class="fa fa-users"></i> <span>@lang('validation.users')</span> 
                 </a>
               </li>
-              <li>
+              <!-- <li>
                 <a href="{{URL::to('/users/create')}}">
                   <i class="fa fa-user-plus"></i> <span>@lang('validation.addUser')</span> 
                 </a>
-              </li>
+              </li> -->
               <li>
                 <a href="{{URL::to('add-expenses-item')}}">
                   <i class="fa fa-plus"></i> <span>@lang('validation.add-expenses-item')</span> 
