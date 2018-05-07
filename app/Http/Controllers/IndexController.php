@@ -264,14 +264,31 @@ class IndexController extends Controller
 			$query .= "donator_name LIKE  '%" .$request->input('donator_name') ."%'";
 		}
 		if($request->input('project_name') != ''){
-			// $project = DB::table('projects')->where(" name ",$request->input('project_name'))->get();
-			var_dump($request->input('project_name'));
-			var_dump($project);die;
-			if($query != '')
-				$query .= ' and ';
-			else
-				$query .= $where;
-			$query .= "project_id LIKE  '%" .$request->input('project_name') ."%'";
+			$project = DB::select("SELECT * FROM projects WHERE name LIKE '%" . $request->input('project_name') ."%'  ");
+
+			if(!empty($project)){
+				$ids_array = '(';
+				$count = count($project);
+				for ($i=0; $i < $count ; $i++) { 
+					$ids_array .= $project[$i]->id;
+					if($i+1 < $count)
+						$ids_array .= ',';
+				}
+				$ids_array .= ')';
+
+				if($query != '')
+					$query .= ' and ';
+				else
+					$query .= $where;
+				$query .= "project_id in " .$ids_array;
+			}else{
+				if($query != '')
+					$query .= ' and ';
+				else
+					$query .= $where;
+				$query .= "project_id is null ";
+			}
+			
 		}
 		if($request->input('receipt_date') != ''){
 			if($query != '')
