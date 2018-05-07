@@ -374,8 +374,8 @@ class ProjectController extends Controller {
             $level_two->code = $new_level_code;
             $level_two->title = $project->name;
            	$level_two->level = 2;
-	        $level_two->parent = 4;    
-	        // $level_two->accounting_tree_level_one_id = 4;    
+	        // $level_two->parent = 4;    
+	        $level_two->accounting_tree_level_one_id = 4;    
 	        $level_two->debit = false;
  			$level_two->credit = true;
  			$level_two->save();
