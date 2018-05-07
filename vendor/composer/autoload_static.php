@@ -296,6 +296,7 @@ class ComposerStaticInitd862fef8e29d86cf3144b8ef6aacc142
     );
 
     public static $classMap = array (
+        'AccountingTreeLevelTwoTableSeeder' => __DIR__ . '/../..' . '/database/seeds/AccountingTreeLevelTwoTableSeeder.php',
         'CreateAccountItemTable' => __DIR__ . '/../..' . '/database/migrations/2018_04_17_120059_create_account_item_table.php',
         'CreateAccountSheetsTable' => __DIR__ . '/../..' . '/database/migrations/2018_02_21_094849_create_account_sheets_table.php',
         'CreateAccountingTreeLevelOnesTable' => __DIR__ . '/../..' . '/database/migrations/2018_03_26_153832_create_accounting_tree_level_ones_table.php',
@@ -897,6 +898,11 @@ class ComposerStaticInitd862fef8e29d86cf3144b8ef6aacc142
         'SebastianBergmann\\Version' => __DIR__ . '/..' . '/sebastian/version/src/Version.php',
         'TestCase' => __DIR__ . '/../..' . '/tests/TestCase.php',
         'Text_Template' => __DIR__ . '/..' . '/phpunit/php-text-template/src/Template.php',
+        'UpdateRevenueBankAccountsTable' => __DIR__ . '/../..' . '/database/migrations/2018_05_07_105158_update_revenue_bank_accounts_table.php',
+        'UpdateRevenueBanksTable' => __DIR__ . '/../..' . '/database/migrations/2018_05_07_101928_update_revenue_banks_table.php',
+        'UpdateRevenueBenefitItemsTable' => __DIR__ . '/../..' . '/database/migrations/2018_05_07_124206_update_revenue_benefit_items_table.php',
+        'UpdateRevenueFawryItemsTable' => __DIR__ . '/../..' . '/database/migrations/2018_05_07_131744_update_revenue_fawry_items_table.php',
+        'UpdateTwoRevenueBanksTable' => __DIR__ . '/../..' . '/database/migrations/2018_05_07_110847_update_two_revenue_banks_table.php',
         'UserTableSeeder' => __DIR__ . '/../..' . '/database/seeds/UserTableSeeder.php',
     );
 

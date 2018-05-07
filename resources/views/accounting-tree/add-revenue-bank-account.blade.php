@@ -26,10 +26,26 @@
                         @endif
                     </div>
                     <div class="col-md-3">
-                        <label style="float: right;">item name</label>
+                        <label style="float: right;">Item name</label>
                     </div>
                 </div>
                 <br>
+                <div class="row">
+                    <div class="col-md-9">
+                        {{ Form::select('bank_id', $banks,null,['class' => 'form-control' , 'placeholder' => 'اختر بند المشروع'])  }}
+
+                        @if ($errors->has('receipt_writter_id'))
+                            <span class="alert-danger">
+                                <strong>{{ $errors->first('bank_id') }}</strong>
+                            </span>
+                        @endif
+                    </div>
+                    <div class="col-md-3">
+                        <label style="float: right;">Bank name</label>
+                    </div>
+                </div>
+                <br>
+
                 
                 <br>
                 <div class="well well-sm">

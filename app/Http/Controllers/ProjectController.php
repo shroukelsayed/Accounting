@@ -215,8 +215,6 @@ class ProjectController extends Controller {
 	        $fawryItem2->credit = true;
 	        $fawryItem2->save();
 
-
-
 	        $fawryBanks = FawryBanks::all();
             foreach ($fawryBanks as $fawryBank) {
 	            $fawryItemBank = new FawryItemBanks();
@@ -225,7 +223,6 @@ class ProjectController extends Controller {
 	            $fawryItemBank->code = $fawryItem2->code.''.$fawryBank->code;
 	            $fawryItemBank->save();
 	        }
-
 	        
  			// 5- Sms
             $sms = new Sms();
@@ -377,20 +374,15 @@ class ProjectController extends Controller {
             $level_two->code = $new_level_code;
             $level_two->title = $project->name;
            	$level_two->level = 2;
-	        $level_two->accounting_tree_level_one_id = 4;    
+	        $level_two->parent = 4;    
+	        // $level_two->accounting_tree_level_one_id = 4;    
 	        $level_two->debit = false;
  			$level_two->credit = true;
  			$level_two->save();
 
  				// Level 3
-            $last_level_three_revenue = LevelThreeRevenues::orderby('id', 'desc')->first();
-            if(!empty($last_level_three_revenue)){
-	            $new_level_code = $last_level_three_revenue->code + 1;
-	        }else{
-	            $new_level_code  = $level_two->code . "01";
-            }
  			$level_three_revenue = new LevelThreeRevenues(); 
-            $level_three_revenue->code = $new_level_code;
+            $level_three_revenue->code = $level_two->code . "01";
             $level_three_revenue->title = $project->name  . ' مؤسسة';
            	$level_three_revenue->level = 3;
 	        $level_three_revenue->parent = $level_two->id;    
@@ -399,7 +391,7 @@ class ProjectController extends Controller {
  			$level_three_revenue->save();
 
  			$level_three_revenue2 = new LevelThreeRevenues(); 
-            $level_three_revenue2->code = $new_level_code + 1 ;
+            $level_three_revenue2->code = $level_two->code . "02";
             $level_three_revenue2->title = $project->name . ' تراخيص';
            	$level_three_revenue2->level = 3;
 	        $level_three_revenue2->parent = $level_two->id;    

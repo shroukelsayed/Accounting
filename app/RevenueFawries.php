@@ -12,6 +12,6 @@ class RevenueFawries extends Model
     }
 
      public function revenueFawryItems(){
-    	return $this->belongsToMany(RevenueFawryItems::class, 'r_fawry_items', 'revenue_fawry_id','revenue_fawry_item_id')->withPivot('code');
+    	return $this->belongsToMany(LevelFourRevenues::class, 'revenue_fawry_items', 'revenue_fawry_id','level_four_revenue_id')->withPivot('code','title');
     }
 }

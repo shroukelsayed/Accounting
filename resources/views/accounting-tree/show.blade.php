@@ -425,28 +425,32 @@
                                                 <ul>
                                                 @foreach($levelFour->revenueFawries as $revenueFawry)
                                                     <li>
-                                                    <h5 class="my-2 h5">&nbsp&nbsp{{$revenueFawry->code}} &nbsp&nbsp{{$revenueFawry->title}}</h5>
+                                                        <a style="color:green;" class="nav-link " data-toggle="collapse" data-target="#panel-{{$revenueFawry->code}}" role="tab"> <i class="fa fa-download ml-2"></i> &nbsp{{$revenueFawry->title}}</a>
+                                                        <div class="collapse" id="panel-{{$revenueFawry->code}}" role="tabpanel">
+                                                            <ul>
+                                                            @foreach($revenueFawry->revenueFawryItems as $revenueFawryItem)
+                                                                <li>
+                                                                <h5 class="my-2 h5">&nbsp&nbsp{{$revenueFawryItem->pivot->code}} &nbsp&nbsp{{$revenueFawryItem->pivot->title}}</h5>
+                                                                </li>
+                                                            @endforeach 
+                                                            </ul>
+                                                        </div>
                                                     </li>
                                                 @endforeach
                                                 </ul>
 
                                                 <ul>
                                                 @foreach($levelFour->revenueBanks as $revenueBank)
-                                                    <!-- <li>
-                                                    <h5 class="my-2 h5">&nbsp&nbsp{{$revenueBank->code}} &nbsp&nbsp{{$revenueBank->title}}</h5>
-                                                    </li> -->
                                                     <li>
-                                                        <a style="color: darkblue;" class="nav-link " data-toggle="collapse" data-target="#panel-{{$revenueBank->code}}" role="tab"> <i class="fa fa-download ml-2"></i> &nbsp{{$revenueBank->title}}</a>
+                                                        <a style="color:green;" class="nav-link " data-toggle="collapse" data-target="#panel-{{$revenueBank->code}}" role="tab"> <i class="fa fa-download ml-2"></i> &nbsp{{$revenueBank->title}}</a>
                                                         <div class="collapse" id="panel-{{$revenueBank->code}}" role="tabpanel">
-                                                            <!-- <ul>
+                                                            <ul>
                                                             @foreach($revenueBank->revenueBankAccounts as $revenueBankAccount)
                                                                 <li>
-                                                                <h5 class="my-2 h5">&nbsp&nbsp{{$revenueBankAccount->pivot->code}} &nbsp&nbsp{{$revenueBankAccount->title}}</h5>
+                                                                <h5 class="my-2 h5">&nbsp&nbsp{{$revenueBankAccount->pivot->code}} &nbsp&nbsp{{$revenueBankAccount->pivot->title}}</h5>
                                                                 </li>
                                                             @endforeach 
-                                                            </ul> -->
-                                                            <!-- <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal" onclick="drawdev({{ $revenueBank->id }},{{ $revenueBank->code }},{{ $revenueBank->level }});"><i class="glyphicon glyphicon-plus"></i> Add New </button>
-                                                            <div id="addChild-{{$revenueBank->code}}"></div> -->
+                                                            </ul>
                                                         </div>
                                                     </li>
                                                 @endforeach
@@ -455,7 +459,16 @@
                                                 <ul>
                                                 @foreach($levelFour->revenueBenefits as $revenueBenefit)
                                                     <li>
-                                                    <h5 class="my-2 h5">&nbsp&nbsp{{$revenueBenefit->code}} &nbsp&nbsp{{$revenueBenefit->title}}</h5>
+                                                        <a style="color:green;" class="nav-link " data-toggle="collapse" data-target="#panel-{{$revenueBenefit->code}}" role="tab"> <i class="fa fa-download ml-2"></i> &nbsp{{$revenueBenefit->title}}</a>
+                                                        <div class="collapse" id="panel-{{$revenueBenefit->code}}" role="tabpanel">
+                                                            <ul>
+                                                            @foreach($revenueBenefit->revenueBenefitItems as $revenueBenefitItem)
+                                                                <li>
+                                                                <h5 class="my-2 h5">&nbsp&nbsp{{$revenueBenefitItem->pivot->code}} &nbsp&nbsp{{$revenueBenefitItem->pivot->title}}</h5>
+                                                                </li>
+                                                            @endforeach 
+                                                            </ul>
+                                                        </div>
                                                     </li>
                                                 @endforeach 
                                                 </ul>
@@ -464,10 +477,6 @@
                                             </li>
                                         @endforeach
                                         </ul>
-
-
-                                        <!-- <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal" onclick="drawdev({{ $levelThreeRevenue->id }},{{ $levelThreeRevenue->code }},{{ $levelThreeRevenue->level }});"><i class="glyphicon glyphicon-plus"></i> Add New </button>
-                                        <div id="addChild-{{$levelThreeRevenue->code}}"></div> -->
                                     </div>
                                     </li>
                                 @endforeach

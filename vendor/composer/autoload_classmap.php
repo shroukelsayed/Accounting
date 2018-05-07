@@ -6,6 +6,7 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'AccountingTreeLevelTwoTableSeeder' => $baseDir . '/database/seeds/AccountingTreeLevelTwoTableSeeder.php',
     'CreateAccountItemTable' => $baseDir . '/database/migrations/2018_04_17_120059_create_account_item_table.php',
     'CreateAccountSheetsTable' => $baseDir . '/database/migrations/2018_02_21_094849_create_account_sheets_table.php',
     'CreateAccountingTreeLevelOnesTable' => $baseDir . '/database/migrations/2018_03_26_153832_create_accounting_tree_level_ones_table.php',
@@ -607,5 +608,10 @@ return array(
     'SebastianBergmann\\Version' => $vendorDir . '/sebastian/version/src/Version.php',
     'TestCase' => $baseDir . '/tests/TestCase.php',
     'Text_Template' => $vendorDir . '/phpunit/php-text-template/src/Template.php',
+    'UpdateRevenueBankAccountsTable' => $baseDir . '/database/migrations/2018_05_07_105158_update_revenue_bank_accounts_table.php',
+    'UpdateRevenueBanksTable' => $baseDir . '/database/migrations/2018_05_07_101928_update_revenue_banks_table.php',
+    'UpdateRevenueBenefitItemsTable' => $baseDir . '/database/migrations/2018_05_07_124206_update_revenue_benefit_items_table.php',
+    'UpdateRevenueFawryItemsTable' => $baseDir . '/database/migrations/2018_05_07_131744_update_revenue_fawry_items_table.php',
+    'UpdateTwoRevenueBanksTable' => $baseDir . '/database/migrations/2018_05_07_110847_update_two_revenue_banks_table.php',
     'UserTableSeeder' => $baseDir . '/database/seeds/UserTableSeeder.php',
 );

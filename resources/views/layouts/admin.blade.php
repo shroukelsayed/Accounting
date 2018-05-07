@@ -207,7 +207,7 @@
                   <i class="fa fa-plus"></i> <span>@lang('validation.add-coupon')</span> 
                 </a>
               </li>
-              <!--  <li>
+               <li>
                 <a href="{{URL::to('add-revenue-bank-account')}}">
                   <i class="fa fa-plus"></i> <span>@lang('validation.add-revenue-bank-account')</span> 
                 </a>
@@ -221,35 +221,8 @@
                 <a href="{{URL::to('add-revenue-fawry-item')}}">
                   <i class="fa fa-plus"></i> <span>@lang('validation.add-revenue-fawry-item')</span> 
                 </a>
-              </li> -->
-              <!-- // Start of Links to create new case ... by shrouk -->
-
-
-             <!--  <li class="treeview">
-                <a href="#">
-                  <i class="fa fa-edit"></i> <span>New Case</span>
-                  <i class="fa fa-angle-left pull-right"></i>
-                </a>
-                <ul class="treeview-menu">
-                  <li><a href="{{URL::to('/projects')}}"><i class="fa fa-edit"></i> Blood Case</a></li>
-                  <li><a href="{{URL::to('/projects')}}"><i class="fa fa-edit"></i> Money Case</a></li>
-                  <li><a href="{{URL::to('/projects')}}"><i class="fa fa-edit"></i> Medicine Case</a></li>
-                  <li><a href="{{URL::to('/projects')}}"><i class="fa fa-edit"></i> Other Case</a></li>
-                </ul>
-              </li> -->
-          <!-- // End of Links to create new case ... by shrouk -->  
-                    
-              <!-- <li>
-               <a href="{{URL::to('/compaigns')}}">
-                  <i class="fa fa-th"></i> <span>@lang('validation.AllCompaigns')</span> 
-                </a>
               </li>
-              <li>
-              <a href="{{URL::to('/compaigns/create')}}">
-                  <i class="fa fa-edit"></i> <span>@lang('validation.NewCompaign')</span> 
-                </a>
-              </li> -->
-              <!-- /// cases according to donation type .. by shrouk -->
+              
             @endif
             <!-- /// end of  -->
             <li>

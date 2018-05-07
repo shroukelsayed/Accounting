@@ -13,7 +13,7 @@ class RevenueBanks extends Model
 
     public function revenueBankAccounts()
     {
-        return $this->hasMany(RevenueBankAccounts::class,'parent');
+    	return $this->belongsToMany(LevelFourRevenues::class, 'revenue_bank_accounts', 'revenue_bank_id', 'level_four_revenue_id')->withPivot('code','title');
     }
     
 }

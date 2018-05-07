@@ -30,6 +30,21 @@
                     </div>
                 </div>
                 <br>
+                <div class="row">
+                    <div class="col-md-9">
+                        {{ Form::select('fawry_id', $fawries,null,['class' => 'form-control' , 'placeholder' => 'اختر بند المشروع'])  }}
+
+                        @if ($errors->has('fawry_id'))
+                            <span class="alert-danger">
+                                <strong>{{ $errors->first('fawry_id') }}</strong>
+                            </span>
+                        @endif
+                    </div>
+                    <div class="col-md-3">
+                        <label style="float: right;">Fawry name</label>
+                    </div>
+                </div>
+                <br>
                 
                 <br>
                 <div class="well well-sm">

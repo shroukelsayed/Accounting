@@ -75,6 +75,7 @@ use App\RevenueCoupons;
 use App\RBankAccounts;
 use App\RBenefitItems;
 use App\RFawryItems;
+use App\RevenueFawries;
 use App\RevenueBanks;
 use App\RevenueBankAccounts;
 use App\RevenueBenefits;
@@ -908,7 +909,8 @@ class AccountingTreeController extends Controller
      */
     public function revenueBankAccount()
     {
-        return view('accounting-tree.add-revenue-bank-account');
+        $banks = RevenueBanks::lists('title','id');
+        return view('accounting-tree.add-revenue-bank-account',compact('banks'));
     }
 
     /**
@@ -919,36 +921,29 @@ class AccountingTreeController extends Controller
      */
     public function addRevenueBankAccount(Request $request)
     {
-        // var_dump($request->all());die;
-        $last_item = RevenueBankAccounts::orderby('id', 'desc')->first();
+        // var_dump($request->all());
+
+        $last_item = DB::table('revenue_bank_accounts')
+                        ->where('revenue_bank_id',  $request->input('bank_id'))->orderBy('id', 'desc')->first();
+        $bank = RevenueBanks::findOrFail($request->input('bank_id'));       
+
         $item = new RevenueBankAccounts();
-        // $items = Coupons::all();
 
         if(!is_null($last_item)){
             $new_level_code = str_pad($last_item->code + 1, 4, '0', STR_PAD_LEFT);
         }else{
-            $new_level_code = "0001";
+            $new_level_code = $bank->code."0001";
         }
         $item->level = 6;
         $item->code = $new_level_code;
         $item->title = $request->input('title');
-        $item->debit = true;
-        $item->credit = false;
+        $item->revenue_bank_id = $request->input('bank_id');
+        $item->level_four_revenue_id = $bank->parent;
         $item->save();
 
-        $RevenueBanks = RevenueBanks::all();
-        // foreach ($items as $item) {
-            
-            foreach ($RevenueBanks as $RevenueBank) {
-                $RevenueCoupon = new RBankAccounts();
-                $RevenueCoupon->revenue_bank_id  = $RevenueBank->id;
-                $RevenueCoupon->revenue_bank_account_id = $item->id;
-                $RevenueCoupon->code = $RevenueBank->code."".$item->code;
+        $banks = RevenueBanks::lists('title','id');
 
-                $RevenueCoupon->save();
-            }
-        // }
-        return view('accounting-tree.add-revenue-bank-account')->with('message', 'Item added successfully.');
+        return view('accounting-tree.add-revenue-bank-account',compact('banks'))->with('message', 'Item added successfully.');
     }
 
     /**
@@ -959,7 +954,8 @@ class AccountingTreeController extends Controller
      */
     public function revenueBenefitItem()
     {
-        return view('accounting-tree.add-revenue-benefit-item');
+        $benefits = RevenueBenefits::lists('title','id');
+        return view('accounting-tree.add-revenue-benefit-item',compact('benefits'));
     }
 
     /**
@@ -970,37 +966,27 @@ class AccountingTreeController extends Controller
      */
     public function addRevenueBenefitItem(Request $request)
     {
-        // var_dump($request->all());die;
-        $last_item = Coupons::orderby('id', 'desc')->first();
-        $item = new Coupons();
-        // $items = Coupons::all();
+        $last_item = DB::table('revenue_benefit_items')
+                        ->where('revenue_benefit_id',  $request->input('benefit_id'))->orderBy('id', 'desc')->first();
+        $benefit = RevenueBenefits::findOrFail($request->input('benefit_id'));       
+
+        $item = new RevenueBenefitItems();
 
         if(!is_null($last_item)){
-            $new_level_code = str_pad($last_item->code + 1, 3, '0', STR_PAD_LEFT);
+            $new_level_code = str_pad($last_item->code + 1, 4, '0', STR_PAD_LEFT);
         }else{
-            $new_level_code = "001";
+            $new_level_code = $benefit->code."0001";
         }
-        $item->level = 5;
+        $item->level = 6;
         $item->code = $new_level_code;
         $item->title = $request->input('title');
-        $item->debit = true;
-        $item->credit = false;
+        $item->revenue_benefit_id = $request->input('benefit_id');
+        $item->level_four_revenue_id = $benefit->parent;
         $item->save();
 
-        $LevelFourRevenues = DB::table('level_four_revenues')
-                                ->where('title', 'like', '% كوبونات %' )->get();
-        // foreach ($items as $item) {
-            
-            foreach ($LevelFourRevenues as $LevelFourRevenue) {
-                $RevenueCoupon = new RevenueCoupons();
-                $RevenueCoupon->level_four_revenue_id  = $LevelFourRevenue->id;
-                $RevenueCoupon->coupon_id = $item->id;
-                $RevenueCoupon->code = $LevelFourRevenue->code."".$item->code;
+        $benefits = RevenueBenefits::lists('title','id');
 
-                $RevenueCoupon->save();
-            }
-        // }
-        return view('accounting-tree.add-revenue-benefit-item')->with('message', 'Item added successfully.');
+        return view('accounting-tree.add-revenue-benefit-item',compact('benefits'))->with('message', 'Item added successfully.');
     }
 
     /**
@@ -1011,7 +997,8 @@ class AccountingTreeController extends Controller
      */
     public function revenueFawryItem()
     {
-        return view('accounting-tree.add-revenue-fawry-item');
+        $fawries = RevenueFawries::lists('title','id');
+        return view('accounting-tree.add-revenue-fawry-item',compact('fawries'));
     }
 
     /**
@@ -1022,37 +1009,27 @@ class AccountingTreeController extends Controller
      */
     public function addRevenueFawryItem(Request $request)
     {
-        // var_dump($request->all());die;
-        $last_item = Coupons::orderby('id', 'desc')->first();
-        $item = new Coupons();
-        // $items = Coupons::all();
+        $last_item = DB::table('revenue_fawry_items')
+                        ->where('revenue_fawry_id',  $request->input('fawry_id'))->orderBy('id', 'desc')->first();
+        $fawry = RevenueFawries::findOrFail($request->input('fawry_id'));       
+
+        $item = new RevenueFawryItems();
 
         if(!is_null($last_item)){
-            $new_level_code = str_pad($last_item->code + 1, 3, '0', STR_PAD_LEFT);
+            $new_level_code = str_pad($last_item->code + 1, 4, '0', STR_PAD_LEFT);
         }else{
-            $new_level_code = "001";
+            $new_level_code = $fawry->code."0001";
         }
-        $item->level = 5;
+        $item->level = 6;
         $item->code = $new_level_code;
         $item->title = $request->input('title');
-        $item->debit = true;
-        $item->credit = false;
+        $item->revenue_fawry_id = $request->input('fawry_id');
+        $item->level_four_revenue_id = $fawry->parent;
         $item->save();
 
-        $LevelFourRevenues = DB::table('level_four_revenues')
-                                ->where('title', 'like', '% كوبونات %' )->get();
-        // foreach ($items as $item) {
-            
-            foreach ($LevelFourRevenues as $LevelFourRevenue) {
-                $RevenueCoupon = new RevenueCoupons();
-                $RevenueCoupon->level_four_revenue_id  = $LevelFourRevenue->id;
-                $RevenueCoupon->coupon_id = $item->id;
-                $RevenueCoupon->code = $LevelFourRevenue->code."".$item->code;
+        $fawries = RevenueFawries::lists('title','id');
 
-                $RevenueCoupon->save();
-            }
-        // }
-        return view('accounting-tree.add-revenue-fawry-item')->with('message', 'Item added successfully.');
+        return view('accounting-tree.add-revenue-fawry-item',compact('fawries'))->with('message', 'Item added successfully.');
     }
 
     /**

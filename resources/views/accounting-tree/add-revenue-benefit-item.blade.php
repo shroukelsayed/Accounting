@@ -30,7 +30,22 @@
                     </div>
                 </div>
                 <br>
-                
+                <div class="row">
+                    <div class="col-md-9">
+                        {{ Form::select('benefit_id', $benefits,null,['class' => 'form-control' , 'placeholder' => 'اختر بند المشروع'])  }}
+
+                        @if ($errors->has('benefit_id'))
+                            <span class="alert-danger">
+                                <strong>{{ $errors->first('benefit_id') }}</strong>
+                            </span>
+                        @endif
+                    </div>
+                    <div class="col-md-3">
+                        <label style="float: right;">Benefit name</label>
+                    </div>
+                </div>
+                <br>
+
                 <br>
                 <div class="well well-sm">
                     <button type="submit" class="btn btn-primary">حفظ</button>
