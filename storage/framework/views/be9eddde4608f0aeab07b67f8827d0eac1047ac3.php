@@ -68,7 +68,7 @@
     <div class="row">
         <div class="col-md-1"></div>
         <div class="col-md-10">
-            <?php if($receipts->count()): ?>
+            <?php if($receipts->count() or $licenseReceipts->count()): ?>
                 <?php echo Form::open(['url' => 'cash-receipt' , 'class' => 'form']); ?>
 
                 <?php echo csrf_field(); ?>

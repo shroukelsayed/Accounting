@@ -37,6 +37,11 @@ class User extends Authenticatable
     {
         return $this->hasMany(DonationReceipt::class);
     }
+
+    public function licenseReceipts()
+    {
+        return $this->hasMany(LicenseReceipt::class);
+    }
     
     public function accountSheets()
     {

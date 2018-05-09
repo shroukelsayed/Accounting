@@ -110,9 +110,9 @@
         </nav>
       </header>
       <!-- Left side column. contains the logo and sidebar -->
-      <aside class="main-sidebar">
+      <aside class="main-sidebar" style="width: 290px;">
         <!-- sidebar: style can be found in sidebar.less -->
-        <section class="sidebar">
+        <section class="sidebar" style="width: 290px;">
           <!-- Sidebar user panel -->
           <div class="user-panel">
             <div class="pull-left image">
@@ -161,11 +161,11 @@
                   <i class="fa fa-users"></i> <span><?php echo app('translator')->get('validation.users'); ?></span> 
                 </a>
               </li>
-              <li>
+              <!-- <li>
                 <a href="<?php echo e(URL::to('/users/create')); ?>">
                   <i class="fa fa-user-plus"></i> <span><?php echo app('translator')->get('validation.addUser'); ?></span> 
                 </a>
-              </li>
+              </li> -->
               <li>
                 <a href="<?php echo e(URL::to('add-expenses-item')); ?>">
                   <i class="fa fa-plus"></i> <span><?php echo app('translator')->get('validation.add-expenses-item'); ?></span> 

@@ -104,6 +104,7 @@
             	{!! Form::open(['url' => 'save-receipt' , 'class' => 'form']) !!}
             @endif
             	{!! csrf_field() !!}
+            		<input type="hidden" name="license" value="true">
             		<div style="text-align: right;">
             			<label>مؤسسة عمار اﻻرض</label><br>
                			<label> المشهرة برقم ٤٥٦٦ لسنة ٢٠١٢ </label><br>
@@ -380,7 +381,11 @@
 					<div class="form-group" style="text-align: right;">
 						<div class="row">
 							<div class="col-sm-9">
-							    {!! Form::select('receipt_delegate_id', ['Under 18', '19 to 30', 'Over 30'],null,['class' => 'form-control']) !!}
+							    @if(isset($receipt) and $receipt->receipt_delegate_id)
+									{{ Form::select('receipt_delegate_id', $workers,$receipt->receipt_delegate_id,['class' => 'form-control' , 'placeholder' => 'اختر بند المشروع'])  }}
+								@else
+									{{ Form::select('receipt_delegate_id', $workers,null,['class' => 'form-control' , 'placeholder' => 'اختر اسم المندوب'])  }}
+								@endif
 							    @if ($errors->has('receipt_delegate_id'))
                                     <span class="alert-danger">
                                         <strong>{{ $errors->first('receipt_delegate_id') }}</strong>

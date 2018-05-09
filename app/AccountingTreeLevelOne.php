@@ -10,8 +10,8 @@ class AccountingTreeLevelOne extends Model
 
     public function levelTwo()
     {
-        // return $this->hasMany(AccountingTreeLevelTwo::class,'parent');
-        return $this->hasMany(AccountingTreeLevelTwo::class,'accounting_tree_level_one_id');
+        return $this->hasMany(AccountingTreeLevelTwo::class,'parent');
+        // return $this->hasMany(AccountingTreeLevelTwo::class,'accounting_tree_level_one_id');
     }
 
 }

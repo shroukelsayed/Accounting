@@ -13,6 +13,7 @@ use App;
 use App\Http\Requests;
 use App\Project;
 use App\DonationReceipt;
+use App\LicenseReceipt;
 use App\Receipt;
 
 use App\Workers;
@@ -36,8 +37,9 @@ class IndexController extends Controller
 	public function index()
 	{
 		$receipts = DonationReceipt::all();
+		$licenseReceipts = LicenseReceipt::all();
 
-		return view('receipts-index',compact('receipts'));
+		return view('receipts-index',compact('receipts','licenseReceipts'));
 	}
 
 	/**
@@ -143,91 +145,190 @@ class IndexController extends Controller
 	 *
 	 * @return Response
 	 */
+	public function licenseReceipts($id = null)
+	{
+		if($id){
+			$receipt = LicenseReceipt::findOrFail($id);
+			$last_id = $receipt->id;
+			$notebook = $receipt->receipt_notebook;
+		}else{
+			$last_receipt = LicenseReceipt::orderby('id', 'desc')->first();
+			$last_id = ($last_receipt)? ($last_receipt->id +1) : 1;
+			
+			if($last_receipt){
+				$receiptsCount =  DB::select("SELECT count(id) as count FROM license_receipts WHERE  receipt_notebook = ". $last_receipt->receipt_notebook);
+				$datetime = new DateTime($last_receipt->receipt_date);
+				if(($receiptsCount[0]->count >= 50) || (date('m') > $datetime->format('m')))
+					$notebook = $last_receipt->receipt_notebook + 1 ;
+				else
+					$notebook = $last_receipt->receipt_notebook;	
+			}else
+				$notebook = 1;
+		}
+		$ourPeriod = '';
+		var_dump(date('d-m-Y',strtotime('+1 years')));die;
+		// mktime(0, 0, 0, date("m"),   date("d"),date("Y")+1)/
+		$projects = Project::lists('name','id');
+		$workers = Workers::lists('title','id');
+
+		return view('donation-receipt-license', compact('projects','receipt','last_id','notebook','workers'));
+	}
+
+
+	/**
+	 * Display a listing of the resource.
+	 *
+	 * @return Response
+	 */
 	public function saveReceipt(Request $request,$id = null)
 	{
+		// var_dump($request->all());die();
+		$validationArray = array();
 
-		if(is_null($id)){
-			$receipt = new DonationReceipt();
-			$receipt->is_approved = false;
-			$receipt->collecting_type = "";
-			$receipt->receipt_id = 0;
-		}
-		else{
-			$receipt = DonationReceipt::findOrFail($id);
-			if(!is_null($request->input('is_approved')) && $request->input('is_approved') == '1'){
-				$receipt->is_approved = true;
-				$receipt->collecting_type = $request->input('collecting_type');
+		if(!is_null($request->input('license')) and $request->input('license')){
+			if(is_null($id)){
+				$receipt = new LicenseReceipt();
+				$receipt->is_approved = false;
+				$receipt->collecting_type = "";
+				$receipt->receipt_id = 0;
+			}else{
+				$receipt = LicenseReceipt::findOrFail($id);
+				if(!is_null($request->input('is_approved')) && $request->input('is_approved') == '1'){
+					$receipt->is_approved = true;
+					$receipt->collecting_type = $request->input('collecting_type');
+				}
+			}
+			$receipt->cash = $request->input('receipt_type') == '1' ? true : false;
+			if($request->input('receipt_type') == '1'){
+				$validator = Validator::make($request->all(), [
+	            	'donator_name' => 'required|max:255',
+		            'donator_address' => 'required',
+		            'amount' => 'required',
+		            'type' => 'required',
+		            'delivery_date' => 'required',
+		            'donator_phone' => 'required|numeric',
+		            'project_id' => 'required',
+		            'receipt_delegate_id' => 'required'
+		        ]);
+		        if($validator->fails()) {
+			        return Redirect::back()
+			            ->withErrors($validator)
+			            ->WithInput();
+			    }
+			    $receipt->cheque_number = 0;
+				$receipt->cheque_bank = "";
+				$receipt->cheque_date = $request->input('delivery_date');
+				$receipt->alpha_amount = $request->input('amount_alpha');
+			}else{
+				$validator = Validator::make($request->all(), [
+		            'donator_name' => 'required|max:255',
+		            'donator_address' => 'required',
+		            'cheque_number' => 'required',
+		            'cheque_bank' => 'required',
+		            'cheque_date' => 'required',
+		            'amount' => 'required',
+		            'type' => 'required',
+		            'delivery_date' => 'required',
+		            'donator_phone' => 'required|numeric',
+		            'project_id' => 'required',
+		            'receipt_delegate_id' => 'required'
+		        ]);
+		        if($validator->fails()) {
+			        return Redirect::back()
+			            ->withErrors($validator)
+			            ->WithInput();
+			    }
+				$receipt->cheque_number = $request->input('cheque_number');
+				$receipt->cheque_bank = $request->input('cheque_bank');
+				$receipt->cheque_date = $request->input('cheque_date');
+			}
+
+		}else{
+			if(is_null($id)){
+				$receipt = new DonationReceipt();
+				$receipt->is_approved = false;
+				$receipt->collecting_type = "";
+				$receipt->receipt_id = 0;
+
+			}else{
+				$receipt = DonationReceipt::findOrFail($id);
+				if(!is_null($request->input('is_approved')) && $request->input('is_approved') == '1'){
+					$receipt->is_approved = true;
+					$receipt->collecting_type = $request->input('collecting_type');
+				}
+			}
+			$receipt->cash = $request->input('receipt_type') == '1' ? true : false;
+			if($request->input('receipt_type') == '1'){
+				$validator = Validator::make($request->all(), [
+	            	'donator_name' => 'required|max:255',
+		            'donator_address' => 'required',
+		            'amount' => 'required',
+		            'notes' => 'required',
+		            'type' => 'required',
+		            'delivery_date' => 'required',
+		            'donator_phone' => 'required|numeric',
+		            'project_id' => 'required',
+		            'receipt_writter_id' => 'required',
+		            'receipt_delegate_id' => 'required',
+		            'receipt_for_month' => 'required',
+		        ]);
+		        if($validator->fails()) {
+			        return Redirect::back()
+			            ->withErrors($validator)
+			            ->WithInput();
+			    }
+			    $receipt->cheque_number = 0;
+				$receipt->cheque_bank = "";
+				$receipt->cheque_date = $request->input('delivery_date');
+				$receipt->alpha_amount = $request->input('amount_alpha');
+			}else{
+				$validator = Validator::make($request->all(), [
+		            'donator_name' => 'required|max:255',
+		            'donator_address' => 'required',
+		            'cheque_number' => 'required',
+		            'cheque_bank' => 'required',
+		            'cheque_date' => 'required',
+		            'amount' => 'required',
+		            'notes' => 'required',
+		            'type' => 'required',
+		            'delivery_date' => 'required',
+		            'donator_phone' => 'required|numeric',
+		            'project_id' => 'required',
+		            'receipt_writter_id' => 'required',
+		            'receipt_delegate_id' => 'required',
+		            'receipt_for_month' => 'required',
+		        ]);
+		        if($validator->fails()) {
+			        return Redirect::back()
+			            ->withErrors($validator)
+			            ->WithInput();
+			    }
+				$receipt->cheque_number = $request->input('cheque_number');
+				$receipt->cheque_bank = $request->input('cheque_bank');
+				$receipt->cheque_date = $request->input('cheque_date');
 			}
 		}
-
-		$receipt->cash = $request->input('receipt_type') == '1' ? true : false;
-		if($request->input('receipt_type') == '1'){
-			$validator = Validator::make($request->all(), [
-            	'donator_name' => 'required|max:255',
-	            'donator_address' => 'required',
-	            'amount' => 'required',
-	            'notes' => 'required',
-	            'type' => 'required',
-	            'delivery_date' => 'required',
-	            'donator_phone' => 'required|numeric',
-	            'project_id' => 'required',
-	            'receipt_writter_id' => 'required',
-	            'receipt_delegate_id' => 'required',
-	            'receipt_for_month' => 'required',
-	        ]);
-	        if($validator->fails()) {
-		        return Redirect::back()
-		            ->withErrors($validator)
-		            ->WithInput();
-		    }
-		    $receipt->cheque_number = 0;
-			$receipt->cheque_bank = "";
-			$receipt->cheque_date = $request->input('delivery_date');
-			$receipt->alpha_amount = $request->input('amount_alpha');
-		}else{
-			$validator = Validator::make($request->all(), [
-	            'donator_name' => 'required|max:255',
-	            'donator_address' => 'required',
-	            'cheque_number' => 'required',
-	            'cheque_bank' => 'required',
-	            'cheque_date' => 'required',
-	            'amount' => 'required',
-	            'notes' => 'required',
-	            'type' => 'required',
-	            'delivery_date' => 'required',
-	            'donator_phone' => 'required|numeric',
-	            'project_id' => 'required',
-	            'receipt_writter_id' => 'required',
-	            'receipt_delegate_id' => 'required',
-	            'receipt_for_month' => 'required',
-	        ]);
-	        if($validator->fails()) {
-		        return Redirect::back()
-		            ->withErrors($validator)
-		            ->WithInput();
-		    }
-
-			$receipt->cheque_number = $request->input('cheque_number');
-			$receipt->cheque_bank = $request->input('cheque_bank');
-			$receipt->cheque_date = $request->input('cheque_date');
-		}
+		
+		// var_dump($receipt->cash);die;
 
 		$receipt->alpha_amount = $request->input('amount_alpha');
 		$receipt->amount = str_replace(',', '',$request->input('amount'));
-		$receipt->notes = $request->input('notes');
 		$receipt->type = $request->input('type');
 		$receipt->receipt_date = $request->input('delivery_date');
 		$receipt->donator_name = $request->input('donator_name');
 		$receipt->donator_address = $request->input('donator_address');
 		$receipt->donator_mobile = $request->input('donator_phone');
 		$receipt->project_id = $request->input('project_id');
-		$receipt->receipt_writter_id = $request->input('receipt_writter_id');
 		$receipt->receipt_delegate_id = $request->input('receipt_delegate_id');
 		$receipt->receipt_notebook =$request->input('receipt_notebook') ;
-		$receipt->receipt_for_month = $request->input('receipt_for_month');
 		$receipt->donation_section = 1;
 		$receipt->user_id = Auth::user()->id;
 
+		if(is_null($request->input('license'))){
+			$receipt->notes = $request->input('notes');
+			$receipt->receipt_writter_id = $request->input('receipt_writter_id');
+			$receipt->receipt_for_month = $request->input('receipt_for_month');	
+		}
 		$receipt->save();
 
 		return redirect()->action('IndexController@receipts');
@@ -239,6 +340,8 @@ class IndexController extends Controller
 	{
 		$where = " where ";
 		$query = "";
+		$query1 = "";
+		$project;
 		if($request->input('receipt_id') != ''){
 			$query = $where . 'id = '.$request->input('receipt_id');
 		}
@@ -319,9 +422,21 @@ class IndexController extends Controller
 			$query .= "cash = " .  (int)$request->input('cash');
 		}
 
-		$receipts =  DB::select("SELECT * FROM donation_receipts ". $query);
+		if($query != '')
+			$query1 = " and P.id = DR.project_id ";
+		else
+			$query1 = " where P.id = DR.project_id ";
 
-		return view('table',compact('receipts'))->render();
+		$receipts =  DB::select("SELECT DR.* , P.name FROM donation_receipts AS DR ,projects AS P". $query . $query1);
+
+		if($query != '')
+			$query1 = " and P.id = LR.project_id ";
+		else
+			$query1 = " where P.id = LR.project_id ";
+
+		$licenseReceipts =  DB::select("SELECT LR.* , P.name FROM license_receipts  AS LR ,projects AS P". $query . $query1);
+// var_dump($receipts);die;
+		return view('table',compact('receipts','licenseReceipts'))->render();
 	}
 
 
@@ -433,39 +548,6 @@ class IndexController extends Controller
 		return redirect()->action('IndexController@index');	
 	}
 	
-
-	/**
-	 * Display a listing of the resource.
-	 *
-	 * @return Response
-	 */
-	public function licenseReceipts($id = null)
-	{
-		
-		if($id){
-			$receipt = DonationReceipt::findOrFail($id);
-			$last_id = $receipt->id;
-			$notebook = $receipt->receipt_notebook;
-		}else{
-			$last_receipt = DonationReceipt::orderby('id', 'desc')->first();
-			$last_id = ($last_receipt)? ($last_receipt->id +1) : 1;
-			
-			if($last_receipt){
-				$receiptsCount =  DB::select("SELECT count(id) as count FROM donation_receipts WHERE  receipt_notebook = ". $last_receipt->receipt_notebook);
-				$datetime = new DateTime($last_receipt->receipt_date);
-				if(($receiptsCount[0]->count >= 50) || (date('m') > $datetime->format('m')))
-					$notebook = $last_receipt->receipt_notebook + 1 ;
-				else
-					$notebook = $last_receipt->receipt_notebook;	
-			}else
-				$notebook = 1;
-		}
-
-		$projects = Project::lists('name','id');
-
-		return view('donation-receipt-license', compact('projects','receipt','last_id','notebook'));
-	}
-
 
 	public function convertNumber(Request $request)
 	{

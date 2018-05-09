@@ -70,7 +70,7 @@
     <div class="row">
         <div class="col-md-1"></div>
         <div class="col-md-10">
-            @if($receipts->count())
+            @if($receipts->count() or $licenseReceipts->count())
                 {!! Form::open(['url' => 'cash-receipt' , 'class' => 'form']) !!}
                 {!! csrf_field() !!}
                 
