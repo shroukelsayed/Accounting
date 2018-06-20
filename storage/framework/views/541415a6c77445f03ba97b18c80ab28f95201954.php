@@ -101,6 +101,9 @@
                                 <li>
                                     <a href="<?php echo e(url('/all-cash')); ?>"><?php echo app('translator')->get('validation.all_cash'); ?></a>
                                 </li>
+                                <li>
+                                    <a href="<?php echo e(url('/account-sheet')); ?>"><?php echo app('translator')->get('validation.account-sheet'); ?></a>
+                                </li>
                             </ul>
                         </li>
 

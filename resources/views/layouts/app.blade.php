@@ -101,6 +101,9 @@
                                 <li>
                                     <a href="{{ url('/all-cash') }}">@lang('validation.all_cash')</a>
                                 </li>
+                                <li>
+                                    <a href="{{ url('/account-sheet') }}">@lang('validation.account-sheet')</a>
+                                </li>
                             </ul>
                         </li>
 

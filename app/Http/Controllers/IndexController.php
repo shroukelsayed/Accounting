@@ -9,6 +9,7 @@ use DB;
 use Validator;
 use Auth;
 use App;
+use Input;
 
 use App\Http\Requests;
 use App\Project;
@@ -17,6 +18,85 @@ use App\LicenseReceipt;
 use App\Receipt;
 
 use App\Workers;
+use App\AccountingTreeLevelTwo;
+
+
+use App\CurrentAssets;
+use App\Banks;
+use App\BankAccounts;
+use App\BankAccountItems;
+use App\Treasury;
+use App\TreasuryCurrencies;
+use App\Currency;
+use App\AdvancedExpenses;
+use App\ExpensesItems;
+use App\DepositsWithOthers;
+use App\DepositsWithOtherItems;
+use App\CustodyAndAdvances;
+use App\ReceivableCheques;
+use App\VariousDebitors;
+use App\Fawry;
+use App\FawryItems;
+use App\FawryBanks;
+use App\Stores;
+use App\Sms;
+use App\AccuredRevenues;
+use App\OtherDebitBalances;
+use App\CibMachine;
+
+use App\CurrentLiabilities;
+use App\AccuredExpenses;
+use App\AmountsUnderAdjustments;
+use App\Creditors;
+use App\PayableCheques;
+use App\PenalitiesFunds;
+use App\FriendshipFunds;
+use App\SocialInsurances;
+use App\SocialInsuranceItems;
+use App\Taxes;
+use App\Suppliers;
+use App\SuppliersCreditors;
+
+use App\LevelThreeOperationExpenses;
+use App\LevelThreeGeneralExpenses;
+use App\LevelFourOperationExpenses;
+use App\LevelFourGeneralExpenses;
+use App\OperationExpenseItems;
+use App\GeneralExpenseItems;
+
+use App\AdvancedExpenseExpensesItems; 
+use App\AccuredExpenseItems;
+use App\FawryItemBanks;
+use App\AccountItems;
+use App\StoreItems;
+use App\CustodyAndAdvanceWorkers;
+use App\AccuredRevenuesItems;
+use App\AccuredItems;
+use App\PenalitiesFundWorkers;
+use App\FriendshipFundWorkers;
+use App\InsuranceItems;
+
+use App\LevelThreeRevenues;
+use App\LevelFourRevenues;
+use App\NotebookLicenses;
+use App\Coupons;
+use App\RevenueCoupons;
+use App\RBankAccounts;
+use App\RBenefitItems;
+use App\RFawryItems;
+use App\RevenueFawries;
+use App\RevenueBanks;
+use App\RevenueBankAccounts;
+use App\RevenueBenefits;
+use App\RevenueBenefitItems;
+use App\RevenueFawryItems;
+use App\RevenueMalls;
+use App\RevenueSms;
+
+
+
+
+
 
 use Illuminate\Support\Facades\Redirect;
 
@@ -55,7 +135,7 @@ class IndexController extends Controller
 	}
 
 
-	 /**
+	/**
 	 * Display a listing of the resource.
 	 *
 	 * @return Response
@@ -330,7 +410,7 @@ class IndexController extends Controller
 			$receipt->receipt_for_month = $request->input('receipt_for_month');	
 		}
 		$receipt->save();
-
+// var_dump("jkj");die;
 		return redirect()->action('IndexController@receipts');
 
 	}
@@ -341,10 +421,9 @@ class IndexController extends Controller
 		$where = " where ";
 		$query = "";
 		$query1 = "";
+		$query2 = "";
 		$project;
-		if($request->input('receipt_id') != ''){
-			$query = $where . 'id = '.$request->input('receipt_id');
-		}
+		
 		if($request->input('donator_address') != ''){
 			if($query != '')
 				$query .= ' and ';
@@ -421,20 +500,26 @@ class IndexController extends Controller
 				$query .= $where;
 			$query .= "cash = " .  (int)$request->input('cash');
 		}
-
+			
 		if($query != '')
 			$query1 = " and P.id = DR.project_id ";
 		else
 			$query1 = " where P.id = DR.project_id ";
 
-		$receipts =  DB::select("SELECT DR.* , P.name FROM donation_receipts AS DR ,projects AS P". $query . $query1);
+		if($request->input('receipt_id') != '')
+			$query2 = "and DR.id = " . $request->input('receipt_id');
+
+		$receipts =  DB::select("SELECT DR.* , P.name FROM donation_receipts AS DR ,projects AS P". $query . $query1 . $query2);
 
 		if($query != '')
 			$query1 = " and P.id = LR.project_id ";
 		else
 			$query1 = " where P.id = LR.project_id ";
 
-		$licenseReceipts =  DB::select("SELECT LR.* , P.name FROM license_receipts  AS LR ,projects AS P". $query . $query1);
+		if($request->input('receipt_id') != '')
+			$query2 = "and LR.id = " . $request->input('receipt_id');
+
+		$licenseReceipts =  DB::select("SELECT LR.* , P.name FROM license_receipts  AS LR ,projects AS P". $query . $query1 . $query2);
 // var_dump($receipts);die;
 		return view('table',compact('receipts','licenseReceipts'))->render();
 	}
@@ -795,4 +880,369 @@ class IndexController extends Controller
 	    }
 	}
 
+	/**
+	 * Display a listing of the resource.
+	 *
+	 * @return Response
+	 */
+	public function accountSheet()
+	{
+		// $users = User::orderBy('id', 'desc')->paginate(10);
+		$workers = Workers::lists('title','id');
+        $levels = AccountingTreeLevelTwo::lists('title','code');
+        // $levels_two = AccountingTreeLevelTwo::all();
+
+        // $currentAssets = CurrentAssets::lists('title','code');
+        // $banks = Banks::lists('title','code');
+        // $treasury = Treasury::lists('title','code');
+        // $advancedExpenses = AdvancedExpenses::lists('title','code');
+        // $depositsWithOthers = DepositsWithOthers::lists('title','code');
+        // $custodyAndAdvances = CustodyAndAdvances::lists('title','code');
+        // $accuredRevenues = AccuredRevenues::lists('title','code');
+        // $variousDebitors = VariousDebitors::lists('title','code');
+        // $otherDebitBalances = OtherDebitBalances::lists('title','code');
+        // $stores = Stores::lists('title','code');
+        // $receivableCheques = ReceivableCheques::lists('title','code');
+        // $fawry = Fawry::lists('title','code');
+        // $sms = Sms::lists('title','code');
+        // $cibMachine = CibMachine::lists('title','code');
+
+
+
+
+        // $currentLiabilities = CurrentLiabilities::lists('title','code');
+        // $suppliers = Suppliers::lists('title','code');
+        // $currentLiabilities = CurrentLiabilities::lists('title','code');
+        // $currentLiabilities = CurrentLiabilities::lists('title','code');
+        // $currentLiabilities = CurrentLiabilities::lists('title','code');
+        // $currentLiabilities = CurrentLiabilities::lists('title','code');
+        // $currentLiabilities = CurrentLiabilities::lists('title','code');
+        // $currentLiabilities = CurrentLiabilities::lists('title','code');
+        
+// var_dump($currentAssets);die;
+		// return view('account-sheet',compact('workers','levels','currentAssets','banks','treasury','advancedExpenses','depositsWithOthers','custodyAndAdvances','accuredRevenues','variousDebitors','otherDebitBalances','stores','receivableCheques','fawry','sms','cibMachine','currentLiabilities','suppliers'));
+		return view('account-sheet',compact('workers','levels'));
+
+	}
+
+	public function getLevels()
+	{
+	  	$level_code = Input::get('option');
+	  	// $level_code = '12';
+	  	// var_dump($level_code);die;
+	  	if(strlen($level_code) == 2){
+	  		$level = AccountingTreeLevelTwo::where('code', '=', $level_code)->firstOrFail();
+		  	if($level_code == '12'){
+	    		$currentAssets =$level->currentAssets();
+	    		$levels = $currentAssets->get(['code','title']);
+		  	}else if ($level_code == "21") {
+		  		$currentLiabilities =$level->currentLiabilities();
+	    		$levels = $currentLiabilities->get(['code','title']);
+	        }else if ($level_code == "32") {
+				$levelThreeOperationExpenses =$level->levelThreeOperationExpenses();
+	    		$levels = $levelThreeOperationExpenses->get(['code','title']);
+	        }else if ($level_code == "31") {
+				$levelThreeGeneralExpenses =$level->levelThreeGeneralExpenses();
+	    		$levels = $levelThreeGeneralExpenses->get(['code','title']);
+	        }else if (strpos($level_code, '4', 0) !== false) {
+				$levelThreeRevenues =$level->levelThreeRevenues();
+	    		$levels = $levelThreeRevenues->get(['code','title']);
+	    	}
+	    }else if(strlen($level_code) == 4){
+	    	if(substr($level_code, 0,2) == '12'){
+			  	$level = CurrentAssets::where('code', '=', $level_code)->firstOrFail();
+		    	if($level_code == '1201'){
+		    		$treasury = $level->treasury();
+		    		$levels = $treasury->get(['code','title']);
+			  	}else if ($level_code == "1202") {
+		    		$bank = $level->banks();
+		    		$levels = $bank->get(['code','title']);
+		        }else if ($level_code == "1203") {
+		    		$bank = $level->advancedExpenses();
+		    		$levels = $bank->get(['code','title']);
+		        }else if ($level_code == "1204") {
+		    		$bank = $level->depositsWithOthers();
+		    		$levels = $bank->get(['code','title']);
+		        }else if ($level_code == "1205") {
+		    		$bank = $level->custodyAndAdvances();
+		    		$levels = $bank->get(['code','title']);
+		        }else if ($level_code == "1206") {
+		    		$bank = $level->accuredRevenues();
+		    		$levels = $bank->get(['code','title']);
+		        }else if ($level_code == "1207") {
+		    		$bank = $level->variousDebitors();
+		    		$levels = $bank->get(['code','title']);
+		        }else if ($level_code == "1208") {
+		    		$bank = $level->otherDebitBalances();
+		    		$levels = $bank->get(['code','title']);
+		        }else if ($level_code == "1209") {
+		    		$bank = $level->stores();
+		    		$levels = $bank->get(['code','title']);
+		        }else if ($level_code == "1210") {
+		    		$bank = $level->receivableCheques();
+		    		$levels = $bank->get(['code','title']);
+		        }else if ($level_code == "1211") {
+		    		$bank = $level->fawry();
+		    		$levels = $bank->get(['code','title']);
+		        }else if ($level_code == "1212") {
+		    		$bank = $level->sms();
+		    		$levels = $bank->get(['code','title']);
+		        }else if ($level_code == "1213") {
+		    		$bank = $level->cibMachine();
+		    		$levels = $bank->get(['code','title']);
+		        }else{
+
+		        }
+		    }else if (substr($level_code, 0,2) == '21'){
+		    	$level = CurrentLiabilities::where('code', '=', $level_code)->firstOrFail();
+		    	if($level_code == '2101'){
+		    		$Suppliers = $level->suppliers();
+		    		$levels = $Suppliers->get(['code','title']);
+			  	}else if ($level_code == "2102") {
+		    		$AccuredExpenses = $level->accuredExpenses();
+		    		$levels = $AccuredExpenses->get(['code','title']);
+		        }else if ($level_code == "2103") {
+		    		$PayableCheques = $level->payableCheques();
+		    		$levels = $PayableCheques->get(['code','title']);
+		        }else if ($level_code == "2104") {
+		    		$Taxes = $level->taxes();
+		    		$levels = $Taxes->get(['code','title']);
+		        }else if ($level_code == "2105") {
+		    		$SocialInsurances = $level->socialInsurances();
+		    		$levels = $SocialInsurances->get(['code','title']);
+		        }else if ($level_code == "2106") {
+		    		$PenalitiesFunds = $level->penalitiesFunds();
+		    		$levels = $PenalitiesFunds->get(['code','title']);
+		        }else if ($level_code == "2107") {
+		    		$FriendshipFunds = $level->friendshipFunds();
+		    		$levels = $FriendshipFunds->get(['code','title']);
+		        }else if ($level_code == "2108") {
+		    		$AmountsUnderAdjustments = $level->amountsUnderAdjustments();
+		    		$levels = $AmountsUnderAdjustments->get(['code','title']);
+		        }else if ($level_code == "2109") {
+		    		$Creditors = $level->creditors();
+		    		$levels = $Creditors->get(['code','title']);
+		        }
+		    }else if (substr($level_code, 0,2) == '31'){
+		    	$level = LevelThreeGeneralExpenses::where('code', '=', $level_code)->firstOrFail();
+		    	if(strpos($level_code, '31', 0) !== false){
+		    		$levelFour = $level->LevelFour();
+		    		$levels = $levelFour->get(['code','title']);
+			  	}
+		    }else if (substr($level_code, 0,2) == '32'){
+		    	$level = LevelThreeOperationExpenses::where('code', '=', $level_code)->firstOrFail();
+		    	if(strpos($level_code, '32', 0) !== false){
+		    		$levelFour = $level->LevelFour();
+		    		$levels = $levelFour->get(['code','title']);
+			  	}
+		    }else if (substr($level_code, 0,1) == '4'){
+		    	$level = LevelThreeRevenues::where('code', '=', $level_code)->firstOrFail();
+		    	if(strpos($level_code, '4', 0) !== false){
+		    		$levelFour = $level->LevelFour();
+		    		$levels = $levelFour->get(['code','title']);
+			  	}
+		    }
+	    }else if(strlen($level_code) == 6){
+	    	if(substr($level_code, 0,4) == '1201'){
+	    		$level = Treasury::where('code', '=', $level_code)->firstOrFail();
+		    	if(strpos($level_code, '1201', 0) !== false){
+		    		$levelFive = $level->treasuryCurrencies();
+		    		$levels = $levelFive->get();
+			  	}
+	    	}else if(substr($level_code, 0,4) == '1202'){
+	    		$level = Banks::where('code', '=', $level_code)->firstOrFail();
+		    	if(strpos($level_code, '1202', 0) !== false){
+		    		$levelFive = $level->bankAccounts();
+		    		$levels = $levelFive->get(['code','title']);
+			  	}
+	    	}else if(substr($level_code, 0,4) == '1203'){
+	    		$level = AdvancedExpenses::where('code', '=', $level_code)->firstOrFail();
+		    	if(strpos($level_code, '1203', 0) !== false){
+		    		$levelFive = $level->expensesItems();
+		    		$levels = $levelFive->get();
+			  	}
+	    	}else if(substr($level_code, 0,4) == '1204'){
+	    		$level = DepositsWithOthers::where('code', '=', $level_code)->firstOrFail();
+		    	if(strpos($level_code, '1204', 0) !== false){
+		    		$levelFive = $level->depositsWithOtherItems();
+		    		$levels = $levelFive->get();
+			  	}
+	    	}else if(substr($level_code, 0,4) == '1205'){
+	    		$level = CustodyAndAdvances::where('code', '=', $level_code)->firstOrFail();
+		    	if(strpos($level_code, '1205', 0) !== false){
+		    		$levelFive = $level->workers();
+		    		$levels = $levelFive->get();
+			  	}
+	    	}else if(substr($level_code, 0,4) == '1206'){
+	    		$level = AccuredRevenues::where('code', '=', $level_code)->firstOrFail();
+		    	if(strpos($level_code, '1206', 0) !== false){
+		    		$levelFive = $level->accuredRevenuesItems();
+		    		$levels = $levelFive->get();
+			  	}
+	    	}else if(substr($level_code, 0,4) == '1207'){
+	    		$level = VariousDebitors::where('code', '=', $level_code)->firstOrFail();
+		    	if(strpos($level_code, '1207', 0) !== false){
+		    		$levelFive = $level->bankAccounts();
+		    		$levels = $levelFive->get();
+			  	}
+	    	}else if(substr($level_code, 0,4) == '1208'){
+	    		$level = OtherDebitBalances::where('code', '=', $level_code)->firstOrFail();
+		    	if(strpos($level_code, '1208', 0) !== false){
+		    		$levelFive = $level->bankAccounts();
+		    		$levels = $levelFive->get();
+			  	}
+	    	}else if(substr($level_code, 0,4) == '1209'){
+	    		$level = Stores::where('code', '=', $level_code)->firstOrFail();
+		    	if(strpos($level_code, '1209', 0) !== false){
+		    		$levelFive = $level->storeItems();
+		    		$levels = $levelFive->get();
+			  	}
+	    	}else if(substr($level_code, 0,4) == '1210'){
+	    		$level = ReceivableCheques::where('code', '=', $level_code)->firstOrFail();
+		    	if(strpos($level_code, '1210', 0) !== false){
+		    		$levelFive = $level->bankAccounts();
+		    		$levels = $levelFive->get();
+			  	}
+	    	}else if(substr($level_code, 0,4) == '1211'){
+	    		$level = Fawry::where('code', '=', $level_code)->firstOrFail();
+		    	if(strpos($level_code, '1211', 0) !== false){
+		    		$levelFive = $level->fawryItems();
+		    		$levels = $levelFive->get();
+			  	}
+	    	}else if(substr($level_code, 0,4) == '1212'){
+	    		$level = Sms::where('code', '=', $level_code)->firstOrFail();
+		    	if(strpos($level_code, '1212', 0) !== false){
+		    		$levelFive = $level->bankAccounts();
+		    		$levels = $levelFive->get();
+			  	}
+	    	}else if(substr($level_code, 0,4) == '1213'){
+	    		$level = CibMachine::where('code', '=', $level_code)->firstOrFail();
+		    	if(strpos($level_code, '1213', 0) !== false){
+		    		$levelFive = $level->bankAccounts();
+		    		$levels = $levelFive->get();
+			  	}
+	    	}
+
+
+	    	else if(substr($level_code, 0,4) == '2101'){
+	    		$level = Suppliers::where('code', '=', $level_code)->firstOrFail();
+		    	if(strpos($level_code, '2101', 0) !== false){
+		    		$levelFive = $level->suppliersCreditors();
+		    		$levels = $levelFive->get();
+			  	}
+	    	}else if(substr($level_code, 0,4) == '2102'){
+	    		$level = AccuredExpenses::where('code', '=', $level_code)->firstOrFail();
+		    	if(strpos($level_code, '2102', 0) !== false){
+		    		$levelFive = $level->expensesItems();
+		    		$levels = $levelFive->get();
+			  	}
+	    	}else if(substr($level_code, 0,4) == '2103'){
+	    		$level = PayableCheques::where('code', '=', $level_code)->firstOrFail();
+		    	if(strpos($level_code, '2103', 0) !== false){
+		    		$levelFive = $level->bankAccounts();
+		    		$levels = $levelFive->get();
+			  	}
+	    	}else if(substr($level_code, 0,4) == '2104'){
+	    		$level = Taxes::where('code', '=', $level_code)->firstOrFail();
+		    	if(strpos($level_code, '2104', 0) !== false){
+		    		$levelFive = $level->bankAccounts();
+		    		$levels = $levelFive->get();
+			  	}
+	    	}else if(substr($level_code, 0,4) == '2105'){
+	    		$level = SocialInsurances::where('code', '=', $level_code)->firstOrFail();
+		    	if(strpos($level_code, '2105', 0) !== false){
+		    		$levelFive = $level->socialInsuranceItems();
+		    		$levels = $levelFive->get();
+			  	}
+	    	}else if(substr($level_code, 0,4) == '2106'){
+	    		$level = PenalitiesFunds::where('code', '=', $level_code)->firstOrFail();
+		    	if(strpos($level_code, '2106', 0) !== false){
+		    		$levelFive = $level->workers();
+		    		$levels = $levelFive->get();
+			  	}
+	    	}else if(substr($level_code, 0,4) == '2107'){
+	    		$level = FriendshipFunds::where('code', '=', $level_code)->firstOrFail();
+		    	if(strpos($level_code, '2107', 0) !== false){
+		    		$levelFive = $level->workers();
+		    		$levels = $levelFive->get();
+			  	}
+	    	}else if(substr($level_code, 0,4) == '2108'){
+	    		$level = AmountsUnderAdjustments::where('code', '=', $level_code)->firstOrFail();
+		    	if(strpos($level_code, '2108', 0) !== false){
+		    		$levelFive = $level->bankAccounts();
+		    		$levels = $levelFive->get();
+			  	}
+	    	}else if(substr($level_code, 0,4) == '2109'){
+	    		$level = Creditors::where('code', '=', $level_code)->firstOrFail();
+		    	if(strpos($level_code, '2109', 0) !== false){
+		    		$levelFive = $level->bankAccounts();
+		    		$levels = $levelFive->get();
+			  	}
+	    	}
+
+	    	else if(substr($level_code, 0,4) == '3101'){
+	    		$level = LevelFourGeneralExpenses::where('code', '=', $level_code)->firstOrFail();
+		    	if(strpos($level_code, '3101', 0) !== false){
+		    		$levelFive = $level->expensesItems();
+		    		$levels = $levelFive->get();
+			  	}
+	    	}
+
+	    	else if(substr($level_code, 0,4) == '3201'){
+	    		$level = LevelFourOperationExpenses::where('code', '=', $level_code)->firstOrFail();
+		    	if(strpos($level_code, '3201', 0) !== false){
+		    		$levelFive = $level->expensesItems();
+		    		$levels = $levelFive->get();
+			  	}
+	    	}
+
+	    	else if(substr($level_code, 0,1) == '4'){
+	    		$level = LevelFourRevenues::where('code', '=', $level_code)->firstOrFail();
+		    	if(strpos($level_code, '0201', 2) !== false){
+		    		$levelFive = $level->notebookLicenses();
+		    		$levels = $levelFive->get();
+			  	}else if(strpos($level_code, '0202', 2) !== false){
+		    		$levelFive = $level->coupons();
+		    		$levels = $levelFive->get();
+			  	}else if(strpos($level_code, '0203', 2) !== false){
+		    		$levelFive = $level->revenueBanks();
+		    		$levels = $levelFive->get();
+			  	}else if(strpos($level_code, '0204', 2) !== false){
+		    		$levelFive = $level->revenueBenefits();
+		    		$levels = $levelFive->get();
+			  	}else if(strpos($level_code, '0205', 2) !== false){
+		    		$levelFive = $level->revenueMalls();
+		    		$levels = $levelFive->get();
+			  	}else if(strpos($level_code, '0206', 2) !== false){
+		    		$levelFive = $level->revenueSms();
+		    		$levels = $levelFive->get();
+			  	}else if(strpos($level_code, '0207', 2) !== false){
+		    		$levelFive = $level->revenueFawries();
+		    		$levels = $levelFive->get();
+			  	}
+
+	    	}
+
+	    }else if(strlen($level_code) == 9){
+			if(strpos($level_code, '0203', 2) !== false){
+			    $level = RevenueBanks::where('code', '=', $level_code)->firstOrFail();
+				$levelSix = $level->revenueBankAccounts();
+		    	$levels = $levelSix->get();
+			}else if(strpos($level_code, '0204', 0) !== false){
+			    $level = RevenueBenefits::where('code', '=', $level_code)->firstOrFail();
+				$levelSix = $level->revenueBenefitItems();
+		    	$levels = $levelSix->get();
+			}else if(strpos($level_code, '12020', 0) !== false){
+			    $level = BankAccounts::where('code', '=', $level_code)->firstOrFail();
+				$levelSix = $level->bankAccountItems();
+		    	$levels = $levelSix->get();
+			}
+
+		}
+         
+
+		// var_dump($currentAssets);
+		// var_dump($levels);die;
+		return \Response::make($levels);
+	}
 }
