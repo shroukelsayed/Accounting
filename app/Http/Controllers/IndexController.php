@@ -93,7 +93,7 @@ use App\RevenueFawryItems;
 use App\RevenueMalls;
 use App\RevenueSms;
 
-
+use App\AccountSheet;
 
 
 
@@ -410,7 +410,7 @@ class IndexController extends Controller
 			$receipt->receipt_for_month = $request->input('receipt_for_month');	
 		}
 		$receipt->save();
-// var_dump("jkj");die;
+		// var_dump("jkj");die;
 		return redirect()->action('IndexController@receipts');
 
 	}
@@ -520,7 +520,7 @@ class IndexController extends Controller
 			$query2 = "and LR.id = " . $request->input('receipt_id');
 
 		$licenseReceipts =  DB::select("SELECT LR.* , P.name FROM license_receipts  AS LR ,projects AS P". $query . $query1 . $query2);
-// var_dump($receipts);die;
+		// var_dump($receipts);die;
 		return view('table',compact('receipts','licenseReceipts'))->render();
 	}
 
@@ -630,7 +630,9 @@ class IndexController extends Controller
 			$donation_receipt->save();
 		}
 
-		return redirect()->action('IndexController@index');	
+		// return redirect()->action('IndexController@index');	
+		return redirect()->action('IndexController@accountSheet', ['cash_id' => $receipt->id,'ids'=>$ids]);
+
 	}
 	
 
@@ -713,7 +715,7 @@ class IndexController extends Controller
 	        $output = rtrim($output, ", ");
 	    }
 
-	    return $output . $outputf . " جنيها مصريا " ;
+	    return $output . $outputf . " جنيها مصريا فقط لا غير " ;
 	}
 
 	function convertGroup($index){
@@ -885,45 +887,42 @@ class IndexController extends Controller
 	 *
 	 * @return Response
 	 */
-	public function accountSheet()
+	public function accountSheet(Request $request)
 	{
-		// $users = User::orderBy('id', 'desc')->paginate(10);
 		$workers = Workers::lists('title','id');
         $levels = AccountingTreeLevelTwo::lists('title','code');
-        // $levels_two = AccountingTreeLevelTwo::all();
-
-        // $currentAssets = CurrentAssets::lists('title','code');
-        // $banks = Banks::lists('title','code');
-        // $treasury = Treasury::lists('title','code');
-        // $advancedExpenses = AdvancedExpenses::lists('title','code');
-        // $depositsWithOthers = DepositsWithOthers::lists('title','code');
-        // $custodyAndAdvances = CustodyAndAdvances::lists('title','code');
-        // $accuredRevenues = AccuredRevenues::lists('title','code');
-        // $variousDebitors = VariousDebitors::lists('title','code');
-        // $otherDebitBalances = OtherDebitBalances::lists('title','code');
-        // $stores = Stores::lists('title','code');
-        // $receivableCheques = ReceivableCheques::lists('title','code');
-        // $fawry = Fawry::lists('title','code');
-        // $sms = Sms::lists('title','code');
-        // $cibMachine = CibMachine::lists('title','code');
+       	
+		// $ids = null;
+		$last_sheet = AccountSheet::orderby('id', 'desc')->first();
+		$last_id = ($last_sheet)? $last_sheet->id +1  . '/' . getdate()['mon'] : 1  . '/' . getdate()['mon'];
+		// var_dump($request->all());die;
+		$ids =  $request->input('ids');
+		$receipts = DonationReceipt::whereIn('id',$ids)->get();
+		$projects_amount = array();
+		foreach ($receipts as $key => $receipt) {
+			if(isset($projects_amount[$receipt->project->name]))
+				$projects_amount[$receipt->project->name] += $receipt->amount;
+			else
+				$projects_amount[$receipt->project->name] = $receipt->amount;
+		}
 
 
+		$cashReceipt = Receipt::find($request->input('cash_id'));
+       	// var_dump($projects_amount,$last_id,$cashReceipt->amount);die;
+
+		// var_dump(getdate()['mon']);die;
 
 
-        // $currentLiabilities = CurrentLiabilities::lists('title','code');
-        // $suppliers = Suppliers::lists('title','code');
-        // $currentLiabilities = CurrentLiabilities::lists('title','code');
-        // $currentLiabilities = CurrentLiabilities::lists('title','code');
-        // $currentLiabilities = CurrentLiabilities::lists('title','code');
-        // $currentLiabilities = CurrentLiabilities::lists('title','code');
-        // $currentLiabilities = CurrentLiabilities::lists('title','code');
-        // $currentLiabilities = CurrentLiabilities::lists('title','code');
-        
-// var_dump($currentAssets);die;
-		// return view('account-sheet',compact('workers','levels','currentAssets','banks','treasury','advancedExpenses','depositsWithOthers','custodyAndAdvances','accuredRevenues','variousDebitors','otherDebitBalances','stores','receivableCheques','fawry','sms','cibMachine','currentLiabilities','suppliers'));
-		return view('account-sheet',compact('workers','levels'));
+		return view('account-sheet',compact('workers','levels','last_id','cashReceipt','projects_amount'));
+	}
+
+	public function saveAccountSheet(Request $request)
+	{
+		var_dump($request->all());die;
+
 
 	}
+
 
 	public function getLevels()
 	{
@@ -932,7 +931,10 @@ class IndexController extends Controller
 	  	// var_dump($level_code);die;
 	  	if(strlen($level_code) == 2){
 	  		$level = AccountingTreeLevelTwo::where('code', '=', $level_code)->firstOrFail();
-		  	if($level_code == '12'){
+		  	if($level_code == '11'){
+		  		$fixedAssets =$level->fixedAssets();
+	    		$levels = $fixedAssets->get(['code','title']);
+		  	}else if($level_code == '12'){
 	    		$currentAssets =$level->currentAssets();
 	    		$levels = $currentAssets->get(['code','title']);
 		  	}else if ($level_code == "21") {

@@ -142,16 +142,18 @@ return [
 
 
 
-    ''=>'',
-    ''=>'',
-    ''=>'',
-    ''=>'',
-    ''=>'',
-    ''=>'',
-    ''=>'',
-    ''=>'',
-    ''=>'',
-    ''=>'',
+    'add-expenses-item'           =>'add-expenses-item',
+    'add-currency'                =>'add-currency',
+    'add-fawry-bank'              =>'add-fawry-bank',
+    'add-bank-account-item'       =>'add-bank-account-item',
+    'add-worker'                  =>'add-worker',
+    'add-accured-revenue-item'    =>'add-accured-revenue-item',
+    'add-coupon'                  =>'add-coupon',
+    'add-revenue-bank-account'    =>'add-revenue-bank-account',
+    'add-revenue-benefit-item'    =>'add-revenue-benefit-item',
+    'add-revenue-fawry-item'      =>'add-revenue-fawry-item',
+
+    
     ''=>'',
     ''=>'',
     ''=>'',

@@ -77,7 +77,9 @@ Route::group(['middleware' => ['web']], function () {
 		Route::post('/receipts/search','IndexController@search');
 		Route::post('/convert-number','IndexController@convertNumber');
 		Route::get('/account-sheet','IndexController@accountSheet');
+		Route::post('/save-account-sheet','IndexController@saveAccountSheet');
 
+		
 		Route::get('get-levels', 'IndexController@getLevels');
 
 	});

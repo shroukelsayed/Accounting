@@ -129,6 +129,16 @@ return [
     'add_donation_receipt_license'    => 'إضافة إيصال تبرع / تراخيص',
     'all_cash'                        => 'ايصالات إستلام نقدية',
 
+    'add-expenses-item'               =>'اضافة بند مصروفات',
+    'add-currency'                    =>' اضافة عملة ',
+    'add-fawry-bank'                  =>'اضافة بنوك شركة فورى ',
+    'add-bank-account-item'           =>' اضافة تحليلى البنوك ',
+    'add-worker'                      =>'اضافة عامل ',
+    'add-accured-revenue-item'        =>'اضافة بنود ايرادات مستحقة',
+    'add-coupon'                      =>'اضافة فئة كوبون ',
+    'add-revenue-bank-account'        =>'اضافة تبرعات مباشرة بالبنوك ',
+    'add-revenue-benefit-item'        =>'اضافة فوائد عوائد البنوك',
+    'add-revenue-fawry-item'          =>'اضافة بنوك فورى ',
 
     ' '                               => ' ',
     ' '                               => ' ',
