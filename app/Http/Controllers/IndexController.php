@@ -892,7 +892,6 @@ class IndexController extends Controller
 		$workers = Workers::lists('title','id');
         $levels = AccountingTreeLevelTwo::lists('title','code');
        	
-		// $ids = null;
 		$last_sheet = AccountSheet::orderby('id', 'desc')->first();
 		$last_id = ($last_sheet)? $last_sheet->id +1  . '/' . getdate()['mon'] : 1  . '/' . getdate()['mon'];
 		// var_dump($request->all());die;
@@ -908,10 +907,6 @@ class IndexController extends Controller
 
 
 		$cashReceipt = Receipt::find($request->input('cash_id'));
-       	// var_dump($projects_amount,$last_id,$cashReceipt->amount);die;
-
-		// var_dump(getdate()['mon']);die;
-
 
 		return view('account-sheet',compact('workers','levels','last_id','cashReceipt','projects_amount'));
 	}

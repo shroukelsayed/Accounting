@@ -152,8 +152,22 @@
                                                         <a style="color: darkred;" class="nav-link " data-toggle="collapse" data-target="#panel-{{$accuredRevenue->code}}" role="tab"> <i class="fa fa-download ml-2"></i> &nbsp{{$accuredRevenue->title}}</a>
                                                         <div class="collapse" id="panel-{{$accuredRevenue->code}}" role="tabpanel">
                                                             @foreach($accuredRevenue->accuredRevenuesItems as $accuredRevenuesItem)
-                                                                <h5 class="my-2 h5">{{$accuredRevenuesItem->title}}</h5>
+                                                                @if($accuredRevenuesItem->title == 'فورى')
+                                                                    <!-- <h5 class="my-2 h5">{{$accuredRevenuesItem->title}}</h5> -->
+                                                                    <a style="color: darkred;" class="nav-link " data-toggle="collapse" data-target="#panel-{{$accuredRevenuesItem->code}}" role="tab"> <i class="fa fa-download ml-2"></i> &nbsp{{$accuredRevenuesItem->title}}</a>
+                                                                    <div class="collapse" id="panel-{{$accuredRevenuesItem->code}}" role="tabpanel">
+                                                                        @foreach($accuredRevenuesItem->accuredRevenuesFawries as $accuredRevenuesFawry)
+                                                                            <h5 class="my-2 h5">{{$accuredRevenuesFawry->title}}</h5>
+                                                                        @endforeach
+                                                                        <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal" onclick="drawdev({{ $accuredRevenuesItem->id }},{{ $accuredRevenuesItem->code }},{{ $accuredRevenuesItem->level }});"><i class="glyphicon glyphicon-plus"></i> Add accuredRevenuesItem Item </button>
+                                                                        <div id="addChild-{{$accuredRevenuesItem->code}}"></div>
+                                                                    </div>
+                                                                @else
+                                                                    <h5 class="my-2 h5">{{$accuredRevenuesItem->title}}</h5>
+                                                                @endif
                                                             @endforeach  
+                                                            <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal" onclick="drawdev({{ $accuredRevenue->id }},{{ $accuredRevenue->code }},{{ $accuredRevenue->level }});"><i class="glyphicon glyphicon-plus"></i> Add accuredRevenue Item </button>
+                                                            <div id="addChild-{{$accuredRevenue->code}}"></div>
                                                         <hr> 
                                                         </div>
                                                         </li>
@@ -213,7 +227,10 @@
                                                     @foreach($currentAsset->cibMachine as $cibMachine)
                                                         <h5 class="my-2 h5">{{$cibMachine->title}}</h5>
                                                     @endforeach 
-                                                    @if(in_array($currentAsset->code,array('1202','1203' ,'1204','1207','1208','1210')))
+                                                    @foreach($currentAsset->deposits as $deposit)
+                                                        <h5 class="my-2 h5">{{$deposit->title}}</h5>
+                                                    @endforeach 
+                                                    @if(in_array($currentAsset->code,array('1202','1203' ,'1204','1207','1208','1210','1214')))
                                                         <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal" onclick="drawdev({{ $currentAsset->id }},{{ $currentAsset->code }},{{ $currentAsset->level }});"><i class="glyphicon glyphicon-plus"></i> Add New </button>
                                                         <div id="addChild-{{$currentAsset->code}}"></div>
                                                     @endif
@@ -479,21 +496,24 @@
                                                     </li>
                                                 @endforeach 
                                                 </ul>
-                                                
                                             </div>
                                             </li>
                                         @endforeach
                                         </ul>
+                                        @if(strpos($levelThreeRevenue->code ,'43') !== false)
+                                            <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal" onclick="drawdev({{ $levelThreeRevenue->id }},{{ $levelThreeRevenue->code }},{{ $levelThreeRevenue->level }});"><i class="glyphicon glyphicon-plus"></i> Add New Bank Account </button>
+                                            <div id="addChild-{{$levelThreeRevenue->code}}"></div>
+                                        @endif
                                     </div>
                                     </li>
                                 @endforeach
                             </ul>
                         @endif
                         <!-- level Revenues  View  -->
-
-                        <!-- <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal" onclick="drawdev({{ $level_two->id }},{{ $level_two->code }},{{ $level_two->level }});"><i class="glyphicon glyphicon-plus"></i> Add New </button>
-                        <div id="addChild-{{$level_two->code}}"></div>
- -->
+                        @if($level_two->code == '43')
+                            <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal" onclick="drawdev({{ $level_two->id }},{{ $level_two->code }},{{ $level_two->level }});"><i class="glyphicon glyphicon-plus"></i> Add New Bank</button>
+                            <div id="addChild-{{$level_two->code}}"></div>
+                        @endif
                     </div>
                 </div>
                 <!-- Nav tabs -->

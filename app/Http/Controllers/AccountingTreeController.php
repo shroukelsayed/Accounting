@@ -34,6 +34,9 @@ use App\AccuredRevenues;
 use App\OtherDebitBalances;
 use App\CibMachine;
 use App\Workers;
+use App\Deposits;
+use App\AccuredRevenuesFawryBanks;
+use App\AccuredRevenuesFawries;
 
 use App\CurrentLiabilities;
 use App\AccuredExpenses;
@@ -279,7 +282,11 @@ class AccountingTreeController extends Controller
                 }else if($request->input('parent_code') == '32'){
                     $level = new LevelThreeOperationExpenses();
                     $last_level = LevelThreeOperationExpenses::orderby('id', 'desc')->first();
+                }else if($request->input('parent_code') == '43'){ // for deposits .. 
+                    $level = new LevelThreeRevenues();
+                    $last_level = LevelThreeRevenues::orderby('id', 'desc')->first();
                 }
+
             }elseif($request->input('parent_level') == '3'){
                 //// Current Assets Level 4 
                 if($request->input('parent_code') == '1201'){
@@ -321,6 +328,9 @@ class AccountingTreeController extends Controller
                 }else if($request->input('parent_code') == '1213'){
                     $level = new CibMachine();
                     $last_level = CibMachine::orderby('id', 'desc')->first();
+                }else if($request->input('parent_code') == '1214'){
+                    $level = new Deposits();
+                    $last_level = Deposits::orderby('id', 'desc')->first();
                 }
                 //// Current Assets Level 4 
 
@@ -376,6 +386,12 @@ class AccountingTreeController extends Controller
                 }
                 //// Expenses Level 4 
 
+                //// Revenues Level 4 
+                else if(strpos($request->input('parent_code'), '43') !== false){
+                    $level = new LevelFourRevenues();
+                    $last_level = LevelFourRevenues::where('code','like', '%43%')->orderby('id', 'desc')->first();
+                }
+
             }elseif($request->input('parent_level') == '4'){
                 if(strpos($request->input('parent_code'), '1202') !== false){
                     $level = new BankAccounts();
@@ -386,6 +402,9 @@ class AccountingTreeController extends Controller
                 }elseif($request->input('parent_code') == '120401'){
                     $level = new DepositsWithOtherItems();
                     $last_level = DepositsWithOtherItems::orderby('id', 'desc')->first();
+                }elseif(strpos($request->input('parent_code'), '1206') !== false){
+                    $level = new AccuredRevenuesItems();
+                    $last_level = AccuredRevenuesItems::where('code','like', $request->input('parent_code').'%')->orderby('id', 'desc')->first();
                 }elseif(strpos($request->input('parent_code'), '1209') !== false){
                     $level = new StoreItems();
                     $last_level = StoreItems::orderby('id', 'desc')->first();
@@ -401,6 +420,9 @@ class AccountingTreeController extends Controller
                 }elseif($request->input('parent_code') == '121101002'){
                     $level = new FawryBanks();
                     $last_level = FawryBanks::orderby('id', 'desc')->first();
+                }elseif(strpos($request->input('parent_code'), '1206') !== false){
+                    $level = new AccuredRevenuesFawries();
+                    $last_level = AccuredRevenuesFawries::where('code','like', $request->input('parent_code').'%')->orderby('id', 'desc')->first();
                 }elseif (preg_match('^4[0-9]{1}0203001^','420203001') || preg_match('^4[0-9]{1}0203001^','420203002')) {
                     # code...
                     var_dump("jhjhh");
@@ -408,7 +430,7 @@ class AccountingTreeController extends Controller
                 }
 
             }
-
+            // var_dump($last_level);die();
             if(!is_null($last_level)){
                 $new_level_code = $last_level->code + 1;
             }else{

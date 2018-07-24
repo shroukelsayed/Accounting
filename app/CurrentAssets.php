@@ -75,5 +75,10 @@ class CurrentAssets extends Model
     {
         return $this->hasMany(CibMachine::class,'parent');
     }
+
+    public function deposits()
+    {
+        return $this->hasMany(Deposits::class,'parent');
+    }
        
 }
