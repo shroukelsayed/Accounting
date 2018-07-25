@@ -286,7 +286,6 @@ class AccountingTreeController extends Controller
                     $level = new LevelThreeRevenues();
                     $last_level = LevelThreeRevenues::orderby('id', 'desc')->first();
                 }
-
             }elseif($request->input('parent_level') == '3'){
                 //// Current Assets Level 4 
                 if($request->input('parent_code') == '1201'){
@@ -391,7 +390,6 @@ class AccountingTreeController extends Controller
                     $level = new LevelFourRevenues();
                     $last_level = LevelFourRevenues::where('code','like', '%43%')->orderby('id', 'desc')->first();
                 }
-
             }elseif($request->input('parent_level') == '4'){
                 if(strpos($request->input('parent_code'), '1202') !== false){
                     $level = new BankAccounts();
@@ -412,7 +410,6 @@ class AccountingTreeController extends Controller
                     $level = new SuppliersCreditors();
                     $last_level = SuppliersCreditors::orderby('id', 'desc')->first();
                 }
-
             }elseif($request->input('parent_level') == '5'){
                 if($request->input('parent_code') == '120201001'){
                     $level = new BankAccountItems();
@@ -428,8 +425,14 @@ class AccountingTreeController extends Controller
                     var_dump("jhjhh");
                     die;
                 }
-
+            }elseif($request->input('parent_level') == '6'){
+                if(strpos($request->input('parent_code'), '1206') !== false){
+                    $level = new AccuredRevenuesFawryBanks();
+                    $last_level = AccuredRevenuesFawryBanks::where('code','like', $request->input('parent_code').'%')->orderby('id', 'desc')->first();
+                }
             }
+
+
             // var_dump($last_level);die();
             if(!is_null($last_level)){
                 $new_level_code = $last_level->code + 1;
@@ -440,6 +443,8 @@ class AccountingTreeController extends Controller
                     $new_level_code  = $request->input('parent_code')."001";
                 }elseif($request->input('parent_level') == '5'){
                     $new_level_code  = $request->input('parent_code')."0001";
+                }elseif($request->input('parent_level') == '6'){
+                    $new_level_code  = $request->input('parent_code')."001";
                 }
                 // var_dump($new_level_code);die;
             }
@@ -484,7 +489,6 @@ class AccountingTreeController extends Controller
                 // }elseif(strpos($request->input('parent_code'), '2107') !== false){
                     
                 }
-
             }elseif($request->input('parent_level') == '3'){
                 if(strpos($request->input('parent_code'), '31') !== false){
                     $items = ExpensesItems::all();

@@ -153,18 +153,29 @@
                                                         <div class="collapse" id="panel-{{$accuredRevenue->code}}" role="tabpanel">
                                                             @foreach($accuredRevenue->accuredRevenuesItems as $accuredRevenuesItem)
                                                                 @if($accuredRevenuesItem->title == 'فورى')
-                                                                    <!-- <h5 class="my-2 h5">{{$accuredRevenuesItem->title}}</h5> -->
-                                                                    <a style="color: darkred;" class="nav-link " data-toggle="collapse" data-target="#panel-{{$accuredRevenuesItem->code}}" role="tab"> <i class="fa fa-download ml-2"></i> &nbsp{{$accuredRevenuesItem->title}}</a>
+                                                                    <a style="color: darkred;" class="nav-link " data-toggle="collapse" data-target="#panel-{{$accuredRevenuesItem->code}}" role="tab"> <i class="fa fa-circle ml-2"></i> &nbsp{{$accuredRevenuesItem->title}}</a>
                                                                     <div class="collapse" id="panel-{{$accuredRevenuesItem->code}}" role="tabpanel">
                                                                         @foreach($accuredRevenuesItem->accuredRevenuesFawries as $accuredRevenuesFawry)
-                                                                            <h5 class="my-2 h5">{{$accuredRevenuesFawry->title}}</h5>
+                                                                            <!-- <h5 class="my-2 h5">{{$accuredRevenuesFawry->title}}</h5> -->
+                                                                            <a style="color: darkred;" class="nav-link " data-toggle="collapse" data-target="#panel-{{$accuredRevenuesFawry->code}}" role="tab"> <i class="fa fa-circle-o-notch ml-2"></i> &nbsp{{$accuredRevenuesFawry->title}}</a>
+                                                                            <div class="collapse" id="panel-{{$accuredRevenuesFawry->code}}" role="tabpanel">
+                                                                                @if($accuredRevenuesFawry->title == 'بنك')
+                                                                                    @foreach($accuredRevenuesFawry->accuredRevenuesFawriesBanks as $accuredRevenuesFawryBank)
+                                                                                        <h5 class="my-2 h5">{{$accuredRevenuesFawryBank->title}}</h5><br>
+                                                                                    @endforeach
+                                                                                    <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal" onclick="drawdev({{ $accuredRevenuesFawry->id }},{{ $accuredRevenuesFawry->code }},{{ $accuredRevenuesFawry->level }});"><i class="glyphicon glyphicon-plus"></i> Add accuredRevenuesFawry Item </button>
+                                                                                    <div id="addChild-{{$accuredRevenuesFawry->code}}"></div>
+                                                                                @endif
+                                                                            </div>
+                                                                            <br>
                                                                         @endforeach
                                                                         <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal" onclick="drawdev({{ $accuredRevenuesItem->id }},{{ $accuredRevenuesItem->code }},{{ $accuredRevenuesItem->level }});"><i class="glyphicon glyphicon-plus"></i> Add accuredRevenuesItem Item </button>
                                                                         <div id="addChild-{{$accuredRevenuesItem->code}}"></div>
                                                                     </div>
                                                                 @else
-                                                                    <h5 class="my-2 h5">{{$accuredRevenuesItem->title}}</h5>
+                                                                    <a style="color: darkred;" class="nav-link "> <i class="fa fa-circle ml-2"></i> &nbsp{{$accuredRevenuesItem->title}}</a>
                                                                 @endif
+                                                                <br>
                                                             @endforeach  
                                                             <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal" onclick="drawdev({{ $accuredRevenue->id }},{{ $accuredRevenue->code }},{{ $accuredRevenue->level }});"><i class="glyphicon glyphicon-plus"></i> Add accuredRevenue Item </button>
                                                             <div id="addChild-{{$accuredRevenue->code}}"></div>

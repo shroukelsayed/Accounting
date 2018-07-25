@@ -41,6 +41,7 @@
 <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/fancybox/1.3.4/jquery.fancybox-1.3.4.pack.min.js"></script>
   	 
 <?php
+// var_dump($levels[12]);die();
 	// var_dump(isset($receipt) and $receipt->id != null);die();
 	// var_dump( isset($receipt) and $receipt->type == 2);die();
  ?>
@@ -110,10 +111,10 @@
                	 					</td>
                	 					<td>
                	 						<label dir="rtl">من حساب : </label>
-               	 						@if(isset($receipt) and $receipt->notes)
-							    			{{ Form::select('from_level_one', $levels,$receipt->receipt_writter_id,['class' => 'form-control' , 'placeholder' => 'اختر بند المشروع'])  }}
+               	 						@if(isset($cashReceipt) and $cashReceipt->amount)
+							    			{{ Form::select('from_level_two', $levels,$levels[12],['class' => 'form-control from' , 'placeholder' => 'اختر بند المشروع'])  }}
 										@else
-											{{ Form::select('from_level_one', $levels,null,['class' => 'form-control from' , 'placeholder' => 'اختر اسم الحساب'])  }}
+											{{ Form::select('from_level_two', $levels,null,['class' => 'form-control from' , 'placeholder' => 'اختر اسم الحساب'])  }}
 											
 											<select name="from_level_three" id="from_level_three" class="form-control from" style="display: none;"></select>
 		                                	<select name="from_level_four" id="from_level_four" class="form-control from" style="display: none;"></select>
@@ -128,7 +129,7 @@
 		                                @endif
 		                                <br><br><br><br><br><br>
                	 							<label dir="rtl">الى حساب : </label>
-											{{ Form::select('to_level_one', $levels,null,['class' => 'form-control to' , 'placeholder' => 'اختر اسم الحساب'])  }}
+											{{ Form::select('to_level_two', $levels,null,['class' => 'form-control to' , 'placeholder' => 'اختر اسم الحساب'])  }}
 		                                	
 		                                	<select name="to_level_three" id="to_level_three" class="form-control to" style="display: none;"></select>
 		                                	<select name="to_level_four" id="to_level_four" class="form-control to" style="display: none;"></select>
