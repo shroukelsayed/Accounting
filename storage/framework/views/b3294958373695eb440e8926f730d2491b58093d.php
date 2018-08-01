@@ -33,7 +33,7 @@
                                 
                                 <td class="text-right">
                                     <a class="btn btn-xs btn-primary" href="<?php echo e(route('projects.show', $project->id)); ?>"><i class="glyphicon glyphicon-eye-open"></i> View</a>
-                                    <a class="btn btn-xs btn-warning" href="<?php echo e(route('projects.edit', $project->id)); ?>"><i class="glyphicon glyphicon-edit"></i> Edit</a>
+                                    <!-- <a class="btn btn-xs btn-warning" href="<?php echo e(route('projects.edit', $project->id)); ?>"><i class="glyphicon glyphicon-edit"></i> Edit</a> -->
                                    
                                 </td>
                             </tr>
