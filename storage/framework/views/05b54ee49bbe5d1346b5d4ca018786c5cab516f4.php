@@ -1,4 +1,5 @@
-<?php $__env->startSection('header'); ?>
+<?php $__env->startSection('content'); ?>
+<br><br><br><br><br><br><br>
 <div class="page-header">
         <h1>Projects / Show #<?php echo e($project->id); ?></h1>
         <form action="<?php echo e(route('projects.destroy', $project->id)); ?>" method="POST" style="display: inline;" onsubmit="if(confirm('Delete? Are you sure?')) { return true } else {return false };">
@@ -10,20 +11,13 @@
             </div>
         </form>
     </div>
-<?php $__env->stopSection(); ?>
-
-<?php $__env->startSection('content'); ?>
-
 <br><br><br>
 
     <div class="row">
         <div class="col-md-12">
 
             <form action="#">
-                <div class="form-group">
-                    <label for="nome">ID</label>
-                    <p class="form-control-static"></p>
-                </div>
+                
                 <div class="form-group">
                     <label for="nome">ID</label>
                     <p class="form-control-static"><?php echo e($project->id); ?> </p>

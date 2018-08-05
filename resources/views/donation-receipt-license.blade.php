@@ -109,7 +109,7 @@
             			<label>مؤسسة عمار اﻻرض</label><br>
                			<label> المشهرة برقم ٤٥٦٦ لسنة ٢٠١٢ </label><br>
                			<label> ترخيص رقم ٧٦ لسنة ٢٠١٧ على مستوى الجمهورية </label><br>
-               			<label> فى المدة من ١/٧/٢٠١٧ الى ٣٠/٦/٢٠١٨ "عام كامل" </label>
+               			<label> فى المدة من {{ $ourPeriod['from'] }} الى {{ $ourPeriod['to'] }} "عام كامل" </label>
             		</div>
             		<div class="row">
             			<div class="col-sm-3">

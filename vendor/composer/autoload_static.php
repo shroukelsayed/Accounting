@@ -310,6 +310,7 @@ class ComposerStaticInitd862fef8e29d86cf3144b8ef6aacc142
         'CreateAccuredRevenuesTable' => __DIR__ . '/../..' . '/database/migrations/2018_03_27_125551_create_accured_revenues_table.php',
         'CreateAdvancedExpensesExpensesItemTable' => __DIR__ . '/../..' . '/database/migrations/2018_04_17_110045_create_advanced_expenses_expenses_item_table.php',
         'CreateAdvancedExpensesTable' => __DIR__ . '/../..' . '/database/migrations/2018_03_27_130611_create_advanced_expenses_table.php',
+        'CreateAllocationsTable' => __DIR__ . '/../..' . '/database/migrations/2018_08_05_133404_create_allocations_table.php',
         'CreateAmountsUnderAdjustmentTable' => __DIR__ . '/../..' . '/database/migrations/2018_03_27_133200_create_amounts_under_adjustment_table.php',
         'CreateBankAccountItemsTable' => __DIR__ . '/../..' . '/database/migrations/2018_03_26_155128_create_bank_account_items_table.php',
         'CreateBankAccountTable' => __DIR__ . '/../..' . '/database/migrations/2018_03_26_155057_create_bank_account_table.php',

@@ -1106,4 +1106,16 @@ class AccountingTreeController extends Controller
         }
         return view('accounting-tree.add-currency')->with('message', 'Item added successfully.');
     }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function getLevel(Request $request)
+    {
+        
+    }
+
 }

@@ -1,5 +1,8 @@
 @extends(  Auth::user()->role  == 1  ? 'layouts.admin' : 'layouts.app')
-@section('header')
+
+
+@section('content')
+<br><br><br><br><br><br><br>
 <div class="page-header">
         <h1>Projects / Show #{{$project->id}}</h1>
         <form action="{{ route('projects.destroy', $project->id) }}" method="POST" style="display: inline;" onsubmit="if(confirm('Delete? Are you sure?')) { return true } else {return false };">
@@ -11,20 +14,13 @@
             </div>
         </form>
     </div>
-@endsection
-
-@section('content')
-
 <br><br><br>
 
     <div class="row">
         <div class="col-md-12">
 
             <form action="#">
-                <div class="form-group">
-                    <label for="nome">ID</label>
-                    <p class="form-control-static"></p>
-                </div>
+                
                 <div class="form-group">
                     <label for="nome">ID</label>
                     <p class="form-control-static">{{ $project->id}} </p>

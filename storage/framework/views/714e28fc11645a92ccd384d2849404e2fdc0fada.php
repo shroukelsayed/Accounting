@@ -36,7 +36,7 @@
                                 
                                 <td class="text-right">
                                     <a class="btn btn-xs btn-primary" href="<?php echo e(route('users.show', $user->id)); ?>"><i class="glyphicon glyphicon-eye-open"></i> View</a>
-                                    <a class="btn btn-xs btn-warning" href="<?php echo e(route('users.edit', $user->id)); ?>"><i class="glyphicon glyphicon-edit"></i> Edit</a>
+                                    <!-- <a class="btn btn-xs btn-warning" href="<?php echo e(route('users.edit', $user->id)); ?>"><i class="glyphicon glyphicon-edit"></i> Edit</a> -->
                                     <form action="<?php echo e(route('users.destroy', $user->id)); ?>" method="POST" style="display: inline;" onsubmit="if(confirm('Delete? Are you sure?')) { return true } else {return false };">
                                         <input type="hidden" name="_method" value="DELETE">
                                         <input type="hidden" name="_token" value="<?php echo e(csrf_token()); ?>">

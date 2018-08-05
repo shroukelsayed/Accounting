@@ -16,6 +16,7 @@ use App\Project;
 use App\DonationReceipt;
 use App\LicenseReceipt;
 use App\Receipt;
+use App\Allocations;
 
 use App\Workers;
 use App\AccountingTreeLevelTwo;
@@ -148,17 +149,43 @@ class IndexController extends Controller
 
 	}
 
-	 /**
+	/**
 	 * Display a listing of the resource.
 	 *
 	 * @return Response
 	 */
 	public function allocation()
 	{
-		// $users = User::orderBy('id', 'desc')->paginate(10);
+		$allocations = Allocations::orderBy('id', 'asc')->paginate(10);
 
-		return view('welcome');
+		return view('allocation',compact('allocations'));
 	}
+		
+
+	/**
+	 * Display a listing of the resource.
+	 *
+	 * @return Response
+	 */
+	public function saveAllocation(Request $request)
+	{
+		// var_dump($request->all());die;
+		// $allocations = Allocations::orderBy('id', 'asc')->paginate(10);
+
+		$allocation = new Allocations();
+		// var_dump($request);die;
+		
+		$allocation->title = $request->input('title');
+		$allocation->amount = $request->input('amount');
+		$allocation->level = 0;
+		$allocation->debit = 0;
+		$allocation->credit = 1;
+		$allocation->save();
+
+		return redirect()->action('IndexController@allocation');
+
+	}
+
 
 	 /**
 	 * Display a listing of the resource.
@@ -245,13 +272,29 @@ class IndexController extends Controller
 			}else
 				$notebook = 1;
 		}
-		$ourPeriod = '';
-		var_dump(date('d-m-Y',strtotime('+1 years')));die;
-		// mktime(0, 0, 0, date("m"),   date("d"),date("Y")+1)/
+
+		$western_arabic = array('0','1','2','3','4','5','6','7','8','9');
+		$eastern_arabic = array('٠','١','٢','٣','٤','٥','٦','٧','٨','٩');
+
+		$ourPeriod = array();
+		if( date('m') > '06' ){
+			$ourPeriod['from'] = date('Y') .'/7/1';
+			$ourPeriod['to'] = date('Y',strtotime('+1 years')) . '/6/30';
+		}else{
+			$ourPeriod['from'] = date('Y') .'/7/1';
+			$ourPeriod['to'] = date('Y',strtotime('+1 years')) . '/6/30';
+		}
+
+		$ourPeriod['to'] = str_replace($western_arabic, $eastern_arabic, $ourPeriod['to']);
+		$ourPeriod['from'] = str_replace($western_arabic, $eastern_arabic, $ourPeriod['from']);
+		$ourPeriod['year'] = str_replace($western_arabic, $eastern_arabic, date('Y'));
+
+		// var_dump($ourPeriod); die;
+
 		$projects = Project::lists('name','id');
 		$workers = Workers::lists('title','id');
 
-		return view('donation-receipt-license', compact('projects','receipt','last_id','notebook','workers'));
+		return view('donation-receipt-license', compact('projects','receipt','last_id','notebook','workers','ourPeriod'));
 	}
 
 
@@ -1219,7 +1262,6 @@ class IndexController extends Controller
 			  	}
 
 	    	}
-
 	    }else if(strlen($level_code) == 9){
 			if(strpos($level_code, '0203', 2) !== false){
 			    $level = RevenueBanks::where('code', '=', $level_code)->firstOrFail();
@@ -1239,7 +1281,7 @@ class IndexController extends Controller
          
 
 		// var_dump($currentAssets);
-		// var_dump($levels);die;
+		var_dump($levels);die;
 		return \Response::make($levels);
 	}
 }

@@ -80,10 +80,10 @@
                                 <li><a href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out"></i>@lang('validation.logout')</a></li>
                             </ul>
                         </li>
+                        <!-- <li><a href="/allocation">@lang('validation.allocation')</a></li> -->
                         <li><a href="/allocation">@lang('validation.allocation')</a></li>
-                        <li><a href="/allocation">@lang('validation.allocation')</a></li>
-                        <li><a href="/custody-advances">@lang('validation.custody_and_advances')</a></li>
-                        <li><a href="/treasury">@lang('validation.treasury')</a></li>
+                        <!-- <li><a href="/custody-advances">@lang('validation.custody_and_advances')</a></li> -->
+                        <!-- <li><a href="/treasury">@lang('validation.treasury')</a></li> -->
                         <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             @lang('validation.receipts')

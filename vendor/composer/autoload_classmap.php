@@ -20,6 +20,7 @@ return array(
     'CreateAccuredRevenuesTable' => $baseDir . '/database/migrations/2018_03_27_125551_create_accured_revenues_table.php',
     'CreateAdvancedExpensesExpensesItemTable' => $baseDir . '/database/migrations/2018_04_17_110045_create_advanced_expenses_expenses_item_table.php',
     'CreateAdvancedExpensesTable' => $baseDir . '/database/migrations/2018_03_27_130611_create_advanced_expenses_table.php',
+    'CreateAllocationsTable' => $baseDir . '/database/migrations/2018_08_05_133404_create_allocations_table.php',
     'CreateAmountsUnderAdjustmentTable' => $baseDir . '/database/migrations/2018_03_27_133200_create_amounts_under_adjustment_table.php',
     'CreateBankAccountItemsTable' => $baseDir . '/database/migrations/2018_03_26_155128_create_bank_account_items_table.php',
     'CreateBankAccountTable' => $baseDir . '/database/migrations/2018_03_26_155057_create_bank_account_table.php',

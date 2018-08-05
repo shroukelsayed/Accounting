@@ -41,7 +41,8 @@
 <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/fancybox/1.3.4/jquery.fancybox-1.3.4.pack.min.js"></script>
   	 
 <?php
-// var_dump($levels[12]);die();
+	// $l = $levels['12'];
+	// var_dump($levels);die();
 	// var_dump(isset($receipt) and $receipt->id != null);die();
 	// var_dump( isset($receipt) and $receipt->type == 2);die();
  ?>
@@ -112,7 +113,7 @@
                	 					<td>
                	 						<label dir="rtl">من حساب : </label>
                	 						@if(isset($cashReceipt) and $cashReceipt->amount)
-							    			{{ Form::select('from_level_two', $levels,$levels[12],['class' => 'form-control from' , 'placeholder' => 'اختر بند المشروع'])  }}
+							    			{{ Form::select('from_level_two', $levels,$levels,['class' => 'form-control from' ])  }}
 										@else
 											{{ Form::select('from_level_two', $levels,null,['class' => 'form-control from' , 'placeholder' => 'اختر اسم الحساب'])  }}
 											

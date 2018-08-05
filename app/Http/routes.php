@@ -79,6 +79,8 @@ Route::group(['middleware' => ['web']], function () {
 		Route::get('/account-sheet','IndexController@accountSheet');
 		Route::post('/save-account-sheet','IndexController@saveAccountSheet');
 
+		Route::post('/save-allocation','IndexController@saveAllocation');
+
 		
 		Route::get('get-levels', 'IndexController@getLevels');
 
