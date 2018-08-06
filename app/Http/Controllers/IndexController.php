@@ -156,7 +156,7 @@ class IndexController extends Controller
 	 */
 	public function allocation()
 	{
-		$allocations = Allocations::orderBy('id', 'asc')->paginate(10);
+		$allocations = Allocations::where('level','==', 0)->orderBy('id', 'asc')->paginate(10);
 
 		return view('allocation',compact('allocations'));
 	}
@@ -169,15 +169,18 @@ class IndexController extends Controller
 	 */
 	public function saveAllocation(Request $request)
 	{
-		// var_dump($request->all());die;
+		// var_dump((int)$request->input('parent_id'));die;
 		// $allocations = Allocations::orderBy('id', 'asc')->paginate(10);
-
 		$allocation = new Allocations();
 		// var_dump($request);die;
 		
 		$allocation->title = $request->input('title');
 		$allocation->amount = $request->input('amount');
-		$allocation->level = 0;
+		if($request->input('parent_id') !== null)
+			$allocation->level = (int)$request->input('parent_id');
+		else
+			$allocation->level = 0;
+
 		$allocation->debit = 0;
 		$allocation->credit = 1;
 		$allocation->save();
@@ -186,8 +189,33 @@ class IndexController extends Controller
 
 	}
 
+	/**
+	 * Display a listing of the resource.
+	 *
+	 * @return Response
+	 */
+	public function store()
+	{
+		// $users = User::orderBy('id', 'desc')->paginate(10);
 
-	 /**
+		return view('stores');
+
+	}
+
+	/**
+	 * Display a listing of the resource.
+	 *
+	 * @return Response
+	 */
+	public function saveStoreItem(Request $request)
+	{
+		// $users = User::orderBy('id', 'desc')->paginate(10);
+
+		return view('welcome');
+
+	}
+
+	/**
 	 * Display a listing of the resource.
 	 *
 	 * @return Response

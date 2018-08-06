@@ -80,7 +80,7 @@
                                 <li><a href="<?php echo e(url('/logout')); ?>"><i class="fa fa-btn fa-sign-out"></i><?php echo app('translator')->get('validation.logout'); ?></a></li>
                             </ul>
                         </li>
-                        <!-- <li><a href="/allocation"><?php echo app('translator')->get('validation.allocation'); ?></a></li> -->
+                        <li><a href="/store"><?php echo app('translator')->get('validation.store'); ?></a></li>
                         <li><a href="/allocation"><?php echo app('translator')->get('validation.allocation'); ?></a></li>
                         <!-- <li><a href="/custody-advances"><?php echo app('translator')->get('validation.custody_and_advances'); ?></a></li> -->
                         <!-- <li><a href="/treasury"><?php echo app('translator')->get('validation.treasury'); ?></a></li> -->

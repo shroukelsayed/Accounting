@@ -80,7 +80,9 @@ Route::group(['middleware' => ['web']], function () {
 		Route::post('/save-account-sheet','IndexController@saveAccountSheet');
 
 		Route::post('/save-allocation','IndexController@saveAllocation');
-
+		Route::get('/store', "IndexController@store");
+		Route::post('/save-store-item','IndexController@saveStoreItem');
+		
 		
 		Route::get('get-levels', 'IndexController@getLevels');
 
