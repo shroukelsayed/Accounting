@@ -128,6 +128,7 @@ return [
     'createReceipt'                   => 'إنشاء ايصال إستلام نقدية',
     'add_donation_receipt_license'    => 'إضافة إيصال تبرع / تراخيص',
     'all_cash'                        => 'ايصالات إستلام نقدية',
+    'stores'                          => 'المخازن ',
 
     'add-expenses-item'               =>'اضافة بند مصروفات',
     'add-currency'                    =>' اضافة عملة ',

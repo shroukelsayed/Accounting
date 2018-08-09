@@ -138,7 +138,7 @@ return [
     'createReceipt'              => 'Create Receipt',
     'add_donation_receipt_license'    => 'Add Donation Receipt / License',
     'all_cash'                        => 'Cash Receipts',
-
+    'stores'                          => 'Stores',
 
 
 
