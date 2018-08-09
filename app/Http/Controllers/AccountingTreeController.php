@@ -284,7 +284,7 @@ class AccountingTreeController extends Controller
                     $last_level = LevelThreeOperationExpenses::orderby('id', 'desc')->first();
                 }else if($request->input('parent_code') == '43'){ // for deposits .. 
                     $level = new LevelThreeRevenues();
-                    $last_level = LevelThreeRevenues::orderby('id', 'desc')->first();
+                    $last_level = LevelThreeRevenues::where('code','like', '%43%')->orderby('id', 'desc')->first();
                 }
             }elseif($request->input('parent_level') == '3'){
                 //// Current Assets Level 4 
