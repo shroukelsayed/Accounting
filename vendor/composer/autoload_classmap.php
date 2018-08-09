@@ -614,6 +614,7 @@ return array(
     'TestCase' => $baseDir . '/tests/TestCase.php',
     'Text_Template' => $vendorDir . '/phpunit/php-text-template/src/Template.php',
     'UpdateAccuredRevenuesItemsTable' => $baseDir . '/database/migrations/2018_07_24_131631_update_accured_revenues_items_table.php',
+    'UpdateLevelTwoTable' => $baseDir . '/database/migrations/2018_08_09_112055_update_level_two_table.php',
     'UpdateLicenseReceiptsTable' => $baseDir . '/database/migrations/2018_05_09_103648_update_license_receipts_table.php',
     'UpdateRevenueBankAccountsTable' => $baseDir . '/database/migrations/2018_05_07_105158_update_revenue_bank_accounts_table.php',
     'UpdateRevenueBanksTable' => $baseDir . '/database/migrations/2018_05_07_101928_update_revenue_banks_table.php',

@@ -904,6 +904,7 @@ class ComposerStaticInitd862fef8e29d86cf3144b8ef6aacc142
         'TestCase' => __DIR__ . '/../..' . '/tests/TestCase.php',
         'Text_Template' => __DIR__ . '/..' . '/phpunit/php-text-template/src/Template.php',
         'UpdateAccuredRevenuesItemsTable' => __DIR__ . '/../..' . '/database/migrations/2018_07_24_131631_update_accured_revenues_items_table.php',
+        'UpdateLevelTwoTable' => __DIR__ . '/../..' . '/database/migrations/2018_08_09_112055_update_level_two_table.php',
         'UpdateLicenseReceiptsTable' => __DIR__ . '/../..' . '/database/migrations/2018_05_09_103648_update_license_receipts_table.php',
         'UpdateRevenueBankAccountsTable' => __DIR__ . '/../..' . '/database/migrations/2018_05_07_105158_update_revenue_bank_accounts_table.php',
         'UpdateRevenueBanksTable' => __DIR__ . '/../..' . '/database/migrations/2018_05_07_101928_update_revenue_banks_table.php',
