@@ -141,6 +141,7 @@ return [
     'add-revenue-benefit-item'        =>'اضافة فوائد عوائد البنوك',
     'add-revenue-fawry-item'          =>'اضافة بنوك فورى ',
 
+    'add-store-item'                  => 'إذن إضافة أصناف للمخازن',
     ' '                               => ' ',
     ' '                               => ' ',
     ' '                               => ' ',

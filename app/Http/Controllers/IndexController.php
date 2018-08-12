@@ -197,8 +197,11 @@ class IndexController extends Controller
 	public function store()
 	{
 		// $users = User::orderBy('id', 'desc')->paginate(10);
-
-		return view('stores');
+		// $stores = Stores::orderby('id', 'desc')->paginate(10);
+		$stores = Stores::lists('title','id');
+		// var_dump($stores);
+		// die;
+		return view('stores',compact('stores'));
 
 	}
 

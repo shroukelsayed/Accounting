@@ -153,6 +153,8 @@ return [
     'add-revenue-benefit-item'    =>'add-revenue-benefit-item',
     'add-revenue-fawry-item'      =>'add-revenue-fawry-item',
 
+    'add-store-item'              => 'Add Store Item ',
+
     
     ''=>'',
     ''=>'',
