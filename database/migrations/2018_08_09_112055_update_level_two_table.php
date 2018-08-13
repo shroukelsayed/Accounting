@@ -13,12 +13,12 @@ class UpdateLevelTwoTable extends Migration
     public function up()
     {
         //
-        Schema::table('accounting_tree_level_twos', function($table) {
-            // $table->renameColumn('accounting_tree_level_one_id','parent');
-            $table->integer('parent')->unsigned()->change();
-            $table->foreign('parent')->references('id')->on('accounting_tree_level_ones')->onDelete('cascade');
+        // Schema::table('accounting_tree_level_twos', function($table) {
+        //     // $table->renameColumn('accounting_tree_level_one_id','parent');
+        //     $table->integer('parent')->unsigned()->change();
+        //     $table->foreign('parent')->references('id')->on('accounting_tree_level_ones')->onDelete('cascade');
             
-        });
+        // });
     }
 
     /**
@@ -30,8 +30,8 @@ class UpdateLevelTwoTable extends Migration
     {
         //
 
-        Schema::table('accounting_tree_level_twos', function($table) {
-            $table->dropColumn('parent');
-        });
+        // Schema::table('accounting_tree_level_twos', function($table) {
+        //     $table->dropColumn('parent');
+        // });
     }
 }

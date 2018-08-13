@@ -910,6 +910,7 @@ class ComposerStaticInitd862fef8e29d86cf3144b8ef6aacc142
         'UpdateRevenueBanksTable' => __DIR__ . '/../..' . '/database/migrations/2018_05_07_101928_update_revenue_banks_table.php',
         'UpdateRevenueBenefitItemsTable' => __DIR__ . '/../..' . '/database/migrations/2018_05_07_124206_update_revenue_benefit_items_table.php',
         'UpdateRevenueFawryItemsTable' => __DIR__ . '/../..' . '/database/migrations/2018_05_07_131744_update_revenue_fawry_items_table.php',
+        'UpdateStoreLogsTable' => __DIR__ . '/../..' . '/database/migrations/2018_08_13_113558_update_store_logs_table.php',
         'UpdateTwoRevenueBanksTable' => __DIR__ . '/../..' . '/database/migrations/2018_05_07_110847_update_two_revenue_banks_table.php',
         'UserTableSeeder' => __DIR__ . '/../..' . '/database/seeds/UserTableSeeder.php',
     );

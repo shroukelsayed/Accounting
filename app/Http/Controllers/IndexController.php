@@ -40,6 +40,7 @@ use App\Fawry;
 use App\FawryItems;
 use App\FawryBanks;
 use App\Stores;
+use App\StoreLogs;
 use App\Sms;
 use App\AccuredRevenues;
 use App\OtherDebitBalances;
@@ -212,9 +213,46 @@ class IndexController extends Controller
 	 */
 	public function saveStoreItem(Request $request)
 	{
-		// $users = User::orderBy('id', 'desc')->paginate(10);
 
-		return view('welcome');
+		// var_dump($request->all());die;
+
+
+		$store = Stores::findOrFail($request->input('store_id'));
+        $lastItem = StoreItems::where('code','like', "$store->code%")->orderby('id', 'desc')->first();
+		$storeItem = new StoreItems();
+		$storeItemLog = new StoreLogs();
+
+		if(!is_null($lastItem)){
+            $new_item_code = $lastItem->code + 1;
+        }else{
+            $new_item_code  = $store->code."001";
+        }
+
+
+        $storeItem->level = $store->level +1;
+        $storeItem->parent = $request->input('store_id');
+        $storeItem->code = $new_item_code;
+        $storeItem->title = $request->input('item_name');
+        $storeItem->debit = false;
+        $storeItem->credit = true;
+        $storeItem->save();
+
+        $storeItemLog->store_id = $request->input('store_id');
+        $storeItemLog->supplier_name = $request->input('supplier_name');
+        $storeItemLog->supplier_address = $request->input('supplier_address');
+        $storeItemLog->supplier_bill_number = $request->input('supplier_bill_number');
+        $storeItemLog->supply_order_number = $request->input('supply_order_number');
+        $storeItemLog->receipt_record_number = $request->input('receipt_record_number');
+        $storeItemLog->item_id = $storeItem->id;
+        $storeItemLog->units_number = $request->input('units_number');
+        $storeItemLog->unit_price = $request->input('unit_price');
+        $storeItemLog->total_units_price = $request->input('total_units_price');
+        $storeItemLog->save();
+
+		// var_dump($request->all());die;
+		
+		return redirect()->action('IndexController@store');
+		// return view('welcome');
 
 	}
 

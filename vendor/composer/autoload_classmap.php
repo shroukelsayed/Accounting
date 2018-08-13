@@ -620,6 +620,7 @@ return array(
     'UpdateRevenueBanksTable' => $baseDir . '/database/migrations/2018_05_07_101928_update_revenue_banks_table.php',
     'UpdateRevenueBenefitItemsTable' => $baseDir . '/database/migrations/2018_05_07_124206_update_revenue_benefit_items_table.php',
     'UpdateRevenueFawryItemsTable' => $baseDir . '/database/migrations/2018_05_07_131744_update_revenue_fawry_items_table.php',
+    'UpdateStoreLogsTable' => $baseDir . '/database/migrations/2018_08_13_113558_update_store_logs_table.php',
     'UpdateTwoRevenueBanksTable' => $baseDir . '/database/migrations/2018_05_07_110847_update_two_revenue_banks_table.php',
     'UserTableSeeder' => $baseDir . '/database/seeds/UserTableSeeder.php',
 );

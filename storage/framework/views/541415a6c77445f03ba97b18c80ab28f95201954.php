@@ -80,7 +80,19 @@
                                 <li><a href="<?php echo e(url('/logout')); ?>"><i class="fa fa-btn fa-sign-out"></i><?php echo app('translator')->get('validation.logout'); ?></a></li>
                             </ul>
                         </li>
-                        <li><a href="/store"><?php echo app('translator')->get('validation.stores'); ?></a></li>
+                        <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <?php echo app('translator')->get('validation.stores'); ?>
+                           <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="<?php echo e(url('/store')); ?>"><?php echo app('translator')->get('validation.add-store-item'); ?></a>
+                                </li>
+                                <li>
+                                    <a href="<?php echo e(url('/receipts')); ?>"><?php echo app('translator')->get('validation.add_donation_receipt'); ?></a>
+                                </li>
+                            </ul>
+                        </li>
                         <li><a href="/allocation"><?php echo app('translator')->get('validation.allocation'); ?></a></li>
                         <!-- <li><a href="/custody-advances"><?php echo app('translator')->get('validation.custody_and_advances'); ?></a></li> -->
                         <!-- <li><a href="/treasury"><?php echo app('translator')->get('validation.treasury'); ?></a></li> -->
