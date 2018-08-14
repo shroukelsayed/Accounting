@@ -89,7 +89,7 @@
                                     <a href="<?php echo e(url('/store')); ?>"><?php echo app('translator')->get('validation.add-store-item'); ?></a>
                                 </li>
                                 <li>
-                                    <a href="<?php echo e(url('/receipts')); ?>"><?php echo app('translator')->get('validation.add_donation_receipt'); ?></a>
+                                    <a href="<?php echo e(url('/stores-log')); ?>"><?php echo app('translator')->get('validation.stores-log'); ?></a>
                                 </li>
                             </ul>
                         </li>

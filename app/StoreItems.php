@@ -11,4 +11,8 @@ class StoreItems extends Model
         return $this->hasOne(Stores::class); 
     }
 
+   	public function storeItemLogs()
+    {
+        return $this->hasMany(StoreLogs::class,'item_id');
+    }
 }

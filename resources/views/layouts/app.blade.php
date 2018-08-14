@@ -89,7 +89,7 @@
                                     <a href="{{ url('/store') }}">@lang('validation.add-store-item')</a>
                                 </li>
                                 <li>
-                                    <a href="{{ url('/receipts') }}">@lang('validation.add_donation_receipt')</a>
+                                    <a href="{{ url('/stores-log') }}">@lang('validation.stores-log')</a>
                                 </li>
                             </ul>
                         </li>

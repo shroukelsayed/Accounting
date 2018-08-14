@@ -19,6 +19,7 @@ use App\Receipt;
 use App\Allocations;
 
 use App\Workers;
+use App\User;
 use App\AccountingTreeLevelTwo;
 
 
@@ -202,7 +203,7 @@ class IndexController extends Controller
 		$stores = Stores::lists('title','id');
 		// var_dump($stores);
 		// die;
-		return view('stores',compact('stores'));
+		return view('stores.add-store-item',compact('stores'));
 
 	}
 
@@ -216,7 +217,6 @@ class IndexController extends Controller
 
 		// var_dump($request->all());die;
 
-
 		$store = Stores::findOrFail($request->input('store_id'));
         $lastItem = StoreItems::where('code','like', "$store->code%")->orderby('id', 'desc')->first();
 		$storeItem = new StoreItems();
@@ -227,7 +227,6 @@ class IndexController extends Controller
         }else{
             $new_item_code  = $store->code."001";
         }
-
 
         $storeItem->level = $store->level +1;
         $storeItem->parent = $request->input('store_id');
@@ -252,7 +251,32 @@ class IndexController extends Controller
 		// var_dump($request->all());die;
 		
 		return redirect()->action('IndexController@store');
-		// return view('welcome');
+	}
+
+	/**
+	 * Display a listing of the resource.
+	 *
+	 * @return Response
+	 */
+	public function storesLog()
+	{
+		// $users = User::orderBy('id', 'desc')->paginate(10);
+		$stores_logs = StoreLogs::all();
+
+		// $store = StoreItems::findOrFail(3);
+		// var_dump($store->storeItemLogs);
+		// die;
+
+		// foreach ($stores_logs as $st) {
+		// 	// var_dump($st);
+		// 	// var_dump($st->item_id);
+		// 	// var_dump($st->store);
+		// 	var_dump($st->storeItem);
+		// 	// die();
+		// 	// var_dump($st->store);
+		// }
+		// die;
+		return view('stores.stores-log',compact('stores_logs'));
 
 	}
 
