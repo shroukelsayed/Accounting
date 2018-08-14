@@ -122,7 +122,7 @@ class IndexController extends Controller
 		$receipts = DonationReceipt::all();
 		$licenseReceipts = LicenseReceipt::all();
 
-		return view('receipts-index',compact('receipts','licenseReceipts'));
+		return view('receipts.receipts-index',compact('receipts','licenseReceipts'));
 	}
 
 	/**
@@ -134,7 +134,7 @@ class IndexController extends Controller
 	{
 		$receipts = Receipt::all();
 
-		return view('all-cash-receipts',compact('receipts'));
+		return view('receipts.all-cash-receipts',compact('receipts'));
 	}
 
 
@@ -336,7 +336,7 @@ class IndexController extends Controller
 		$projects = Project::lists('name','id');
 		$workers = Workers::lists('title','id');
 
-		return view('donation-receipt', compact('projects','receipt','last_id','notebook','workers'));
+		return view('receipts.donation-receipt', compact('projects','receipt','last_id','notebook','workers'));
 	}
 
 
@@ -387,7 +387,7 @@ class IndexController extends Controller
 		$projects = Project::lists('name','id');
 		$workers = Workers::lists('title','id');
 
-		return view('donation-receipt-license', compact('projects','receipt','last_id','notebook','workers','ourPeriod'));
+		return view('receipts.donation-receipt-license', compact('projects','receipt','last_id','notebook','workers','ourPeriod'));
 	}
 
 
@@ -657,7 +657,7 @@ class IndexController extends Controller
 
 		$licenseReceipts =  DB::select("SELECT LR.* , P.name FROM license_receipts  AS LR ,projects AS P". $query . $query1 . $query2);
 		// var_dump($receipts);die;
-		return view('table',compact('receipts','licenseReceipts'))->render();
+		return view('receipts.table',compact('receipts','licenseReceipts'))->render();
 	}
 
 
@@ -693,7 +693,7 @@ class IndexController extends Controller
 			return view('cash-receipt',compact('amount','receipt_type','last_id','projects_amount','ids'));
 		}
 		
-		return view('cash-receipt',compact('ids','last_id'));
+		return view('receipts.cash-receipt',compact('ids','last_id'));
 	}
 
 
@@ -1044,7 +1044,7 @@ class IndexController extends Controller
 
 		$cashReceipt = Receipt::find($request->input('cash_id'));
 
-		return view('account-sheet',compact('workers','levels','last_id','cashReceipt','projects_amount'));
+		return view('receipts.account-sheet',compact('workers','levels','last_id','cashReceipt','projects_amount'));
 	}
 
 	public function saveAccountSheet(Request $request)
@@ -1374,7 +1374,7 @@ class IndexController extends Controller
          
 
 		// var_dump($currentAssets);
-		var_dump($levels);die;
+		// var_dump($levels);die;
 		return \Response::make($levels);
 	}
 }

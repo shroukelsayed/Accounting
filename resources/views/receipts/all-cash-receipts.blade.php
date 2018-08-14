@@ -162,7 +162,7 @@
                        
                     </tbody>
                 </table>
-                <!-- @include('table') -->
+                <!-- @include('receipts.table') -->
                 <!-- {!! Form::submit('إنشاء ايصال استلام نقدية', ['class' => 'btn btn-info']) !!}
                 {!! Form::close() !!} -->
             @else

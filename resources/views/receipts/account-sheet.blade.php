@@ -14,13 +14,11 @@
         size:  auto;   /* auto is the initial value */
         margin: 0mm;  /* this affects the margin in the printer settings */
     }
-
     html
     {
         background-color: #FFFFFF; 
         margin: 0px;  /* this affects the margin on the html before sending to printer */
     }
-
     body
     {
         margin: 10mm 15mm 10mm 15mm; /* margin you want for the content */
@@ -266,18 +264,15 @@
 
 <script type="text/javascript">
 	$(function($){
-
 		$.ajax({
             url: '/convert-number',
             type: "POST",
             data: {'number': $(":input[name='amount']").val(),
                    '_token': $('input[name=_token]').val()},
-
             success:function(data) {                 
                 $(":input[name='amount_alpha']").val(data);
             }
         });
-
 		$('.from').change(function () {
 	        var val = $(this).val();
         	var model;
@@ -297,7 +292,6 @@
 				}else{
 	        		model = $('#from_level_six');
 				}
-
 	        	$.get("{{ url('get-levels')}}", 
 					{ option: $(this).val() }, 
 					function(data) {
@@ -327,7 +321,6 @@
 				});
 			}
 	    });
-
 	    $('.to').change(function () {
 	        var val = $(this).val();
         	var model;
@@ -346,7 +339,6 @@
 				}else{
 	        		model = $('#to_level_six');
 				}
-
 	        	$.get("{{ url('get-levels')}}", 
 					{ option: $(this).val() }, 
 					function(data) {
@@ -377,13 +369,10 @@
         	}
         	
 	    });
-
         $('.print-window').click(function() {
         	$('#submitForm').hide();
         	$('#resetForm').hide();
-
         	$('.print-window').hide();
-
 		    window.print();
 		});
    	});
