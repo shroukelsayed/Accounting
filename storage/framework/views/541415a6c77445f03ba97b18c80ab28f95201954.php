@@ -93,9 +93,22 @@
                                 </li>
                             </ul>
                         </li>
+                        <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <?php echo app('translator')->get('validation.custody_and_advances'); ?>
+                           <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="/custody-advances"><?php echo app('translator')->get('validation.add-custody'); ?></a>
+                                </li>
+                                <li>
+                                    <a href="/custody-index"><?php echo app('translator')->get('validation.custody-index'); ?></a>
+                                </li>
+                            </ul>
+                        </li>
                         <li><a href="/allocation"><?php echo app('translator')->get('validation.allocation'); ?></a></li>
-                        <!-- <li><a href="/custody-advances"><?php echo app('translator')->get('validation.custody_and_advances'); ?></a></li> -->
-                        <!-- <li><a href="/treasury"><?php echo app('translator')->get('validation.treasury'); ?></a></li> -->
+                       <!--  <li><a href="/custody-advances"><?php echo app('translator')->get('validation.custody_and_advances'); ?></a></li>
+                        <li><a href="/custody-index"><?php echo app('translator')->get('validation.custody-index'); ?></a></li> -->
                         <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <?php echo app('translator')->get('validation.receipts'); ?>

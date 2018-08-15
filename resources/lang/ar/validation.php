@@ -142,6 +142,9 @@ return [
     'add-revenue-fawry-item'          =>'اضافة بنوك فورى ',
 
     'add-store-item'                  => 'إذن إضافة أصناف للمخازن',
+
+    'add-custody'                     => 'إضافة عهدة',
+    'custody-index'                   => ' العهد',
     ' '                               => ' ',
     ' '                               => ' ',
     ' '                               => ' ',

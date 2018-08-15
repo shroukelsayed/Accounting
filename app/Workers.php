@@ -21,4 +21,9 @@ class Workers extends Model
     {
     	return $this->belongsToMany(FriendshipFunds::class, 'friendship_fund_workers' , 'worker_id' , 'friendship_fund_id')->withPivot('code');
     }
+
+    public function custodySheets()
+    {
+        return $this->hasMany(CustodySheets::class,'worker_id');
+    }
 }

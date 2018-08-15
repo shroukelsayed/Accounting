@@ -154,7 +154,8 @@ return [
     'add-revenue-fawry-item'      =>'add-revenue-fawry-item',
 
     'add-store-item'              => 'Add Store Item ',
-
+    'add-custody'                 => 'Add New Custody',
+    'custody-index'               => ' All Custodies',
     
     ''=>'',
     ''=>'',

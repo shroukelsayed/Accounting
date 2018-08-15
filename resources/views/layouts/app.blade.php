@@ -93,9 +93,22 @@
                                 </li>
                             </ul>
                         </li>
+                        <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            @lang('validation.custody_and_advances')
+                           <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="/custody-advances">@lang('validation.add-custody')</a>
+                                </li>
+                                <li>
+                                    <a href="/custody-index">@lang('validation.custody-index')</a>
+                                </li>
+                            </ul>
+                        </li>
                         <li><a href="/allocation">@lang('validation.allocation')</a></li>
-                        <!-- <li><a href="/custody-advances">@lang('validation.custody_and_advances')</a></li> -->
-                        <!-- <li><a href="/treasury">@lang('validation.treasury')</a></li> -->
+                       <!--  <li><a href="/custody-advances">@lang('validation.custody_and_advances')</a></li>
+                        <li><a href="/custody-index">@lang('validation.custody-index')</a></li> -->
                         <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             @lang('validation.receipts')

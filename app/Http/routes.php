@@ -58,8 +58,10 @@ Route::group(['middleware' => ['web']], function () {
 
 	Route::group(['middleware' => ['auth']], function () {
 
-		Route::get('/allocation', "IndexController@allocation");
 		Route::get('/custody-advances', "IndexController@custodyAdvances");
+		Route::post('/save-custody', "IndexController@saveCustody");
+		Route::get('/custody-index', "IndexController@custodySheets");
+
 		Route::get('/treasury', "IndexController@treasury");
 		// Route::get('/accounting-tree', "IndexController@accountingTree");
 
@@ -79,12 +81,15 @@ Route::group(['middleware' => ['web']], function () {
 		Route::get('/account-sheet','IndexController@accountSheet');
 		Route::post('/save-account-sheet','IndexController@saveAccountSheet');
 
+		Route::get('/allocation', "IndexController@allocation");
 		Route::post('/save-allocation','IndexController@saveAllocation');
 
 		Route::get('/store', "IndexController@store");
 		Route::get('/stores-log', "IndexController@storesLog");
 		Route::post('/save-store-item','IndexController@saveStoreItem');
 		
+		// Route::get('/custody', "IndexController@store");
+
 		
 		Route::get('get-levels', 'IndexController@getLevels');
 

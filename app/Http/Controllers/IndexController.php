@@ -97,7 +97,7 @@ use App\RevenueMalls;
 use App\RevenueSms;
 
 use App\AccountSheet;
-
+use App\CustodySheets;
 
 
 
@@ -288,8 +288,46 @@ class IndexController extends Controller
 	public function custodyAdvances()
 	{
 		// $users = User::orderBy('id', 'desc')->paginate(10);
+		$workers = Workers::lists('title','id');
 
-		return view('welcome');
+		return view('custody.add',compact('workers'));
+	}
+	
+	/**
+	 * Display a listing of the resource.
+	 *
+	 * @return Response
+	 */
+	public function saveCustody(Request $request)
+	{
+		// $users = User::orderBy('id', 'desc')->paginate(10);
+		// var_dump($request->all());die;
+		$workers = Workers::lists('title','id');
+		$custodySheet = new CustodySheets();
+
+		$custodySheet->notes = $request->input('notes');
+		$custodySheet->report = $request->input('report');
+		$custodySheet->amount = $request->input('amount');
+		$custodySheet->custody_date = $request->input('custody_date');
+		$custodySheet->worker_id = $request->input('worker_id');
+		$custodySheet->type = 1;
+
+		$custodySheet->save();
+		
+		return redirect()->action('IndexController@store');
+	}
+
+	/**
+	 * Display a listing of the resource.
+	 *
+	 * @return Response
+	 */
+	public function custodySheets()
+	{
+		// $users = User::orderBy('id', 'desc')->paginate(10);
+		$custodySheets = CustodySheets::all();
+
+		return view('custody.index',compact('custodySheets'));
 	}
 
 	 /**
