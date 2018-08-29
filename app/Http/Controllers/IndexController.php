@@ -158,7 +158,7 @@ class IndexController extends Controller
 	 */
 	public function allocation()
 	{
-		$allocations = Allocations::where('level','==', 0)->orderBy('id', 'asc')->paginate(10);
+		$allocations = Allocations::where('level','=', 0)->orderBy('id', 'asc')->paginate(10);
 
 		return view('allocation',compact('allocations'));
 	}
