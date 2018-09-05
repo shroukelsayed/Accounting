@@ -200,7 +200,7 @@ class IndexController extends Controller
 	{
 		// $users = User::orderBy('id', 'desc')->paginate(10);
 		// $stores = Stores::orderby('id', 'desc')->paginate(10);
-		$stores = Stores::lists('title','id');
+		$stores = Stores::pluck('title','id');
 		// var_dump($stores);
 		// die;
 		return view('stores.add-store-item',compact('stores'));
@@ -288,7 +288,7 @@ class IndexController extends Controller
 	public function custodyAdvances()
 	{
 		// $users = User::orderBy('id', 'desc')->paginate(10);
-		$workers = Workers::lists('title','id');
+		$workers = Workers::pluck('title','id');
 
 		return view('custody.add',compact('workers'));
 	}
@@ -302,7 +302,7 @@ class IndexController extends Controller
 	{
 		// $users = User::orderBy('id', 'desc')->paginate(10);
 		// var_dump($request->all());die;
-		$workers = Workers::lists('title','id');
+		$workers = Workers::pluck('title','id');
 		$custodySheet = new CustodySheets();
 
 		$custodySheet->notes = $request->input('notes');
@@ -371,8 +371,8 @@ class IndexController extends Controller
 			
 		}
 
-		$projects = Project::lists('name','id');
-		$workers = Workers::lists('title','id');
+		$projects = Project::pluck('name','id');
+		$workers = Workers::pluck('title','id');
 
 		return view('receipts.donation-receipt', compact('projects','receipt','last_id','notebook','workers'));
 	}
@@ -422,8 +422,8 @@ class IndexController extends Controller
 
 		// var_dump($ourPeriod); die;
 
-		$projects = Project::lists('name','id');
-		$workers = Workers::lists('title','id');
+		$projects = Project::pluck('name','id');
+		$workers = Workers::pluck('title','id');
 
 		return view('receipts.donation-receipt-license', compact('projects','receipt','last_id','notebook','workers','ourPeriod'));
 	}
@@ -1063,8 +1063,8 @@ class IndexController extends Controller
 	 */
 	public function accountSheet(Request $request)
 	{
-		$workers = Workers::lists('title','id');
-        $levels = AccountingTreeLevelTwo::lists('title','code');
+		$workers = Workers::pluck('title','id');
+        $levels = AccountingTreeLevelTwo::pluck('title','code');
        	
 		$last_sheet = AccountSheet::orderby('id', 'desc')->first();
 		$last_id = ($last_sheet)? $last_sheet->id +1  . '/' . getdate()['mon'] : 1  . '/' . getdate()['mon'];

@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title><?php echo app('translator')->get('validation.accountingSystem'); ?> - <?php echo app('translator')->get('validation.ommar'); ?> </title>
+    <title><?php echo app('translator')->getFromJson('validation.accountingSystem'); ?> - <?php echo app('translator')->getFromJson('validation.ommar'); ?> </title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.5 -->
@@ -70,7 +70,7 @@
             <ul class="nav navbar-nav">
             
               <li>
-                <a href="/accounting-tree"><i class="fa fa-gears">&nbsp&nbsp <?php echo app('translator')->get('validation.accounting_tree'); ?> </i></a>
+                <a href="/accounting-tree"><i class="fa fa-gears">&nbsp&nbsp <?php echo app('translator')->getFromJson('validation.accounting_tree'); ?> </i></a>
               </li>
               
             <!-- User Account: style can be found in dropdown.less -->
@@ -85,11 +85,11 @@
                     <img src="<?php echo e(asset("img/1.png")); ?>" class="img-circle" alt="User Image">
                     <p>
                     <?php if(Auth::user()->role === 1): ?>
-                      <?php echo e(Auth::user()->name); ?> - <?php echo app('translator')->get('validation.Administrator'); ?> 
+                      <?php echo e(Auth::user()->name); ?> - <?php echo app('translator')->getFromJson('validation.Administrator'); ?> 
                     <?php else: ?>
-                      <?php echo e(Auth::user()->name); ?> - <?php echo app('translator')->get('validation.admin'); ?>
+                      <?php echo e(Auth::user()->name); ?> - <?php echo app('translator')->getFromJson('validation.admin'); ?>
                     <?php endif; ?>
-                      <small><?php echo app('translator')->get('validation.Membersince'); ?> <?php echo e(date('F d, Y', strtotime(Auth::user()->created_at))); ?></small>
+                      <small><?php echo app('translator')->getFromJson('validation.Membersince'); ?> <?php echo e(date('F d, Y', strtotime(Auth::user()->created_at))); ?></small>
                     </p>
                   </li>
                   <!-- Menu Body -->
@@ -97,10 +97,10 @@
                   <!-- Menu Footer-->
                   <li class="user-footer">
                     <div class="pull-left">
-                      <a href="<?php echo e(route('users.show',Auth::user()->id )); ?>" class="btn btn-default btn-flat"><?php echo app('translator')->get('validation.profile'); ?></a>  
+                      <a href="<?php echo e(route('users.show',Auth::user()->id )); ?>" class="btn btn-default btn-flat"><?php echo app('translator')->getFromJson('validation.profile'); ?></a>  
                     </div>
                     <div class="pull-right">
-                      <a href="<?php echo e(URL::to('/logout')); ?>" class="btn btn-default btn-flat"><?php echo app('translator')->get('validation.logout'); ?></a>
+                      <a href="<?php echo e(URL::to('/logout')); ?>" class="btn btn-default btn-flat"><?php echo app('translator')->getFromJson('validation.logout'); ?></a>
                     </div>
                   </li>
                 </ul>
@@ -127,99 +127,99 @@
           <li></li>
             <li class="active treeview">
               <a href="<?php echo e(URL::to('/home')); ?>">
-                <i class="glyphicon glyphicon-home"></i> <span><?php echo app('translator')->get('validation.home'); ?></span> 
+                <i class="glyphicon glyphicon-home"></i> <span><?php echo app('translator')->getFromJson('validation.home'); ?></span> 
               </a>
             </li>
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                  <i class="fa fa-language"></i><span><?php echo app('translator')->get('validation.'. Config::get('languages') [App::getLocale()]); ?> </span>
+                  <i class="fa fa-language"></i><span><?php echo app('translator')->getFromJson('validation.'. Config::get('languages') [App::getLocale()]); ?> </span>
                   <span class="caret"></span></a>
                   <ul class="dropdown-menu">
-                      <?php foreach(Config::get('languages') as $lang => $language): ?>
+                      <?php $__currentLoopData = Config::get('languages'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $lang => $language): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                       <?php if($lang != App::getLocale()): ?>
                       <li>
-                          <a href="<?php echo e(route('lang.switch', $lang)); ?>"><i class="fa fa-language"></i><span><?php echo app('translator')->get('validation.'.$language); ?></span></a>
+                          <a href="<?php echo e(route('lang.switch', $lang)); ?>"><i class="fa fa-language"></i><span><?php echo app('translator')->getFromJson('validation.'.$language); ?></span></a>
                       </li>
                       <?php endif; ?>
-                      <?php endforeach; ?>
+                      <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                   </ul>
               </li>
 
             <?php if( Auth::user()->role === 1): ?>
              <li>
                 <a href="<?php echo e(URL::to('/projects')); ?>">
-                  <i class="fa fa-th-large"></i> <span><?php echo app('translator')->get('validation.projects'); ?></span> 
+                  <i class="fa fa-th-large"></i> <span><?php echo app('translator')->getFromJson('validation.projects'); ?></span> 
                 </a>
               </li>
                <li>
                 <a href="<?php echo e(URL::to('/projects/create')); ?>">
-                  <i class="fa fa-plus"></i> <span><?php echo app('translator')->get('validation.addProject'); ?></span> 
+                  <i class="fa fa-plus"></i> <span><?php echo app('translator')->getFromJson('validation.addProject'); ?></span> 
                 </a>
               </li>
              <li>
                 <a href="<?php echo e(URL::to('/users')); ?>">
-                  <i class="fa fa-users"></i> <span><?php echo app('translator')->get('validation.users'); ?></span> 
+                  <i class="fa fa-users"></i> <span><?php echo app('translator')->getFromJson('validation.users'); ?></span> 
                 </a>
               </li>
               <!-- <li>
                 <a href="<?php echo e(URL::to('/users/create')); ?>">
-                  <i class="fa fa-user-plus"></i> <span><?php echo app('translator')->get('validation.addUser'); ?></span> 
+                  <i class="fa fa-user-plus"></i> <span><?php echo app('translator')->getFromJson('validation.addUser'); ?></span> 
                 </a>
               </li> -->
               <li>
                 <a href="<?php echo e(URL::to('add-expenses-item')); ?>">
-                  <i class="fa fa-plus"></i> <span><?php echo app('translator')->get('validation.add-expenses-item'); ?></span> 
+                  <i class="fa fa-plus"></i> <span><?php echo app('translator')->getFromJson('validation.add-expenses-item'); ?></span> 
                 </a>
               </li>
               <li>
                 <a href="<?php echo e(URL::to('add-currency')); ?>">
-                  <i class="fa fa-plus"></i> <span><?php echo app('translator')->get('validation.add-currency'); ?></span> 
+                  <i class="fa fa-plus"></i> <span><?php echo app('translator')->getFromJson('validation.add-currency'); ?></span> 
                 </a>
               </li>
               </li>
               <li>
                 <a href="<?php echo e(URL::to('add-fawry-bank')); ?>">
-                  <i class="fa fa-plus"></i> <span><?php echo app('translator')->get('validation.add-fawry-bank'); ?></span> 
+                  <i class="fa fa-plus"></i> <span><?php echo app('translator')->getFromJson('validation.add-fawry-bank'); ?></span> 
                 </a>
               </li>
               <li>
                 <a href="<?php echo e(URL::to('add-bank-account-item')); ?>">
-                  <i class="fa fa-plus"></i> <span><?php echo app('translator')->get('validation.add-bank-account-item'); ?></span> 
+                  <i class="fa fa-plus"></i> <span><?php echo app('translator')->getFromJson('validation.add-bank-account-item'); ?></span> 
                 </a>
               </li>
               <li>
                 <a href="<?php echo e(URL::to('add-worker')); ?>">
-                  <i class="fa fa-plus"></i> <span><?php echo app('translator')->get('validation.add-worker'); ?></span> 
+                  <i class="fa fa-plus"></i> <span><?php echo app('translator')->getFromJson('validation.add-worker'); ?></span> 
                 </a>
               </li>
               <li>
                 <a href="<?php echo e(URL::to('add-revenue-item')); ?>">
-                  <i class="fa fa-plus"></i> <span><?php echo app('translator')->get('validation.add-accured-revenue-item'); ?></span> 
+                  <i class="fa fa-plus"></i> <span><?php echo app('translator')->getFromJson('validation.add-accured-revenue-item'); ?></span> 
                 </a>
               </li>
               <!-- <li>
                 <a href="<?php echo e(URL::to('add-insurance-item')); ?>">
-                  <i class="fa fa-plus"></i> <span><?php echo app('translator')->get('validation.add-insurance-item'); ?></span> 
+                  <i class="fa fa-plus"></i> <span><?php echo app('translator')->getFromJson('validation.add-insurance-item'); ?></span> 
                 </a>
               </li> -->
               <li>
                 <a href="<?php echo e(URL::to('add-coupon')); ?>">
-                  <i class="fa fa-plus"></i> <span><?php echo app('translator')->get('validation.add-coupon'); ?></span> 
+                  <i class="fa fa-plus"></i> <span><?php echo app('translator')->getFromJson('validation.add-coupon'); ?></span> 
                 </a>
               </li>
                <li>
                 <a href="<?php echo e(URL::to('add-revenue-bank-account')); ?>">
-                  <i class="fa fa-plus"></i> <span><?php echo app('translator')->get('validation.add-revenue-bank-account'); ?></span> 
+                  <i class="fa fa-plus"></i> <span><?php echo app('translator')->getFromJson('validation.add-revenue-bank-account'); ?></span> 
                 </a>
               </li>
                <li>
                 <a href="<?php echo e(URL::to('add-revenue-benefit-item')); ?>">
-                  <i class="fa fa-plus"></i> <span><?php echo app('translator')->get('validation.add-revenue-benefit-item'); ?></span> 
+                  <i class="fa fa-plus"></i> <span><?php echo app('translator')->getFromJson('validation.add-revenue-benefit-item'); ?></span> 
                 </a>
               </li>
                <li>
                 <a href="<?php echo e(URL::to('add-revenue-fawry-item')); ?>">
-                  <i class="fa fa-plus"></i> <span><?php echo app('translator')->get('validation.add-revenue-fawry-item'); ?></span> 
+                  <i class="fa fa-plus"></i> <span><?php echo app('translator')->getFromJson('validation.add-revenue-fawry-item'); ?></span> 
                 </a>
               </li>
               
@@ -227,7 +227,7 @@
             <!-- /// end of  -->
             <li>
             <a href="<?php echo e(URL::to('/logout')); ?>">
-                <i class="fa fa-btn fa-sign-out"></i> <span><?php echo app('translator')->get('validation.logout'); ?></span> 
+                <i class="fa fa-btn fa-sign-out"></i> <span><?php echo app('translator')->getFromJson('validation.logout'); ?></span> 
               </a>
             </li>
           </ul>
@@ -245,10 +245,10 @@
                   <label> Filter </label>
                   <select class="form-control" onChange="window.location.href=this.value" id="filter">
                     <option selected >Plz Choose</option>
-                    <option value="<?php echo e(URL::to('/bloods')); ?>"><?php echo app('translator')->get('validation.BloodCases'); ?></option>
-                    <option value="<?php echo e(URL::to('/money')); ?>"><?php echo app('translator')->get('validation.MoneyCases'); ?></option>
-                    <option value="<?php echo e(URL::to('/medicines')); ?>"> <?php echo app('translator')->get('validation.MedicineCases'); ?></option>
-                    <option value="<?php echo e(URL::to('/others')); ?>"> <?php echo app('translator')->get('validation.OtherCases'); ?></option>
+                    <option value="<?php echo e(URL::to('/bloods')); ?>"><?php echo app('translator')->getFromJson('validation.BloodCases'); ?></option>
+                    <option value="<?php echo e(URL::to('/money')); ?>"><?php echo app('translator')->getFromJson('validation.MoneyCases'); ?></option>
+                    <option value="<?php echo e(URL::to('/medicines')); ?>"> <?php echo app('translator')->getFromJson('validation.MedicineCases'); ?></option>
+                    <option value="<?php echo e(URL::to('/others')); ?>"> <?php echo app('translator')->getFromJson('validation.OtherCases'); ?></option>
                     <option value="<?php echo e(URL::to('/periodicCases')); ?>"> Periodic Cases</option>
                   </select>
                 <?php endif; ?>

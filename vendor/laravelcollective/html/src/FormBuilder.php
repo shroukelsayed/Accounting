@@ -4,11 +4,10 @@ namespace Collective\Html;
 
 use DateTime;
 use BadMethodCallException;
-use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\HtmlString;
 use Illuminate\Contracts\View\Factory;
-use Illuminate\Session\SessionInterface;
+use Illuminate\Contracts\Session\Session;
 use Illuminate\Support\Traits\Macroable;
 use Illuminate\Contracts\Routing\UrlGenerator;
 
@@ -50,7 +49,7 @@ class FormBuilder
     /**
      * The session store implementation.
      *
-     * @var \Illuminate\Session\SessionInterface
+     * @var \Illuminate\Contracts\Session\Session
      */
     protected $session;
 
@@ -67,8 +66,6 @@ class FormBuilder
      * @var array
      */
     protected $labels = [];
-
-    protected $request;
 
     /**
      * The reserved form open attributes.
@@ -99,13 +96,12 @@ class FormBuilder
      * @param  \Illuminate\Contracts\View\Factory         $view
      * @param  string                                     $csrfToken
      */
-    public function __construct(HtmlBuilder $html, UrlGenerator $url, Factory $view, $csrfToken, Request $request = null)
+    public function __construct(HtmlBuilder $html, UrlGenerator $url, Factory $view, $csrfToken)
     {
         $this->url = $url;
         $this->html = $html;
         $this->view = $view;
         $this->csrfToken = $csrfToken;
-        $this->request = $request;
     }
 
     /**
@@ -489,7 +485,7 @@ class FormBuilder
         // the element. Then we'll create the final textarea elements HTML for us.
         $options = $this->html->attributes($options);
 
-        return $this->toHtmlString('<textarea' . $options . '>' . e($value) . '</textarea>');
+        return $this->toHtmlString('<textarea' . $options . '>' . $this->html->escapeAll($value). '</textarea>');
     }
 
     /**
@@ -666,7 +662,7 @@ class FormBuilder
             $html[] = $this->option($display, $value, $selected);
         }
 
-        return $this->toHtmlString('<optgroup label="' . e($label) . '">' . implode('', $html) . '</optgroup>');
+        return $this->toHtmlString('<optgroup label="' . $this->html->escapeAll($label) . '">' . implode('', $html) . '</optgroup>');
     }
 
     /**
@@ -684,7 +680,7 @@ class FormBuilder
 
         $options = ['value' => $value, 'selected' => $selected];
 
-        return $this->toHtmlString('<option' . $this->html->attributes($options) . '>' . e($display) . '</option>');
+        return $this->toHtmlString('<option' . $this->html->attributes($options) . '>' . $this->html->escapeAll($display) . '</option>');
     }
 
     /**
@@ -702,7 +698,7 @@ class FormBuilder
         $options = compact('selected');
         $options['value'] = '';
 
-        return $this->toHtmlString('<option' . $this->html->attributes($options) . '>' . e($display) . '</option>');
+        return $this->toHtmlString('<option' . $this->html->attributes($options) . '>' . $this->html->escapeAll($display) . '</option>');
     }
 
     /**
@@ -716,7 +712,7 @@ class FormBuilder
     protected function getSelectedValue($value, $selected)
     {
         if (is_array($selected)) {
-            return in_array($value, $selected, true) ? 'selected' : null;
+            return in_array($value, $selected) ? 'selected' : null;
         }
 
         return ((string) $value == (string) $selected) ? 'selected' : null;
@@ -813,13 +809,11 @@ class FormBuilder
      */
     protected function getCheckboxCheckedState($name, $value, $checked)
     {
-        $request = $this->request($name);
-
-        if (isset($this->session) && ! $this->oldInputIsEmpty() && is_null($this->old($name)) && !$request) {
+        if (isset($this->session) && ! $this->oldInputIsEmpty() && is_null($this->old($name))) {
             return false;
         }
 
-        if ($this->missingOldAndModel($name) && !$request) {
+        if ($this->missingOldAndModel($name)) {
             return $checked;
         }
 
@@ -845,9 +839,7 @@ class FormBuilder
      */
     protected function getRadioCheckedState($name, $value, $checked)
     {
-        $request = $this->request($name);
-
-        if ($this->missingOldAndModel($name) && !$request) {
+        if ($this->missingOldAndModel($name)) {
             return $checked;
         }
 
@@ -1096,11 +1088,6 @@ class FormBuilder
             return $this->old($name);
         }
 
-        $request = $this->request($name);
-        if (!is_null($request)) {
-            return $request;
-        }
-
         if (! is_null($value)) {
             return $value;
         }
@@ -1108,20 +1095,6 @@ class FormBuilder
         if (isset($this->model)) {
             return $this->getModelValueAttribute($name);
         }
-    }
-
-    /**
-     * Get value from current Request
-     * @param $name
-     * @return array|null|string
-     */
-    protected function request($name)
-    {
-        if (!isset($this->request)) {
-            return null;
-        }
-
-        return $this->request->input($this->transformKey($name));
     }
 
     /**
@@ -1191,7 +1164,7 @@ class FormBuilder
     /**
      * Get the session store implementation.
      *
-     * @return  \Illuminate\Session\SessionInterface  $session
+     * @return  \Illuminate\Contracts\Session\Session  $session
      */
     public function getSessionStore()
     {
@@ -1201,11 +1174,11 @@ class FormBuilder
     /**
      * Set the session store implementation.
      *
-     * @param  \Illuminate\Session\SessionInterface $session
+     * @param  \Illuminate\Contracts\Session\Session $session
      *
      * @return $this
      */
-    public function setSessionStore(SessionInterface $session)
+    public function setSessionStore(Session $session)
     {
         $this->session = $session;
 
@@ -1224,12 +1197,16 @@ class FormBuilder
      */
     public function __call($method, $parameters)
     {
-        if (static::hasComponent($method)) {
+        try {
             return $this->componentCall($method, $parameters);
+        } catch (BadMethodCallException $e) {
+            //
         }
 
-        if (static::hasMacro($method)) {
+        try {
             return $this->macroCall($method, $parameters);
+        } catch (BadMethodCallException $e) {
+            //
         }
 
         throw new BadMethodCallException("Method {$method} does not exist.");

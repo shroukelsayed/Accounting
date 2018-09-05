@@ -159,6 +159,8 @@ return [
         //Html forms 
         Collective\Html\HtmlServiceProvider::class,
 
+        Illuminate\Notifications\NotificationServiceProvider::class,
+
     ],
 
     /*

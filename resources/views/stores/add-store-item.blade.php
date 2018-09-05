@@ -138,7 +138,7 @@
                     <div class="form-group" style="text-align: right;">
                         <div class="row">
                             <div class="col-sm-4">
-                                <input type="number" name="units_number" class="form-control" dir="rtl" min="1">
+                                <input type="number" name="units_number" class="form-control" dir="rtl" min="1" value="1">
                                 @if ($errors->has('units_number'))
                                     <span class="alert-danger">
                                         <strong>{{ $errors->first('units_number') }}</strong>
@@ -171,9 +171,6 @@
                             </div>
                         </div>
                     </div>
-
-
-
                     <br><br><br><br><br>
                     <div class="form-group" style="text-align: center;">
                         <div class="row">
@@ -181,20 +178,8 @@
                                 <label> أمين المخزن   </label><br><br>
                                 <label> ---------------------</label>
                             </div>
-                            <!-- <div class="col-sm-6">
-                                <label>   أمين الخزينة </label><br><br>
-                                <label> ---------------------</label><br>
-                            </div> -->
                         </div>
                     </div>
-
-                    <!-- <br>
-                    <hr style="height:1px;border:none;color:#333;background-color:#333;" />
-                    <div style="text-align: center;">
-                        <label> كل ايصال غير مختوم بختم الؤسسة يعتبر ﻻغى </label><br>
-                        <label> ت: ١٩٠٥٤ </label>
-                    </div>
-                    <br> -->
                     <br><br><br>
                     {!! Form::submit(trans('validation.submit'), ['class' => 'btn btn-info','id' => 'submitForm']) !!}
                 </div>
@@ -209,17 +194,19 @@
    
         $(function($){
         
-            $(":input[name='amount']").blur( function () {
-                $.ajax({
-                    url: '/convert-number',
-                    type: "POST",
-                    data: {'number': $(":input[name='amount']").val(),
-                           '_token': $('input[name=_token]').val()},
+            $(":input[name='unit_price']").blur( function () {
+                var total_price = $(":input[name='unit_price']").val() * $(":input[name='units_number']").val() ;
+                $(":input[name='total_units_price']").val(total_price);
+                // $.ajax({
+                //     url: '/convert-number',
+                //     type: "POST",
+                //     data: {'number': total_price,
+                //            '_token': $('input[name=_token]').val()},
 
-                    success:function(data) {                 
-                        $(":input[name='amount_alpha']").val(data);
-                    }
-                });
+                //     success:function(data) {                 
+                //         $(":input[name='total_units_price']").val(data);
+                //     }
+                // });
             });
 
             $('.print-window').click(function() {

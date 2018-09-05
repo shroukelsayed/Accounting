@@ -935,7 +935,7 @@ class AccountingTreeController extends Controller
      */
     public function revenueBankAccount()
     {
-        $banks = RevenueBanks::lists('title','id');
+        $banks = RevenueBanks::pluck('title','id');
         return view('accounting-tree.add-revenue-bank-account',compact('banks'));
     }
 
@@ -967,7 +967,7 @@ class AccountingTreeController extends Controller
         $item->level_four_revenue_id = $bank->parent;
         $item->save();
 
-        $banks = RevenueBanks::lists('title','id');
+        $banks = RevenueBanks::pluck('title','id');
 
         return view('accounting-tree.add-revenue-bank-account',compact('banks'))->with('message', 'Item added successfully.');
     }
@@ -980,7 +980,7 @@ class AccountingTreeController extends Controller
      */
     public function revenueBenefitItem()
     {
-        $benefits = RevenueBenefits::lists('title','id');
+        $benefits = RevenueBenefits::pluck('title','id');
         return view('accounting-tree.add-revenue-benefit-item',compact('benefits'));
     }
 
@@ -1010,7 +1010,7 @@ class AccountingTreeController extends Controller
         $item->level_four_revenue_id = $benefit->parent;
         $item->save();
 
-        $benefits = RevenueBenefits::lists('title','id');
+        $benefits = RevenueBenefits::pluck('title','id');
 
         return view('accounting-tree.add-revenue-benefit-item',compact('benefits'))->with('message', 'Item added successfully.');
     }
@@ -1023,7 +1023,7 @@ class AccountingTreeController extends Controller
      */
     public function revenueFawryItem()
     {
-        $fawries = RevenueFawries::lists('title','id');
+        $fawries = RevenueFawries::pluck('title','id');
         return view('accounting-tree.add-revenue-fawry-item',compact('fawries'));
     }
 
@@ -1053,7 +1053,7 @@ class AccountingTreeController extends Controller
         $item->level_four_revenue_id = $fawry->parent;
         $item->save();
 
-        $fawries = RevenueFawries::lists('title','id');
+        $fawries = RevenueFawries::pluck('title','id');
 
         return view('accounting-tree.add-revenue-fawry-item',compact('fawries'))->with('message', 'Item added successfully.');
     }

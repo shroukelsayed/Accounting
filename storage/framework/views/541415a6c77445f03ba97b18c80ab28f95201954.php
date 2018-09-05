@@ -5,12 +5,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title><?php echo app('translator')->get('validation.accountingSystem'); ?> - <?php echo app('translator')->get('validation.ommar'); ?> </title>
+    <title><?php echo app('translator')->getFromJson('validation.accountingSystem'); ?> - <?php echo app('translator')->getFromJson('validation.ommar'); ?> </title>
 
   
     <!-- Styles -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-    <?php /* <link href="<?php echo e(elixir('css/app.css')); ?>" rel="stylesheet"> */ ?>
+    
 
     <style>
         body {
@@ -36,7 +36,7 @@
                 </button>
 
                 <!-- Branding Image -->
-                <a class="navbar-brand" href="/home"><?php echo app('translator')->get('validation.accountingSystem'); ?></a>
+                <a class="navbar-brand" href="/home"><?php echo app('translator')->getFromJson('validation.accountingSystem'); ?></a>
                
             </div>
 
@@ -51,22 +51,22 @@
                     <!-- Authentication Links -->
                      <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <?php echo app('translator')->get('validation.'. Config::get('languages')[App::getLocale()]); ?> 
+                            <?php echo app('translator')->getFromJson('validation.'. Config::get('languages')[App::getLocale()]); ?> 
 
                             <span class="caret"></span></a>
                             <ul class="dropdown-menu">
-                                <?php foreach(Config::get('languages') as $lang => $language): ?>
+                                <?php $__currentLoopData = Config::get('languages'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $lang => $language): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                 <?php if($lang != App::getLocale()): ?>
                                 <li>
-                                    <a href="<?php echo e(route('lang.switch', $lang)); ?>"><?php echo app('translator')->get('validation.'.$language); ?></a>
+                                    <a href="<?php echo e(route('lang.switch', $lang)); ?>"><?php echo app('translator')->getFromJson('validation.'.$language); ?></a>
                                 </li>
                                 <?php endif; ?>
-                                <?php endforeach; ?>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </ul>
                         </li>
                    
                     <?php if(Auth::guest()): ?>
-                        <li  ><a href="<?php echo e(url('/login')); ?>"><?php echo app('translator')->get('validation.login'); ?></a></li>
+                        <li  ><a href="<?php echo e(url('/login')); ?>"><?php echo app('translator')->getFromJson('validation.login'); ?></a></li>
                         <!-- <li><a href="<?php echo e(url('/register')); ?>">Register</a></li> -->
                     <?php else: ?>
                         <li class="dropdown">
@@ -77,63 +77,63 @@
                                 <?php if(Auth::user()->role ==1): ?>
                                     <li><a href="<?php echo e(url('/admin')); ?>"><i class="fa fa-btn fa-sign-out"></i>Control Panel</a></li>
                                 <?php endif; ?>
-                                <li><a href="<?php echo e(url('/logout')); ?>"><i class="fa fa-btn fa-sign-out"></i><?php echo app('translator')->get('validation.logout'); ?></a></li>
+                                <li><a href="<?php echo e(url('/logout')); ?>"><i class="fa fa-btn fa-sign-out"></i><?php echo app('translator')->getFromJson('validation.logout'); ?></a></li>
                             </ul>
                         </li>
                         <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <?php echo app('translator')->get('validation.stores'); ?>
+                            <?php echo app('translator')->getFromJson('validation.stores'); ?>
                            <span class="caret"></span></a>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a href="<?php echo e(url('/store')); ?>"><?php echo app('translator')->get('validation.add-store-item'); ?></a>
+                                    <a href="<?php echo e(url('/store')); ?>"><?php echo app('translator')->getFromJson('validation.add-store-item'); ?></a>
                                 </li>
                                 <li>
-                                    <a href="<?php echo e(url('/stores-log')); ?>"><?php echo app('translator')->get('validation.stores-log'); ?></a>
+                                    <a href="<?php echo e(url('/stores-log')); ?>"><?php echo app('translator')->getFromJson('validation.stores-log'); ?></a>
                                 </li>
                             </ul>
                         </li>
                         <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <?php echo app('translator')->get('validation.custody_and_advances'); ?>
+                            <?php echo app('translator')->getFromJson('validation.custody_and_advances'); ?>
                            <span class="caret"></span></a>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a href="/custody-advances"><?php echo app('translator')->get('validation.add-custody'); ?></a>
+                                    <a href="/custody-advances"><?php echo app('translator')->getFromJson('validation.add-custody'); ?></a>
                                 </li>
                                 <li>
-                                    <a href="/custody-index"><?php echo app('translator')->get('validation.custody-index'); ?></a>
+                                    <a href="/custody-index"><?php echo app('translator')->getFromJson('validation.custody-index'); ?></a>
                                 </li>
                             </ul>
                         </li>
-                        <li><a href="/allocation"><?php echo app('translator')->get('validation.allocation'); ?></a></li>
-                       <!--  <li><a href="/custody-advances"><?php echo app('translator')->get('validation.custody_and_advances'); ?></a></li>
-                        <li><a href="/custody-index"><?php echo app('translator')->get('validation.custody-index'); ?></a></li> -->
+                        <li><a href="/allocation"><?php echo app('translator')->getFromJson('validation.allocation'); ?></a></li>
+                       <!--  <li><a href="/custody-advances"><?php echo app('translator')->getFromJson('validation.custody_and_advances'); ?></a></li>
+                        <li><a href="/custody-index"><?php echo app('translator')->getFromJson('validation.custody-index'); ?></a></li> -->
                         <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <?php echo app('translator')->get('validation.receipts'); ?>
+                            <?php echo app('translator')->getFromJson('validation.receipts'); ?>
                            <span class="caret"></span></a>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a href="<?php echo e(url('/all-receipts')); ?>"><?php echo app('translator')->get('validation.donation_receipt'); ?></a>
+                                    <a href="<?php echo e(url('/all-receipts')); ?>"><?php echo app('translator')->getFromJson('validation.donation_receipt'); ?></a>
                                 </li>
                                 <li>
-                                    <a href="<?php echo e(url('/receipts')); ?>"><?php echo app('translator')->get('validation.add_donation_receipt'); ?></a>
+                                    <a href="<?php echo e(url('/receipts')); ?>"><?php echo app('translator')->getFromJson('validation.add_donation_receipt'); ?></a>
                                 </li>
                                 <li>
-                                    <a href="<?php echo e(url('/license-receipts')); ?>"><?php echo app('translator')->get('validation.add_donation_receipt_license'); ?></a>
+                                    <a href="<?php echo e(url('/license-receipts')); ?>"><?php echo app('translator')->getFromJson('validation.add_donation_receipt_license'); ?></a>
                                 </li>
                                 <li>
-                                    <a href="<?php echo e(url('/all-cash')); ?>"><?php echo app('translator')->get('validation.all_cash'); ?></a>
+                                    <a href="<?php echo e(url('/all-cash')); ?>"><?php echo app('translator')->getFromJson('validation.all_cash'); ?></a>
                                 </li>
                                 <li>
-                                    <a href="<?php echo e(url('/account-sheet')); ?>"><?php echo app('translator')->get('validation.account-sheet'); ?></a>
+                                    <a href="<?php echo e(url('/account-sheet')); ?>"><?php echo app('translator')->getFromJson('validation.account-sheet'); ?></a>
                                 </li>
                             </ul>
                         </li>
 
 
-                        <li><a href="/accounting-tree"><?php echo app('translator')->get('validation.accounting_tree'); ?></a></li>
+                        <li><a href="/accounting-tree"><?php echo app('translator')->getFromJson('validation.accounting_tree'); ?></a></li>
                     <?php endif; ?>
                 </ul>
             </div>
@@ -146,6 +146,6 @@
     <!-- JavaScripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js" integrity="sha384-I6F5OKECLVtK/BL+8iSLDEHowSAfUo76ZL9+kGAgTRdiByINKJaqTPH/QVNS1VDb" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-    <?php /* <script src="<?php echo e(elixir('js/app.js')); ?>"></script> */ ?>
+    
 </body>
 </html>
