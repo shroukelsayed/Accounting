@@ -386,7 +386,7 @@ class AccountingTreeController extends Controller
                 //// Expenses Level 4 
 
                 //// Revenues Level 4 
-                else if(strpos($request->input('parent_code'), '43') !== false){
+                else if(strpos($request->input('parent_code'), '41') !== false){
                     $level = new LevelFourRevenues();
                     $last_level = LevelFourRevenues::where('code','like', '%43%')->orderby('id', 'desc')->first();
                 }
@@ -434,7 +434,7 @@ class AccountingTreeController extends Controller
 
 
             // var_dump($last_level);die();
-            if(isset($last_level) && !is_null($last_level)){
+            if( !is_null($last_level)){
                 $new_level_code = $last_level->code + 1;
             }else{
                 if($request->input('parent_level') == '3' || $request->input('parent_level') == '2'){
