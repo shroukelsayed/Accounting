@@ -10,7 +10,7 @@ class LevelThreeRevenuesTableSeeder extends Seeder {
     public function run()
     {
         DB::table('level_three_revenues')->insert([
-        	'id' => '13',
+        	'id' => '1',
         	'code' => '4101',
         	'title' => 'ايرادات  فوائد الودائع البنك التجاري الدولي ',
         	'parent' => '6',
@@ -21,7 +21,7 @@ class LevelThreeRevenuesTableSeeder extends Seeder {
         	'updated_at' => '2018-07-19 14:47:16',
         ]);
         DB::table('level_three_revenues')->insert([
-        	'id' => '15',
+        	'id' => '2',
         	'code' => '4102',
         	'title' => 'ايرادات  فوائد الوائع البنك المصرف المتحد ',
         	'parent' => '6',
