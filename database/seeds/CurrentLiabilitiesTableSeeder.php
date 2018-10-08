@@ -18,7 +18,7 @@ class CurrentLiabilitiesTableSeeder extends Seeder {
             'debit' => '1',
             'credit' => '0',
             'created_at' => '2018-04-15 13:12:40',
-            'updated_at' => '2018-04-15 13:12:40'
+            'updated_at' => '2018-04-15 13:12:40',
         ]);
 
         DB::table('current_liabilities')->insert([
@@ -30,7 +30,7 @@ class CurrentLiabilitiesTableSeeder extends Seeder {
             'debit' => '1',
             'credit' => '0',
             'created_at' => '2018-04-16 07:45:10',
-            'updated_at' => '2018-04-16 07:45:10'
+            'updated_at' => '2018-04-16 07:45:10',
         ]);
 
         DB::table('current_liabilities')->insert([
@@ -42,7 +42,7 @@ class CurrentLiabilitiesTableSeeder extends Seeder {
             'debit' => '1',
             'credit' => '0',
             'created_at' => '2018-04-16 10:03:13',
-            'updated_at' => '2018-04-16 10:03:13'
+            'updated_at' => '2018-04-16 10:03:13',
         ]);
 
         DB::table('current_liabilities')->insert([
@@ -54,7 +54,7 @@ class CurrentLiabilitiesTableSeeder extends Seeder {
             'debit' => '1',
             'credit' => '0',
             'created_at' => '2018-04-16 10:03:31',
-            'updated_at' => '2018-04-16 10:03:31'
+            'updated_at' => '2018-04-16 10:03:31',
         ]);
 
         DB::table('current_liabilities')->insert([
@@ -66,7 +66,7 @@ class CurrentLiabilitiesTableSeeder extends Seeder {
             'debit' => '1',
             'credit' => '0',
             'created_at' => '2018-04-16 10:03:47',
-            'updated_at' => '2018-04-16 10:03:47'
+            'updated_at' => '2018-04-16 10:03:47',
         ]);
 
         DB::table('current_liabilities')->insert([
@@ -78,7 +78,7 @@ class CurrentLiabilitiesTableSeeder extends Seeder {
             'debit' => '1',
             'credit' => '0',
             'created_at' => '2018-04-16 10:04:14',
-            'updated_at' => '2018-04-16 10:04:14'
+            'updated_at' => '2018-04-16 10:04:14',
         ]);
 
         DB::table('current_liabilities')->insert([
@@ -90,7 +90,7 @@ class CurrentLiabilitiesTableSeeder extends Seeder {
             'debit' => '1',
             'credit' => '0',
             'created_at' => '2018-04-16 10:04:27',
-            'updated_at' => '2018-04-16 10:04:27'
+            'updated_at' => '2018-04-16 10:04:27',
         ]);
 
         DB::table('current_liabilities')->insert([
@@ -102,7 +102,7 @@ class CurrentLiabilitiesTableSeeder extends Seeder {
             'debit' => '1',
             'credit' => '0',
             'created_at' => '2018-04-16 10:04:43',
-            'updated_at' => '2018-04-16 10:04:43'
+            'updated_at' => '2018-04-16 10:04:43',
         ]);
 
         DB::table('current_liabilities')->insert([
@@ -114,7 +114,7 @@ class CurrentLiabilitiesTableSeeder extends Seeder {
             'debit' => '1',
             'credit' => '0',
             'created_at' => '2018-04-16 10:04:57',
-            'updated_at' => '2018-04-16 10:04:57'
+            'updated_at' => '2018-04-16 10:04:57',
         ]);
 
     }
