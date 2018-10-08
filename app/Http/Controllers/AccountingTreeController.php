@@ -434,7 +434,7 @@ class AccountingTreeController extends Controller
 
 
             // var_dump($last_level);die();
-            if(!is_null($last_level)){
+            if(isset($last_level) && !is_null($last_level)){
                 $new_level_code = $last_level->code + 1;
             }else{
                 if($request->input('parent_level') == '3' || $request->input('parent_level') == '2'){
