@@ -21,7 +21,7 @@ class AccountingTreeLevelOneTableSeeder extends Seeder {
         ]);
 
         DB::table('accounting_tree_level_ones')->insert([
-            'id' => 1 ,
+            'id' => 2 ,
             'code' => '2' ,
             'title' => 'الخصوم' ,
             'level' => 1 ,
@@ -32,7 +32,7 @@ class AccountingTreeLevelOneTableSeeder extends Seeder {
         ]);
 
         DB::table('accounting_tree_level_ones')->insert([
-            'id' => 1 ,
+            'id' => 3 ,
             'code' => '3' ,
             'title' => 'المصروفات' ,
             'level' => 1 ,
@@ -43,7 +43,7 @@ class AccountingTreeLevelOneTableSeeder extends Seeder {
         ]);
 
         DB::table('accounting_tree_level_ones')->insert([
-            'id' => 1 ,
+            'id' => 4 ,
             'code' => '4' ,
             'title' => 'الإيرادات' ,
             'level' => 1 ,
