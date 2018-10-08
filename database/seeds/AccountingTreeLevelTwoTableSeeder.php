@@ -69,6 +69,18 @@ class AccountingTreeLevelTwoTableSeeder extends Seeder {
             'created_at' => '2018-04-04 09:44:42' ,
             'updated_at' => '2018-04-04 09:44:42' ,
         ]);
+
+        DB::table('accounting_tree_level_twos')->insert([
+            'id' => '6',
+            'code' => '41',
+            'title' => 'ايرادات فوائد الودائع ',
+            'parent' => '4',
+            'level' => '2',
+            'debit' => '0',
+            'credit' => '1',
+            'created_at' => '2018-04-04 09:44:46',
+            'updated_at' => '2018-04-04 09:44:46',
+        ]);
     }
 
 }
