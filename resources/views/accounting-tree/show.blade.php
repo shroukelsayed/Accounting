@@ -511,7 +511,7 @@
                                             </li>
                                         @endforeach
                                         </ul>
-                                        @if(strpos($levelThreeRevenue->code ,'43') !== false)
+                                        @if(strpos($levelThreeRevenue->code ,'41') !== false)
                                             <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal" onclick="drawdev({{ $levelThreeRevenue->id }},{{ $levelThreeRevenue->code }},{{ $levelThreeRevenue->level }});"><i class="glyphicon glyphicon-plus"></i> Add New Bank Account </button>
                                             <div id="addChild-{{$levelThreeRevenue->code}}"></div>
                                         @endif
