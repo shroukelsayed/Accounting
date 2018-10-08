@@ -691,6 +691,8 @@ class AccountingTreeController extends Controller
     {
         // var_dump($request->all());die;
 
+        $all_items = BankAccountItems::all();
+        
         $last_item = BankAccountItems::orderby('id', 'desc')->first();
         $item = new BankAccountItems();
 
@@ -714,7 +716,7 @@ class AccountingTreeController extends Controller
             $accountItem->code = $BankAccount->code."".$item->code;
             $accountItem->save();
         }
-        return view('accounting-tree.add-bank-account-item')->with('message', 'Item added successfully.');
+        return view('accounting-tree.add-bank-account-item',compact('all_items'))->with('message', 'Item added successfully.');
     }
 
     /**
