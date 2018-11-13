@@ -728,7 +728,7 @@ class IndexController extends Controller
 				else
 					$projects_amount[$receipt->project->name] = $receipt->amount;
 			}
-			return view('cash-receipt',compact('amount','receipt_type','last_id','projects_amount','ids'));
+			return view('receipts.cash-receipt',compact('amount','receipt_type','last_id','projects_amount','ids'));
 		}
 		
 		return view('receipts.cash-receipt',compact('ids','last_id'));
