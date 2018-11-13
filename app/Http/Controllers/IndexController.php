@@ -758,7 +758,7 @@ class IndexController extends Controller
 	            'notes' => 'required',
 	        ]);
 	        if($validator->fails()) {
-		        return view('cash-receipt')->withErrors($validator)->with(compact('amount','receipt_type','last_id','projects_amount','ids'));
+		        return view('receipts.cash-receipt')->withErrors($validator)->with(compact('amount','receipt_type','last_id','projects_amount','ids'));
 		    }
 		}else{
 			$validator = Validator::make($request->all(), [
@@ -769,7 +769,7 @@ class IndexController extends Controller
 	            'cheque_date' => 'required',
 	        ]);
 	        if($validator->fails()) {
-		        return view('cash-receipt')->withErrors($validator)->with(compact('amount','receipt_type','last_id','projects_amount','ids'));
+		        return view('receipts.cash-receipt')->withErrors($validator)->with(compact('amount','receipt_type','last_id','projects_amount','ids'));
 		    }
 		}
 
@@ -809,6 +809,81 @@ class IndexController extends Controller
 
 	}
 	
+	/**
+	 * Display a listing of the resource.
+	 *
+	 * @return Response
+	 */
+	public function cashExchangeReceipt(Request $request)
+	{
+		// var_dump($request->all());die;
+		// $ids = null;
+		$last_receipt = Receipt::where('type','=', '1')->orderby('id', 'desc')->first();
+		$last_id = ($last_receipt)? $last_receipt->id +1 : 1;
+
+		$workers = Workers::pluck('title','id');
+
+		return view('receipts.cash-exchange-receipt',compact('last_id','workers'));
+	}
+
+	public function saveCashExchange(Request $request)
+	{
+		// var_dump($request->all());die;
+		
+		$receipt_type = $request->input('receipt_type');
+		$last_id =  $request->input('last_id');
+		$workers = Workers::pluck('title','id');
+		
+		if($request->input('receipt_type') == '1'){
+			$validator = Validator::make($request->all(), [
+            	'depositor_name' => 'required',
+	            'notes' => 'required',
+	        ]);
+	        if($validator->fails()) {
+		        return view('receipts.cash-exchange-receipt')->withErrors($validator)->with(compact('amount','receipt_type','last_id','workers'));
+		    }
+		}else{
+			$validator = Validator::make($request->all(), [
+            	'depositor_name' => 'required',
+	            'notes' => 'required',
+	            'cheque_number' => 'required',
+	            'cheque_bank' => 'required',
+	            'cheque_date' => 'required',
+	        ]);
+	        if($validator->fails()) {
+		        return view('receipts.cash-exchange-receipt')->withErrors($validator)->with(compact('amount','receipt_type','last_id','workers'));
+		    }
+		}
+
+		$receipt = new Receipt();
+
+		if($request->input('receipt_type') != '1'){
+		    $receipt->cheque_number = $request->input('cheque_number');
+			$receipt->cheque_bank = $request->input('cheque_bank');
+		    $receipt->cheque_date = $request->input('cheque_date');
+		}
+
+		$receipt->cheque_number = 0;
+		$receipt->for_account = "";
+		$receipt->cheque_bank = "";
+	    $receipt->cheque_date = $request->input('delivery_date');
+	    $receipt->user_id = Auth::user()->id;
+
+
+		$receipt->receipt_date = $request->input('delivery_date');
+		$receipt->depositor_name = $request->input('depositor_name');
+		$receipt->notes = $request->input('notes');
+		$receipt->type = 1;
+		$receipt->cash = $request->input('receipt_type');
+		$receipt->amount = $request->input('amount');
+		$receipt->alpha_amount = $request->input('amount_alpha');
+		$receipt->save();
+
+		return redirect()->action('IndexController@index');	
+		// return redirect()->action('IndexController@accountSheet', ['cash_id' => $receipt->id,'ids'=>$ids]);
+
+	}
+
 
 	public function convertNumber(Request $request)
 	{

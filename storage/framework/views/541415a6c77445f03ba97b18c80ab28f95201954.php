@@ -126,6 +126,9 @@
                                 <li>
                                     <a href="<?php echo e(url('/all-cash')); ?>"><?php echo app('translator')->getFromJson('validation.all_cash'); ?></a>
                                 </li>
+                                 <li>
+                                    <a href="<?php echo e(url('/cash-exchange-receipt')); ?>"><?php echo app('translator')->getFromJson('validation.cash-exchange-receipt'); ?></a>
+                                </li>
                                 <li>
                                     <a href="<?php echo e(url('/account-sheet')); ?>"><?php echo app('translator')->getFromJson('validation.account-sheet'); ?></a>
                                 </li>

@@ -100,6 +100,11 @@ Route::group(['middleware' => ['web']], function () {
         
         Route::get('get-levels', 'IndexController@getLevels');
 
+
+        Route::get('/cash-exchange-receipt', "IndexController@cashExchangeReceipt");
+        Route::post('/save-cash-exchange', "IndexController@saveCashExchange");
+
+
     });
 
 

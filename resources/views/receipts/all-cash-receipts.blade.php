@@ -82,6 +82,7 @@
                             <th class="text-center">تاريخ اﻹيصال</th>
                             <th class="text-center">المبلغ</th>
                             <th class="text-center">نقاً / شيكات</th>                            
+                            <th class="text-center">نوع اﻹيصال</th>                            
                             <th class="text-center">رقم اﻹيصال</th>                            
                         </tr>
                     </thead>
@@ -155,6 +156,11 @@
                 <td  style="text-align: center;">نقاً </td>
             @else
                 <td style="text-align: center;">شيكات</td>
+            @endif
+             @if($receipt->type == '1')
+                <td  style="text-align: center;">صرف</td>
+            @else
+                <td style="text-align: center;">توريد</td>
             @endif
             <td>{{$receipt->id}}</td>
         </tr>

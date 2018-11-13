@@ -145,6 +145,7 @@ return [
 
     'add-custody'                     => 'إضافة عهدة',
     'custody-index'                   => ' العهد',
+    'cash-exchange-receipt'           => ' إذن صرف نقدية ',
     ' '                               => ' ',
     ' '                               => ' ',
     ' '                               => ' ',
