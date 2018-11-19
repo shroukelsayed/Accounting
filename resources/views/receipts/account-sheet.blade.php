@@ -31,6 +31,22 @@
 		height:150px;
 		margin-top:-8px;
   	}
+      
+    #search{
+        padding: 10px;
+        border: solid 1px #BDC7D8;
+        margin-bottom: 20px;
+        display: inline;
+        width: 100%;
+    }
+    .search-result{
+        border-bottom:solid 1px #BDC7D8;
+        padding:10px;
+        font-family:Times New Roman;
+        font-size: 20px;
+        color:blue;
+      }
+    </style>
 </style>
 
 
@@ -111,8 +127,12 @@
                	 					<td>
                	 						<label dir="rtl">من حساب : </label>
 
-               	 						<input type="text" size="30" id="search">
-										<div id="livesearch" style="border:solid 1px #BDC7D8;display:none;height: 100px; "></div>
+               	 						<input  type="text" id="search" name="searchData" placeholder="Search" autocomplete="off" />
+									     
+									     <div id="search-result-container" style="border:solid 1px #BDC7D8;display:none; ">
+									     </div>
+               	 						<!-- <input type="text" size="30" id="search">
+										<div id="livesearch" style="border:solid 1px #BDC7D8;display:none;height: 100px; "></div> -->
 
                	 						
 							    		@if ($errors->has('notes'))
@@ -263,35 +283,43 @@
 			var val = $(this).val();
 			var type ='';
 			if ($.isNumeric(val) && val.length >3) {
-				// console.log("val");
 				type='number';
 			}else if(val.length > 3 && val.trim() != ""){
-				// console.log("else");
 				type='string';
+			}else{
+            	$('#search-result-container').hide();
 			}
+			console.log(type);
 			if (type != '') {
+				$('#search-result-container').show();
+        		$('#search-result-container').html('<div><span style="font-size: 20px;">Please Wait...</span></div>');
+
 				$.ajax({
 		            url: '/search-level',
 		            type: "GET",
 		            data: {'type': type,
 		                   'search_text': val},
 		            success:function(data) { 
-		            	var html = "";
-		            	for (var i = 0; i < data.length; i++) {
-						    html += '<li>' +data[i]['level_code'] + '   ' + data[i]['level_title'] + '</li>'; 
-						}
-						
-		            	$('#livesearch').show();
-						$('#livesearch').html(html);
-		                console.log(data);
+		            	if(data != ""){
+		            		console.log(data);
+		            		$('#search-result-container').html('');
+		            		for (var i = 0; i < data.length; i++) {
+		            			var html = '';
+		            			html = '<div class="search-result" id='+data[i].level_code+'>'+data[i].level_title+'</div>' 
+				            	$('#search-result-container').append(html);
+		            		}
+		            	}
+				        else    
+				            $('#search-result-container').html("<div class='search-result'>No Result Found...</div>");
 		            }
 		        });
 			}else{
 		       	$('#livesearch').hide();
 		       	$('#livesearch').html("");
 			}
-			// console.log(val);
 		});
+
+	/**************************/
 		$.ajax({
             url: '/convert-number',
             type: "POST",
@@ -404,7 +432,38 @@
 		    window.print();
 		});
 
-
+    //   $(document).ready(function() {
+    //     $('#search-data').unbind().keyup(function(e) {
+    //       var value = $(this).val();
+    //       if (value.length>3) {
+    //         //alert(99933);
+    //         searchData(value);
+    //       }
+    //       else {
+    //         $('#search-result-container').hide();
+    //       }
+    //     });
+    //   }
+    //                    );
+    // function searchData(val){
+    //     $('#search-result-container').show();
+    //     $('#search-result-container').html('<div><img src="preloader.gif" width="50px;" height="50px"> <span style="font-size: 20px;">Please Wait...</span></div>');
+    //     $.post('controller.php',{
+    //       'search-data': val}
+    //            , function(data){
+    //       if(data != "")
+    //         $('#search-result-container').html(data);
+    //       else    
+    //         $('#search-result-container').html("<div class='search-result'>No Result Found...</div>");
+    //     }
+    //           ).fail(function(xhr, ajaxOptions, thrownError) {
+    //       //any errors?
+    //       alert(thrownError);
+    //       //alert with HTTP error
+    //     }
+    //                 );
+    //   }
+   
 
    	});
 </script>
