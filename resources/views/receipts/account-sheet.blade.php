@@ -32,7 +32,7 @@
 		margin-top:-8px;
   	}
       
-    #search{
+ /*    #search{
         padding: 10px;
         border: solid 1px #BDC7D8;
         margin-bottom: 20px;
@@ -45,10 +45,73 @@
         font-family:Times New Roman;
         font-size: 20px;
         color:blue;
-      }
+    } */
+
     </style>
 </style>
+<style>
+/*   * {
+    box-sizing: border-box;
+  }
 
+  body {
+    font: 16px Arial;  
+  } */
+
+  .autocomplete {
+    /*the container must be positioned relative:*/
+    position: relative;
+    display: inline-block;
+  }
+
+/*   input {
+    border: 1px solid transparent;
+    background-color: #f1f1f1;
+    padding: 10px;
+    font-size: 16px;
+  }
+
+  input[type=text] {
+    background-color: #f1f1f1;
+    width: 100%;
+  } */
+
+/*   input[type=submit] {
+    background-color: DodgerBlue;
+    color: #fff;
+    cursor: pointer;
+  } */
+
+  .autocomplete-items {
+    position: absolute;
+    border: 1px solid #d4d4d4;
+    border-bottom: none;
+    border-top: none;
+    z-index: 99;
+    /*position the autocomplete items to be the same width as the container:*/
+    top: 100%;
+    left: 0;
+    right: 0;
+  }
+
+  .autocomplete-items div {
+    padding: 10px;
+    cursor: pointer;
+    background-color: #fff; 
+    border-bottom: 1px solid #d4d4d4; 
+  }
+
+  .autocomplete-items div:hover {
+    /*when hovering an item:*/
+    background-color: #e9e9e9; 
+  }
+
+  .autocomplete-active {
+    /*when navigating through the items using the arrow keys:*/
+    background-color: DodgerBlue !important; 
+    color: #ffffff; 
+  }
+</style>
 
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
 <script type="text/javascript" src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
@@ -126,11 +189,12 @@
                	 					</td>
                	 					<td>
                	 						<label dir="rtl">من حساب : </label>
-
-               	 						<input  type="text" id="search" name="searchData" placeholder="Search" autocomplete="off" />
-									     
-									     <div id="search-result-container" style="border:solid 1px #BDC7D8;display:none; ">
+               	 						<div class="autocomplete">
+               	 							<input  type="text"  id="search" name="searchData"
+               	 							 placeholder="Search" autocomplete="off" />
 									     </div>
+									    <!--  <div id="search-result-container" style="border:solid 1px #BDC7D8;display:none; ">
+									     </div> -->
                	 						<!-- <input type="text" size="30" id="search">
 										<div id="livesearch" style="border:solid 1px #BDC7D8;display:none;height: 100px; "></div> -->
 
@@ -278,7 +342,6 @@
 
 <script type="text/javascript">
 	$(function($){
-
 		$('#search').keyup(function(){
 			var val = $(this).val();
 			var type ='';
@@ -286,33 +349,58 @@
 				type='number';
 			}else if(val.length > 3 && val.trim() != ""){
 				type='string';
-			}else{
-            	$('#search-result-container').hide();
 			}
+
 			console.log(type);
 			if (type != '') {
-				$('#search-result-container').show();
-        		$('#search-result-container').html('<div><span style="font-size: 20px;">Please Wait...</span></div>');
+				// $('#search-result-container').show();
+    //     		$('#search-result-container').html('<div><span style="font-size: 20px;">Please Wait...</span></div>');
+    		var inp = document.getElementById("search");
 
-				$.ajax({
-		            url: '/search-level',
-		            type: "GET",
-		            data: {'type': type,
-		                   'search_text': val},
-		            success:function(data) { 
-		            	if(data != ""){
-		            		console.log(data);
-		            		$('#search-result-container').html('');
-		            		for (var i = 0; i < data.length; i++) {
-		            			var html = '';
-		            			html = '<div class="search-result" id='+data[i].level_code+'>'+data[i].level_title+'</div>' 
-				            	$('#search-result-container').append(html);
-		            		}
-		            	}
-				        else    
-				            $('#search-result-container').html("<div class='search-result'>No Result Found...</div>");
-		            }
-		        });
+			$.ajax({
+	            url: '/search-level',
+	            type: "GET",
+	            data: {'type': type,
+	                   'search_text': val},
+	            success:function(data) { 
+	            	if(data != ""){
+	            		var a, b, i ;
+	            		a = document.createElement("DIV");
+					    a.setAttribute("id", "autocomplete-list");
+					    a.setAttribute("class", "autocomplete-items");
+      					inp.parentNode.appendChild(a);
+
+					    for (var i = 0; i < data.length; i++) {
+					    	b = document.createElement("DIV");
+					          b.innerHTML = "<strong>" + data[i].level_title + "</strong>";
+					          b.innerHTML += "<input id='value' type='hidden' value='" + data[i].level_code + "'>";
+					         b.addEventListener("click", function(e) {
+					         	var code = this.getElementsByTagName("input")[0].value;
+					         	var content = this.getElementsByTagName("strong")[0];
+				               	inp.value = $(content).text();
+				               	$('#search').attr('data-attr', code);
+				          	});
+				          a.appendChild(b);
+					    }
+
+					    function closeAllLists(elmnt) {
+						    var x = document.getElementsByClassName("autocomplete-items");
+						    for (var i = 0; i < x.length; i++) {
+						      if (elmnt != x[i] && elmnt != inp) {
+						        x[i].parentNode.removeChild(x[i]);
+						      }
+						    }
+						}
+
+						document.addEventListener("click", function (e) {
+						      closeAllLists(e.target);
+						});
+	            	}
+			        else    
+			        	console.log("error")
+			            // $('#search-result-container').html("<div class='search-result'>No Result Found...</div>");
+	            }
+	        });
 			}else{
 		       	$('#livesearch').hide();
 		       	$('#livesearch').html("");
@@ -431,40 +519,6 @@
         	$('.print-window').hide();
 		    window.print();
 		});
-
-    //   $(document).ready(function() {
-    //     $('#search-data').unbind().keyup(function(e) {
-    //       var value = $(this).val();
-    //       if (value.length>3) {
-    //         //alert(99933);
-    //         searchData(value);
-    //       }
-    //       else {
-    //         $('#search-result-container').hide();
-    //       }
-    //     });
-    //   }
-    //                    );
-    // function searchData(val){
-    //     $('#search-result-container').show();
-    //     $('#search-result-container').html('<div><img src="preloader.gif" width="50px;" height="50px"> <span style="font-size: 20px;">Please Wait...</span></div>');
-    //     $.post('controller.php',{
-    //       'search-data': val}
-    //            , function(data){
-    //       if(data != "")
-    //         $('#search-result-container').html(data);
-    //       else    
-    //         $('#search-result-container').html("<div class='search-result'>No Result Found...</div>");
-    //     }
-    //           ).fail(function(xhr, ajaxOptions, thrownError) {
-    //       //any errors?
-    //       alert(thrownError);
-    //       //alert with HTTP error
-    //     }
-    //                 );
-    //   }
-   
-
    	});
 </script>
 @endsection
