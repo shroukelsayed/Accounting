@@ -31,56 +31,16 @@
 		height:150px;
 		margin-top:-8px;
   	}
-      
- /*    #search{
-        padding: 10px;
-        border: solid 1px #BDC7D8;
-        margin-bottom: 20px;
-        display: inline;
-        width: 100%;
-    }
-    .search-result{
-        border-bottom:solid 1px #BDC7D8;
-        padding:10px;
-        font-family:Times New Roman;
-        font-size: 20px;
-        color:blue;
-    } */
-
     </style>
 </style>
 <style>
-/*   * {
-    box-sizing: border-box;
-  }
 
-  body {
-    font: 16px Arial;  
-  } */
 
   .autocomplete {
     /*the container must be positioned relative:*/
     position: relative;
     display: inline-block;
   }
-
-/*   input {
-    border: 1px solid transparent;
-    background-color: #f1f1f1;
-    padding: 10px;
-    font-size: 16px;
-  }
-
-  input[type=text] {
-    background-color: #f1f1f1;
-    width: 100%;
-  } */
-
-/*   input[type=submit] {
-    background-color: DodgerBlue;
-    color: #fff;
-    cursor: pointer;
-  } */
 
   .autocomplete-items {
     position: absolute;
@@ -190,7 +150,7 @@
                	 					<td>
                	 						<label dir="rtl">من حساب : </label>
                	 						<div class="autocomplete">
-               	 							<input  type="text"  id="search" name="searchData"
+               	 							<input  type="text"  id="searchfrom" class="search" name="searchData"
                	 							 placeholder="Search" autocomplete="off" />
 									     </div>
 									    <!--  <div id="search-result-container" style="border:solid 1px #BDC7D8;display:none; ">
@@ -206,7 +166,10 @@
 		                                @endif
 		                                <br><br><br><br><br><br>
                	 							<label dir="rtl">الى حساب : </label>
-											{{ Form::select('to_level_two', $levels,null,['class' => 'form-control to' , 'placeholder' => 'اختر اسم الحساب'])  }}
+	               	 						<div class="autocomplete">
+	               	 							<input  type="text"  id="searchto" class="search" name="searchData"
+	               	 							 placeholder="Search" autocomplete="off" />
+										     </div>
 		                                	
 		                                	<select name="to_level_three" id="to_level_three" class="form-control to" style="display: none;"></select>
 		                                	<select name="to_level_four" id="to_level_four" class="form-control to" style="display: none;"></select>
@@ -342,8 +305,10 @@
 
 <script type="text/javascript">
 	$(function($){
-		$('#search').keyup(function(){
+		$('.search').keyup(function(){
+			var id  = $(this).attr('id')
 			var val = $(this).val();
+			// console.log(id);
 			var type ='';
 			if ($.isNumeric(val) && val.length >3) {
 				type='number';
@@ -351,11 +316,8 @@
 				type='string';
 			}
 
-			console.log(type);
 			if (type != '') {
-				// $('#search-result-container').show();
-    //     		$('#search-result-container').html('<div><span style="font-size: 20px;">Please Wait...</span></div>');
-    		var inp = document.getElementById("search");
+    		var inp = document.getElementById(id);
 
 			$.ajax({
 	            url: '/search-level',
@@ -378,7 +340,7 @@
 					         	var code = this.getElementsByTagName("input")[0].value;
 					         	var content = this.getElementsByTagName("strong")[0];
 				               	inp.value = $(content).text();
-				               	$('#search').attr('data-attr', code);
+				               	$(inp).attr('data-attr', code);
 				          	});
 				          a.appendChild(b);
 					    }
