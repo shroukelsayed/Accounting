@@ -110,17 +110,11 @@
                	 					</td>
                	 					<td>
                	 						<label dir="rtl">من حساب : </label>
-               	 						@if(isset($cashReceipt) and $cashReceipt->amount)
-							    			{{ Form::select('from_level_two', $levels,$levels,['class' => 'form-control from' ])  }}
-										@else
-											{{ Form::select('from_level_two', $levels,null,['class' => 'form-control from' , 'placeholder' => 'اختر اسم الحساب'])  }}
-											
-											<select name="from_level_three" id="from_level_three" class="form-control from" style="display: none;"></select>
-		                                	<select name="from_level_four" id="from_level_four" class="form-control from" style="display: none;"></select>
-		                                	<select name="from_level_five" id="from_level_five" class="form-control from" style="display: none;"></select>
-		                                	<select name="from_level_six" id="from_level_six" class="form-control from" style="display: none;"></select>
 
-							    		@endif
+               	 						<input type="text" size="30" id="search">
+										<div id="livesearch" style="border:solid 1px #BDC7D8;display:none;height: 100px; "></div>
+
+               	 						
 							    		@if ($errors->has('notes'))
 		                                    <span class="alert-danger">
 		                                        <strong>{{ $errors->first('notes') }}</strong>
@@ -264,6 +258,40 @@
 
 <script type="text/javascript">
 	$(function($){
+
+		$('#search').keyup(function(){
+			var val = $(this).val();
+			var type ='';
+			if ($.isNumeric(val) && val.length >3) {
+				// console.log("val");
+				type='number';
+			}else if(val.length > 3 && val.trim() != ""){
+				// console.log("else");
+				type='string';
+			}
+			if (type != '') {
+				$.ajax({
+		            url: '/search-level',
+		            type: "GET",
+		            data: {'type': type,
+		                   'search_text': val},
+		            success:function(data) { 
+		            	var html = "";
+		            	for (var i = 0; i < data.length; i++) {
+						    html += '<li>' +data[i]['level_code'] + '   ' + data[i]['level_title'] + '</li>'; 
+						}
+						
+		            	$('#livesearch').show();
+						$('#livesearch').html(html);
+		                console.log(data);
+		            }
+		        });
+			}else{
+		       	$('#livesearch').hide();
+		       	$('#livesearch').html("");
+			}
+			// console.log(val);
+		});
 		$.ajax({
             url: '/convert-number',
             type: "POST",
@@ -273,108 +301,111 @@
                 $(":input[name='amount_alpha']").val(data);
             }
         });
-		$('.from').change(function () {
-	        var val = $(this).val();
-        	var model;
-			console.log(val);
-			if(val == ""){
-				$('select[name="from_level_three"]').hide();
-				$('select[name="from_level_four"]').hide();
-				$('select[name="from_level_five"]').hide();
-				$('select[name="from_level_six"]').hide();
-			}else{
-				if(val.length == 2){
-	        		model = $('#from_level_three');
-			  	}else if(val.length == 4){
-	        		model = $('#from_level_four');
-				}else if(val.length == 6){
-	        		model = $('#from_level_five');
-				}else{
-	        		model = $('#from_level_six');
-				}
-	        	$.get("{{ url('get-levels')}}", 
-					{ option: $(this).val() }, 
-					function(data) {
-						model.empty();
-				        model.append("<option value=''>Plz Select</option>");
-						$.each(data, function(index, element) {
-	 						if(val.length == 9 )
-				            	model.append("<option value='"+ element.pivot.code +"'>" + element.title + " " + element.pivot.title + "</option>");
-	 						else
-				           		model.append("<option value='"+ element.code +"'>" + element.title + "</option>");
-				    	});				
-						if(val.length == 2){
-							$('select[name="from_level_three"]').show();
-							$('select[name="from_level_four"]').hide();
-							$('select[name="from_level_five"]').hide();
-							$('select[name="from_level_six"]').hide();
-					  	}else if(val.length == 4){
-							$('select[name="from_level_four"]').show();
-							$('select[name="from_level_five"]').hide();
-							$('select[name="from_level_six"]').hide();
-						}else if(val.length == 6){
-							$('select[name="from_level_five"]').show();
-							$('select[name="from_level_six"]').hide();
-						}else if(val.length == 9){
-							$('select[name="from_level_six"]').show();
-						}
-				});
-			}
-	    });
-	    $('.to').change(function () {
-	        var val = $(this).val();
-        	var model;
-        	if(val == ""){
-        		$('select[name="to_level_three"]').hide();
-				$('select[name="to_level_four"]').hide();
-				$('select[name="to_level_five"]').hide();
-				$('select[name="to_level_six"]').hide();
-        	}else{
-        		if(val.length == 2){
-	        		model = $('#to_level_three');
-			  	}else if(val.length == 4){
-	        		model = $('#to_level_four');
-				}else if(val.length == 6){
-	        		model = $('#to_level_five');
-				}else{
-	        		model = $('#to_level_six');
-				}
-	        	$.get("{{ url('get-levels')}}", 
-					{ option: $(this).val() }, 
-					function(data) {
-						model.empty();
-				        model.append("<option value=''>Plz Select</option>");
-						$.each(data, function(index, element) {
-	 						if(val.length == 9 )
-				            	model.append("<option value='"+ element.pivot.code +"'>" + element.title + " " + element.pivot.title + "</option>");
-	 						else
-				           		model.append("<option value='"+ element.code +"'>" + element.title + "</option>");
-				    	});				
-						if(val.length == 2){
-							$('select[name="to_level_three"]').show();
-							$('select[name="to_level_four"]').hide();
-							$('select[name="to_level_five"]').hide();
-							$('select[name="to_level_six"]').hide();
-					  	}else if(val.length == 4){
-							$('select[name="to_level_four"]').show();
-							$('select[name="to_level_five"]').hide();
-							$('select[name="to_level_six"]').hide();
-						}else if(val.length == 6){
-							$('select[name="to_level_five"]').show();
-							$('select[name="to_level_six"]').hide();
-						}else if(val.length == 9){
-							$('select[name="to_level_six"]').show();
-						}
-				});
-        	}
+		// $('.from').change(function () {
+	 //        var val = $(this).val();
+  //       	var model;
+		// 	console.log(val);
+		// 	if(val == ""){
+		// 		$('select[name="from_level_three"]').hide();
+		// 		$('select[name="from_level_four"]').hide();
+		// 		$('select[name="from_level_five"]').hide();
+		// 		$('select[name="from_level_six"]').hide();
+		// 	}else{
+		// 		if(val.length == 2){
+	 //        		model = $('#from_level_three');
+		// 	  	}else if(val.length == 4){
+	 //        		model = $('#from_level_four');
+		// 		}else if(val.length == 6){
+	 //        		model = $('#from_level_five');
+		// 		}else{
+	 //        		model = $('#from_level_six');
+		// 		}
+	 //        	$.get("{{ url('get-levels')}}", 
+		// 			{ option: $(this).val() }, 
+		// 			function(data) {
+		// 				model.empty();
+		// 		        model.append("<option value=''>Plz Select</option>");
+		// 				$.each(data, function(index, element) {
+	 // 						if(val.length == 9 )
+		// 		            	model.append("<option value='"+ element.pivot.code +"'>" + element.title + " " + element.pivot.title + "</option>");
+	 // 						else
+		// 		           		model.append("<option value='"+ element.code +"'>" + element.title + "</option>");
+		// 		    	});				
+		// 				if(val.length == 2){
+		// 					$('select[name="from_level_three"]').show();
+		// 					$('select[name="from_level_four"]').hide();
+		// 					$('select[name="from_level_five"]').hide();
+		// 					$('select[name="from_level_six"]').hide();
+		// 			  	}else if(val.length == 4){
+		// 					$('select[name="from_level_four"]').show();
+		// 					$('select[name="from_level_five"]').hide();
+		// 					$('select[name="from_level_six"]').hide();
+		// 				}else if(val.length == 6){
+		// 					$('select[name="from_level_five"]').show();
+		// 					$('select[name="from_level_six"]').hide();
+		// 				}else if(val.length == 9){
+		// 					$('select[name="from_level_six"]').show();
+		// 				}
+		// 		});
+		// 	}
+	 //    });
+	 //    $('.to').change(function () {
+	 //        var val = $(this).val();
+  //       	var model;
+  //       	if(val == ""){
+  //       		$('select[name="to_level_three"]').hide();
+		// 		$('select[name="to_level_four"]').hide();
+		// 		$('select[name="to_level_five"]').hide();
+		// 		$('select[name="to_level_six"]').hide();
+  //       	}else{
+  //       		if(val.length == 2){
+	 //        		model = $('#to_level_three');
+		// 	  	}else if(val.length == 4){
+	 //        		model = $('#to_level_four');
+		// 		}else if(val.length == 6){
+	 //        		model = $('#to_level_five');
+		// 		}else{
+	 //        		model = $('#to_level_six');
+		// 		}
+	 //        	$.get("{{ url('get-levels')}}", 
+		// 			{ option: $(this).val() }, 
+		// 			function(data) {
+		// 				model.empty();
+		// 		        model.append("<option value=''>Plz Select</option>");
+		// 				$.each(data, function(index, element) {
+	 // 						if(val.length == 9 )
+		// 		            	model.append("<option value='"+ element.pivot.code +"'>" + element.title + " " + element.pivot.title + "</option>");
+	 // 						else
+		// 		           		model.append("<option value='"+ element.code +"'>" + element.title + "</option>");
+		// 		    	});				
+		// 				if(val.length == 2){
+		// 					$('select[name="to_level_three"]').show();
+		// 					$('select[name="to_level_four"]').hide();
+		// 					$('select[name="to_level_five"]').hide();
+		// 					$('select[name="to_level_six"]').hide();
+		// 			  	}else if(val.length == 4){
+		// 					$('select[name="to_level_four"]').show();
+		// 					$('select[name="to_level_five"]').hide();
+		// 					$('select[name="to_level_six"]').hide();
+		// 				}else if(val.length == 6){
+		// 					$('select[name="to_level_five"]').show();
+		// 					$('select[name="to_level_six"]').hide();
+		// 				}else if(val.length == 9){
+		// 					$('select[name="to_level_six"]').show();
+		// 				}
+		// 		});
+  //       	}
         	
-	    });
+	    // });
         $('.print-window').click(function() {
         	$('#submitForm').hide();
         	$('#resetForm').hide();
         	$('.print-window').hide();
 		    window.print();
 		});
+
+
+
    	});
 </script>
 @endsection

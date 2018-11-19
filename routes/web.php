@@ -99,6 +99,7 @@ Route::group(['middleware' => ['web']], function () {
 
         
         Route::get('get-levels', 'IndexController@getLevels');
+        Route::get('search-level', 'IndexController@searchLevel');
 
 
         Route::get('/cash-exchange-receipt', "IndexController@cashExchangeReceipt");

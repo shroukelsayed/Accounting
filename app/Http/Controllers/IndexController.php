@@ -99,7 +99,7 @@ use App\RevenueSms;
 use App\AccountSheet;
 use App\CustodySheets;
 
-
+use App\TreeCodes;
 
 use Illuminate\Support\Facades\Redirect;
 
@@ -1165,6 +1165,17 @@ class IndexController extends Controller
 		var_dump($request->all());die;
 
 
+	}
+
+	public function searchLevel(Request $request)
+	{
+		// var_dump($request->all());die;
+		if($request->input('type') == 'number'){
+			$levels = TreeCodes::select('level_code','level_title')->where('level_code','like', $request->input('search_text').'%')->get()->toArray();
+		}else{
+			$levels = TreeCodes::where('level_title','like', '%'.$request->input('search_text').'%')->get(['level_code','level_title'])->toArray();
+		}
+		return $levels;
 	}
 
 
