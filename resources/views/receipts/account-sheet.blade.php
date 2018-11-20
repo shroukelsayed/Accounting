@@ -323,6 +323,7 @@
 	                   'search_text': val},
 	            success:function(data) { 
 	            	if(data != ""){
+	            		closeAllLists();
 	            		var a, b, i ;
 	            		a = document.createElement("DIV");
 					    a.setAttribute("id", "autocomplete-list");
@@ -335,9 +336,7 @@
 					          b.innerHTML += "<input id='value' type='hidden' value='" + data[i].level_code + "'>";
 					         b.addEventListener("click", function(e) {
 					         	var code = this.getElementsByTagName("input")[0].value;
-					         	console.log(code);
 					         	var content = this.getElementsByTagName("strong")[0];
-					         	console.log(id);
 					         	if (id =='searchfrom')
 					         		$('#valuefrom').val(code);
 					         	else
@@ -351,6 +350,7 @@
 
 					    function closeAllLists(elmnt) {
 						    var x = document.getElementsByClassName("autocomplete-items");
+						    console.log(x);
 						    for (var i = 0; i < x.length; i++) {
 						      if (elmnt != x[i] && elmnt != inp) {
 						        x[i].parentNode.removeChild(x[i]);
