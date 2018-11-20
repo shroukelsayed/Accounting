@@ -150,15 +150,10 @@
                	 					<td>
                	 						<label dir="rtl">من حساب : </label>
                	 						<div class="autocomplete">
-               	 							<input  type="text"  id="searchfrom" class="search" name="searchData"
+               	 							<input  type="text"  id="searchfrom" class="search" name="searchDatafrom"
                	 							 placeholder="Search" autocomplete="off" />
+               	 							 <input id='valuefrom' name='valuefrom' type='hidden' value=''>
 									     </div>
-									    <!--  <div id="search-result-container" style="border:solid 1px #BDC7D8;display:none; ">
-									     </div> -->
-               	 						<!-- <input type="text" size="30" id="search">
-										<div id="livesearch" style="border:solid 1px #BDC7D8;display:none;height: 100px; "></div> -->
-
-               	 						
 							    		@if ($errors->has('notes'))
 		                                    <span class="alert-danger">
 		                                        <strong>{{ $errors->first('notes') }}</strong>
@@ -167,14 +162,15 @@
 		                                <br><br><br><br><br><br>
                	 							<label dir="rtl">الى حساب : </label>
 	               	 						<div class="autocomplete">
-	               	 							<input  type="text"  id="searchto" class="search" name="searchData"
+	               	 							<input  type="text"  id="searchto" class="search" name="searchDatato"
 	               	 							 placeholder="Search" autocomplete="off" />
+               	 							 	<input id='valueto' name='valueto' type='hidden' value=''>
 										     </div>
 		                                	
-		                                	<select name="to_level_three" id="to_level_three" class="form-control to" style="display: none;"></select>
+		                                	<!-- <select name="to_level_three" id="to_level_three" class="form-control to" style="display: none;"></select>
 		                                	<select name="to_level_four" id="to_level_four" class="form-control to" style="display: none;"></select>
 		                                	<select name="to_level_five" id="to_level_five" class="form-control to" style="display: none;"></select>
-		                                	<select name="to_level_six" id="to_level_six" class="form-control to" style="display: none;"></select>
+		                                	<select name="to_level_six" id="to_level_six" class="form-control to" style="display: none;"></select> -->
 
 		                                <br>
 
@@ -338,7 +334,14 @@
 					          b.innerHTML += "<input id='value' type='hidden' value='" + data[i].level_code + "'>";
 					         b.addEventListener("click", function(e) {
 					         	var code = this.getElementsByTagName("input")[0].value;
+					         	console.log(code);
 					         	var content = this.getElementsByTagName("strong")[0];
+					         	console.log(id);
+					         	if (id =='searchfrom')
+					         		$('#valuefrom').val(code);
+					         	else
+					         		$('#valueto').val(code);
+
 				               	inp.value = $(content).text();
 				               	$(inp).attr('data-attr', code);
 				          	});
