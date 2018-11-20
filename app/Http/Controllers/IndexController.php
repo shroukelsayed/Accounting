@@ -1162,9 +1162,23 @@ class IndexController extends Controller
 
 	public function saveAccountSheet(Request $request)
 	{
-		var_dump($request->all());die;
+		// var_dump($request->all());die;
 
+		$accountSheet = new AccountSheet();
+		
+		// $accountSheet->sheet_number = $request->input('cash_id') 
+		$accountSheet->sheet_date = $request->input('sheet_date') ;
+		$accountSheet->alpha_amount = $request->input('amount_alpha');
+		$accountSheet->user_id = Auth::user()->id;
+		$accountSheet->from_account = $request->input('valuefrom');
+		$accountSheet->to_account = $request->input('valueto');
+		// $accountSheet->donation_section = $request->input('cash_id');
+		// registered_by
+		// reviewed_by
 
+		$accountSheet->save();
+
+		return redirect()->action('IndexController@index');
 	}
 
 	public function searchLevel(Request $request)

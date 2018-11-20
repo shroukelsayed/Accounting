@@ -105,6 +105,7 @@
 				        		<label>بتاريخ</label> &nbsp&nbsp&nbsp&nbsp
 				        		<label> ( {{$last_id}} ) </label>
 				        		<label> &nbsp&nbsp&nbsp&nbsp &nbsp&nbsp&nbsp&nbsp قيد يوميــة رقم </label>
+				        		<input type="hidden" name="last_id" value="{{$last_id}}">
 							</div>
 		               	</div>
 		               	<div class="col-sm-3" style="text-align: right;">
@@ -244,7 +245,7 @@
                	 				</tr>
                	 				<tr>
                	 					<td colspan="3">
-               	 						<input type="text" name="amount_alpha" dir="rtl" disabled size="70">
+               	 						<input type="text" name="amount_alpha" dir="rtl" readonly size="70">
                	 					</td>
                	 					<td>
                	 						<label> {{ number_format($cashReceipt->amount, 2, '.', ',') }} </label>
