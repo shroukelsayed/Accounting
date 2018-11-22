@@ -106,6 +106,7 @@
 				        		<label> ( {{$last_id}} ) </label>
 				        		<label> &nbsp&nbsp&nbsp&nbsp &nbsp&nbsp&nbsp&nbsp قيد يوميــة رقم </label>
 				        		<input type="hidden" name="last_id" value="{{$last_id}}">
+				        		<input type="hidden" name="ids" value="{{$IDs}}">
 							</div>
 		               	</div>
 		               	<div class="col-sm-3" style="text-align: right;">
@@ -120,14 +121,17 @@
                	 					<th class="text-center">ملاحظات</th>
                	 					<th class="text-center">البيــــان</th>
                	 					<th class="text-center">تحليلى</th>
+               	 					<th class="text-center"  width="15%">العمله</th>
                	 					<th class="text-center"  width="15%">دائن </th>
                	 					<th class="text-center"  width="15%">مدين</th>
+               	 					
                	 					<!-- <th class="text-center" colspan="2" width="15%">مدين</th> -->
                	 				</tr>
                	 				<tr>
                	 					<th class="text-center"></th>
                	 					<th class="text-center"></th>
                	 					<th class="text-center"></th>
+               	 					<th class="text-center" width="10%"></th>
                	 					<th class="text-center" width="10%">جنيه</th>
                	 					<!-- <th class="text-center">قرش</th> -->
                	 					<th class="text-center" width="10%">جنيه</th>
@@ -137,14 +141,14 @@
                	 			<tbody>
                	 				<tr style="height: 500px;">
                	 					<td>
-               	 						@if(isset($receipt) and $receipt->notes)
-							    			{!! Form::textarea('notes', $receipt->notes, ['class' => 'form-control', 'dir'=> "rtl"]) !!}
+               	 						@if(isset($receipt) and $receipt->report)
+							    			{!! Form::textarea('', $receipt->report, ['class' => 'form-control', 'dir'=> "rtl"]) !!}
 										@else
-							    			{!! Form::textarea('notes', null, ['class' => 'form-control', 'dir'=> "rtl"]) !!}
+							    			{!! Form::textarea('report', null, ['class' => 'form-control', 'dir'=> "rtl"]) !!}
 							    		@endif
-							    		@if ($errors->has('notes'))
+							    		@if ($errors->has('report'))
 		                                    <span class="alert-danger">
-		                                        <strong>{{ $errors->first('notes') }}</strong>
+		                                        <strong>{{ $errors->first('report') }}</strong>
 		                                    </span>
 		                                @endif
                	 					</td>
@@ -178,6 +182,7 @@
                	 					</td>
                	 					<td>
                	 						@if(isset($projects_amount))
+               	 							<input type="hidde" name="project_details" value='' placeholder="">
 							            	<table class="table table-bordered  table-hover">
 							            		<tr>
 							            			<td style="color: darkblue;"> المشروع</td>
@@ -194,54 +199,32 @@
 
                	 						
                	 					</td>
+               	 					<td class="text-center"  width="10%">جنيه مصرى </td>
                	 					<td>
                	 						@if(isset($cashReceipt) and $cashReceipt->amount)
-								    		{!! Form::text('amount', number_format($cashReceipt->amount, 2, '.', ','), ['class' => 'form-control', 'dir'=> "rtl",'size' =>"7"]) !!}
+								    		{!! Form::text('credit_amount', number_format($cashReceipt->amount, 2, '.', ','), ['class' => 'form-control', 'dir'=> "rtl",'size' =>"7"]) !!}
 				               	 		@else
-								    		{!! Form::text('amount', null, ['class' => 'form-control', 'dir'=> "rtl",'size' => "7"]) !!}
+								    		{!! Form::text('credit_amount', null, ['class' => 'form-control', 'dir'=> "rtl",'size' => "7"]) !!}
 				               	 		@endif
-				               	 		@if ($errors->has('amount'))
+				               	 		@if ($errors->has('credit_amount'))
 				                            <span class="alert-danger">
-				                                <strong>{{ $errors->first('amount') }}</strong>
+				                                <strong>{{ $errors->first('credit_amount') }}</strong>
 				                            </span>
 				                        @endif
                	 					</td>
-               	 					<!-- <td>
-               	 						@if(isset($receipt) and $receipt->amount)
-								    		{!! Form::text('amount', number_format($receipt->amount, 2, '.', ','), ['class' => 'form-control', 'dir'=> "rtl",'size' =>"7"]) !!}
-				               	 		@else
-								    		{!! Form::text('amount', null, ['class' => 'form-control', 'dir'=> "rtl",'size' => "7"]) !!}
-				               	 		@endif
-				               	 		@if ($errors->has('amount'))
-				                            <span class="alert-danger">
-				                                <strong>{{ $errors->first('amount') }}</strong>
-				                            </span>
-				                        @endif
-               	 					</td> -->
+               	 			
                	 					<td>
                	 						@if(isset($cashReceipt) and $cashReceipt->amount)
-								    		{!! Form::text('amount', number_format($cashReceipt->amount, 2, '.', ','), ['class' => 'form-control', 'dir'=> "rtl",'size' =>"7"]) !!}
+								    		{!! Form::text('debit_amount', number_format($cashReceipt->amount, 2, '.', ','), ['class' => 'form-control', 'dir'=> "rtl",'size' =>"7"]) !!}
 				               	 		@else
-								    		{!! Form::text('amount', null, ['class' => 'form-control', 'dir'=> "rtl",'size' => "7"]) !!}
+								    		{!! Form::text('debit_amount', null, ['class' => 'form-control', 'dir'=> "rtl",'size' => "7"]) !!}
 				               	 		@endif
-				               	 		@if ($errors->has('amount'))
+				               	 		@if ($errors->has('debit_amount'))
 				                            <span class="alert-danger">
-				                                <strong>{{ $errors->first('amount') }}</strong>
+				                                <strong>{{ $errors->first('debit_amount') }}</strong>
 				                            </span>
 				                        @endif
                	 					</td>
-               	 					<!-- <td>
-               	 						@if(isset($receipt) and $receipt->amount)
-								    		{!! Form::text('amount', number_format($receipt->amount, 2, '.', ','), ['class' => 'form-control', 'dir'=> "rtl",'size' =>"7"]) !!}
-				               	 		@else
-								    		{!! Form::text('amount', null, ['class' => 'form-control', 'dir'=> "rtl",'size' => "7"]) !!}
-				               	 		@endif
-				               	 		@if ($errors->has('amount'))
-				                            <span class="alert-danger">
-				                                <strong>{{ $errors->first('amount') }}</strong>
-				                            </span>
-				                        @endif
-               	 					</td> -->
                	 				</tr>
                	 				<tr>
                	 					<td colspan="3">
@@ -302,6 +285,7 @@
 
 <script type="text/javascript">
 	$(function($){
+
 		$('.search').keyup(function(){
 			var id  = $(this).attr('id')
 			var val = $(this).val();
@@ -377,108 +361,13 @@
 		$.ajax({
             url: '/convert-number',
             type: "POST",
-            data: {'number': $(":input[name='amount']").val(),
+            data: {'number': $(":input[name='debit_amount']").val(),
                    '_token': $('input[name=_token]').val()},
             success:function(data) {                 
                 $(":input[name='amount_alpha']").val(data);
             }
         });
-		// $('.from').change(function () {
-	 //        var val = $(this).val();
-  //       	var model;
-		// 	console.log(val);
-		// 	if(val == ""){
-		// 		$('select[name="from_level_three"]').hide();
-		// 		$('select[name="from_level_four"]').hide();
-		// 		$('select[name="from_level_five"]').hide();
-		// 		$('select[name="from_level_six"]').hide();
-		// 	}else{
-		// 		if(val.length == 2){
-	 //        		model = $('#from_level_three');
-		// 	  	}else if(val.length == 4){
-	 //        		model = $('#from_level_four');
-		// 		}else if(val.length == 6){
-	 //        		model = $('#from_level_five');
-		// 		}else{
-	 //        		model = $('#from_level_six');
-		// 		}
-	 //        	$.get("{{ url('get-levels')}}", 
-		// 			{ option: $(this).val() }, 
-		// 			function(data) {
-		// 				model.empty();
-		// 		        model.append("<option value=''>Plz Select</option>");
-		// 				$.each(data, function(index, element) {
-	 // 						if(val.length == 9 )
-		// 		            	model.append("<option value='"+ element.pivot.code +"'>" + element.title + " " + element.pivot.title + "</option>");
-	 // 						else
-		// 		           		model.append("<option value='"+ element.code +"'>" + element.title + "</option>");
-		// 		    	});				
-		// 				if(val.length == 2){
-		// 					$('select[name="from_level_three"]').show();
-		// 					$('select[name="from_level_four"]').hide();
-		// 					$('select[name="from_level_five"]').hide();
-		// 					$('select[name="from_level_six"]').hide();
-		// 			  	}else if(val.length == 4){
-		// 					$('select[name="from_level_four"]').show();
-		// 					$('select[name="from_level_five"]').hide();
-		// 					$('select[name="from_level_six"]').hide();
-		// 				}else if(val.length == 6){
-		// 					$('select[name="from_level_five"]').show();
-		// 					$('select[name="from_level_six"]').hide();
-		// 				}else if(val.length == 9){
-		// 					$('select[name="from_level_six"]').show();
-		// 				}
-		// 		});
-		// 	}
-	 //    });
-	 //    $('.to').change(function () {
-	 //        var val = $(this).val();
-  //       	var model;
-  //       	if(val == ""){
-  //       		$('select[name="to_level_three"]').hide();
-		// 		$('select[name="to_level_four"]').hide();
-		// 		$('select[name="to_level_five"]').hide();
-		// 		$('select[name="to_level_six"]').hide();
-  //       	}else{
-  //       		if(val.length == 2){
-	 //        		model = $('#to_level_three');
-		// 	  	}else if(val.length == 4){
-	 //        		model = $('#to_level_four');
-		// 		}else if(val.length == 6){
-	 //        		model = $('#to_level_five');
-		// 		}else{
-	 //        		model = $('#to_level_six');
-		// 		}
-	 //        	$.get("{{ url('get-levels')}}", 
-		// 			{ option: $(this).val() }, 
-		// 			function(data) {
-		// 				model.empty();
-		// 		        model.append("<option value=''>Plz Select</option>");
-		// 				$.each(data, function(index, element) {
-	 // 						if(val.length == 9 )
-		// 		            	model.append("<option value='"+ element.pivot.code +"'>" + element.title + " " + element.pivot.title + "</option>");
-	 // 						else
-		// 		           		model.append("<option value='"+ element.code +"'>" + element.title + "</option>");
-		// 		    	});				
-		// 				if(val.length == 2){
-		// 					$('select[name="to_level_three"]').show();
-		// 					$('select[name="to_level_four"]').hide();
-		// 					$('select[name="to_level_five"]').hide();
-		// 					$('select[name="to_level_six"]').hide();
-		// 			  	}else if(val.length == 4){
-		// 					$('select[name="to_level_four"]').show();
-		// 					$('select[name="to_level_five"]').hide();
-		// 					$('select[name="to_level_six"]').hide();
-		// 				}else if(val.length == 6){
-		// 					$('select[name="to_level_five"]').show();
-		// 					$('select[name="to_level_six"]').hide();
-		// 				}else if(val.length == 9){
-		// 					$('select[name="to_level_six"]').show();
-		// 				}
-		// 		});
-  //       	}
-        	
-	    // });
+	
         $('.print-window').click(function() {
         	$('#submitForm').hide();
         	$('#resetForm').hide();

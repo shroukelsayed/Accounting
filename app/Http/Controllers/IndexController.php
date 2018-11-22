@@ -1154,33 +1154,56 @@ class IndexController extends Controller
 				$projects_amount[$receipt->project->name] = $receipt->amount;
 		}
 
-
+		// if (is_array($ids)) {
+		// 	# code...
+		// }
+		$IDs = implode(',', $ids);
 		$cashReceipt = Receipt::find($request->input('cash_id'));
 
-		return view('receipts.account-sheet',compact('workers','levels','last_id','cashReceipt','projects_amount'));
+		return view('receipts.account-sheet',compact('workers','levels','last_id','cashReceipt','projects_amount','IDs'));
 	}
 
 	public function saveAccountSheet(Request $request)
-	{
+	{	
+
+		$projects_details = $this->getProjectDetails($request->input('ids'));
+		// var_dump($projects_details);die();
 		// var_dump($request->all());die;
 
 		$accountSheet = new AccountSheet();
-		
-		// $accountSheet->sheet_number = $request->input('cash_id') 
+		$accountSheet->sheet_number = $request->input('last_id') ; 
 		$accountSheet->sheet_date = $request->input('sheet_date') ;
 		$accountSheet->alpha_amount = $request->input('amount_alpha');
 		$accountSheet->user_id = Auth::user()->id;
 		$accountSheet->from_account = $request->input('valuefrom');
 		$accountSheet->to_account = $request->input('valueto');
+		$accountSheet->credit_amount = $request->input('credit_amount');
+		$accountSheet->debit_amount = $request->input('debit_amount');
+		$accountSheet->report = $request->input('report');
+		$accountSheet->registered_by = $request->input('registered_by');
+		$accountSheet->reviewed_by = $request->input('reviewed_by');
+		$accountSheet->project_details = json_encode($projects_details);
+		
 		// $accountSheet->donation_section = $request->input('cash_id');
-		// registered_by
-		// reviewed_by
+		
 
 		$accountSheet->save();
 
 		return redirect()->action('IndexController@index');
 	}
 
+	private function getProjectDetails($ids){
+		$ids = explode(',', $ids);
+		$receipts = DonationReceipt::whereIn('id',$ids)->get();
+		$projects_amount = array();
+		foreach ($receipts as $key => $receipt) {
+			if(isset($projects_amount[$receipt->project->name]))
+				$projects_amount[$receipt->project->name] += $receipt->amount;
+			else
+				$projects_amount[$receipt->project->name] = $receipt->amount;
+		}
+		return $projects_amount ;
+	}
 	public function searchLevel(Request $request)
 	{
 		// var_dump($request->all());die;
