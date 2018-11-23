@@ -136,7 +136,29 @@
                         </li>
 
 
+                        <!-- <li><a href="/reports">@lang('validation.reports')</a></li> -->
+                        <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            @lang('validation.reports')
+                           <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="{{ url('/donation-report') }}">@lang('validation.donation_report')</a>
+                                </li>
+                                <li>
+                                    <a href="{{ url('/cash-report') }}">@lang('validation.cash_report')</a>
+                                </li>
+                                <li>
+                                    <a href="{{ url('/exchange-report') }}">@lang('validation.exchange_report')</a>
+                                </li>
+                                <li>
+                                    <a href="{{ url('/account-sheet-report') }}">@lang('validation.account_sheet_report')</a>
+                                </li>
+                            </ul>
+                        </li>
+
                         <li><a href="/accounting-tree">@lang('validation.accounting_tree')</a></li>
+
                     @endif
                 </ul>
             </div>

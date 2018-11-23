@@ -86,6 +86,7 @@ use App\RevenueBenefitItems;
 use App\RevenueFawryItems;
 use App\RevenueMalls;
 use App\RevenueSms;
+use App\TreeCodes;
 
 use App\Role;
 use DateTime;
@@ -463,6 +464,15 @@ class AccountingTreeController extends Controller
             }
             
             $level->save();
+            /*********save in tree code ************/
+            $tree_codes = new TreeCodes() ;
+            $result = TreeCodes::where('level_code','=',$request->input('parent_code'))->get(['id'])->toArray();
+            $tree_codes->parent_id = $result[0]['id'];
+            $tree_codes->level_title = $level->title ;
+            $tree_codes->level_code = $level->code ;
+            // $tree_codes->table_name = $level-> ;
+            $tree_codes->table_row_id = $level->id ;
+            $tree_codes->save();
 
             if($request->input('parent_level') == '4' ){
                 if(strpos($request->input('parent_code'), '1202') !== false){

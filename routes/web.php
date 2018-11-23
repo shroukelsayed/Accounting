@@ -105,6 +105,12 @@ Route::group(['middleware' => ['web']], function () {
         Route::get('/cash-exchange-receipt', "IndexController@cashExchangeReceipt");
         Route::post('/save-cash-exchange', "IndexController@saveCashExchange");
 
+        Route::get('/donation-report', "IndexController@donationReport");
+        Route::get('/cash-report', "IndexController@cashReport");
+        Route::get('/exchange-report', "IndexController@exchangeReport");
+        Route::get('/account-sheet-report', "IndexController@accountSheetReport");
+
+
 
     });
 

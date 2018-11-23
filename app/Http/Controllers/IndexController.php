@@ -1523,4 +1523,30 @@ class IndexController extends Controller
 		// var_dump($levels);die;
 		return \Response::make($levels);
 	}
+
+	public function donationReport()
+	{
+		return view('reports.donation');
+		
+	}
+
+	public function cashReport()
+	{
+		$receipts = Receipt::where('type','=',0)->get();
+		return view('reports.cash',compact('receipts'));
+	}
+
+	public function exchangeReport()
+	{
+		$receipts = Receipt::where('type','=',1)->get();
+		// echo "<pre>";
+		// var_dump($receipts);die();
+		return view('reports.exchange',compact('receipts'));
+	}
+
+	public function accountSheetReport()
+	{
+		return view('custody.add');
+		
+	}
 }

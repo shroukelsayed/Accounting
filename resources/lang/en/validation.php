@@ -159,8 +159,11 @@ return [
     'cash-exchange-receipt'       => 'Cash Exchange Receipt ',
 
     
-    ''=>'',
-    ''=>'',
+    'reports'=>'Reports',
+    'donation_report'              => 'Donation Report',
+    'exchange_report '             => 'Exchange Report',
+    'account_sheet_report'         => 'Account Sheet Report',
+    'cash_report'                  => 'Cash Report',
     ''=>'',
     ''=>'',
     ''=>'',
