@@ -202,9 +202,9 @@
                	 					<td class="text-center"  width="10%">جنيه مصرى </td>
                	 					<td>
                	 						@if(isset($cashReceipt) and $cashReceipt->amount)
-								    		{!! Form::text('credit_amount', number_format($cashReceipt->amount, 2, '.', ','), ['class' => 'form-control', 'dir'=> "rtl",'size' =>"7"]) !!}
+								    		{!! Form::text('credit_amount', number_format($cashReceipt->amount, 2, '.', ','), ['class' => 'form-control', 'dir'=> "rtl",'size' =>"7" ,'readonly'=>true]) !!}
 				               	 		@else
-								    		{!! Form::text('credit_amount', null, ['class' => 'form-control', 'dir'=> "rtl",'size' => "7"]) !!}
+								    		{!! Form::text('credit_amount', null, ['class' => 'form-control', 'dir'=> "rtl",'size' => "7",'readonly'=>true]) !!}
 				               	 		@endif
 				               	 		@if ($errors->has('credit_amount'))
 				                            <span class="alert-danger">
@@ -215,9 +215,9 @@
                	 			
                	 					<td>
                	 						@if(isset($cashReceipt) and $cashReceipt->amount)
-								    		{!! Form::text('debit_amount', number_format($cashReceipt->amount, 2, '.', ','), ['class' => 'form-control', 'dir'=> "rtl",'size' =>"7"]) !!}
+								    		{!! Form::text('debit_amount', number_format($cashReceipt->amount, 2, '.', ','), ['class' => 'form-control', 'dir'=> "rtl",'size' =>"7" ,'readonly'=>true]) !!}
 				               	 		@else
-								    		{!! Form::text('debit_amount', null, ['class' => 'form-control', 'dir'=> "rtl",'size' => "7"]) !!}
+								    		{!! Form::text('debit_amount', null, ['class' => 'form-control', 'dir'=> "rtl",'size' => "7",'readonly'=>true]) !!}
 				               	 		@endif
 				               	 		@if ($errors->has('debit_amount'))
 				                            <span class="alert-danger">

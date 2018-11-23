@@ -742,15 +742,8 @@ class IndexController extends Controller
 		$receipt_type = $request->input('receipt_type');
 		$last_id =  $request->input('last_id');
 		$amount =  $request->input('amount');
-		$receipts = DonationReceipt::whereIn('id',explode(',', $request->input('ids')))->get();
-		$projects_amount = array();
-		foreach ($receipts as $key => $receipt) {
-			if(isset($projects_amount[$receipt->project->name]))
-				$projects_amount[$receipt->project->name] += $receipt->amount;
-			else
-				$projects_amount[$receipt->project->name] = $receipt->amount;
-		}
 
+		$projects_amount = $this->getProjectDetails(explode(',', $request->input('ids')));
 
 		if($request->input('receipt_type') == '1'){
 			$validator = Validator::make($request->all(), [
@@ -1144,19 +1137,10 @@ class IndexController extends Controller
 		$last_sheet = AccountSheet::orderby('id', 'desc')->first();
 		$last_id = ($last_sheet)? $last_sheet->id +1  . '/' . getdate()['mon'] : 1  . '/' . getdate()['mon'];
 		// var_dump($request->all());die;
-		$ids =  $request->input('ids');
-		$receipts = DonationReceipt::whereIn('id',$ids)->get();
-		$projects_amount = array();
-		foreach ($receipts as $key => $receipt) {
-			if(isset($projects_amount[$receipt->project->name]))
-				$projects_amount[$receipt->project->name] += $receipt->amount;
-			else
-				$projects_amount[$receipt->project->name] = $receipt->amount;
-		}
 
-		// if (is_array($ids)) {
-		// 	# code...
-		// }
+		$ids =  $request->input('ids');
+		$projects_amount = $this->getProjectDetails($ids);
+
 		$IDs = implode(',', $ids);
 		$cashReceipt = Receipt::find($request->input('cash_id'));
 
@@ -1166,7 +1150,8 @@ class IndexController extends Controller
 	public function saveAccountSheet(Request $request)
 	{	
 
-		$projects_details = $this->getProjectDetails($request->input('ids'));
+		$ids = explode(',', $request->input('ids'));
+		$projects_details = $this->getProjectDetails($ids);
 		// var_dump($projects_details);die();
 		// var_dump($request->all());die;
 
@@ -1193,7 +1178,7 @@ class IndexController extends Controller
 	}
 
 	private function getProjectDetails($ids){
-		$ids = explode(',', $ids);
+		// $ids = explode(',', $ids);
 		$receipts = DonationReceipt::whereIn('id',$ids)->get();
 		$projects_amount = array();
 		foreach ($receipts as $key => $receipt) {
