@@ -156,7 +156,7 @@ return [
     'add-store-item'              => 'Add Store Item ',
     'add-custody'                 => 'Add New Custody',
     'custody-index'               => ' All Custodies',
-    'cash-exchange-receipt'       => 'Cash Exchange Receipt ',
+    'add-cash-exchange-receipt'   => 'Add Cash Exchange Receipt ',
 
     
     'reports'=>'Reports',
@@ -164,9 +164,9 @@ return [
     'exchange_report '             => 'Exchange Report',
     'account_sheet_report'         => 'Account Sheet Report',
     'cash_report'                  => 'Cash Report',
-    ''=>'',
-    ''=>'',
-    ''=>'',
+    'all_exchange'                 => 'All Exchange Receipts',
+    'account-sheet'                =>'Add Account Sheet',
+    'account-sheets'               =>'Account Sheets',
     ''=>'',
     ''=>'',
     ''=>'',

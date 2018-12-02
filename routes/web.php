@@ -83,6 +83,7 @@ Route::group(['middleware' => ['web']], function () {
         Route::get('/cash-receipt', "IndexController@cashReceipt");
         Route::get('/all-receipts', "IndexController@index");
         Route::get('/all-cash', "IndexController@allCashReceipts");
+        Route::get('/all-exchange', "IndexController@allExchangeReceipts");
         Route::post('/receipts/search','IndexController@search');
         Route::post('/convert-number','IndexController@convertNumber');
         Route::get('/account-sheet','IndexController@accountSheet');

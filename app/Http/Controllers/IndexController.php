@@ -132,7 +132,20 @@ class IndexController extends Controller
 	 */
 	public function allCashReceipts()
 	{
-		$receipts = Receipt::all();
+		$receipts = Receipt::where('type','=', 0)->orderBy('id', 'asc')->get();
+
+		return view('receipts.all-cash-receipts',compact('receipts'));
+	}
+
+
+	/**
+	 * Display a listing of the resource.
+	 *
+	 * @return Response
+	 */
+	public function allExchangeReceipts()
+	{
+		$receipts = Receipt::where('type','=', 1)->orderBy('id', 'asc')->get();
 
 		return view('receipts.all-cash-receipts',compact('receipts'));
 	}

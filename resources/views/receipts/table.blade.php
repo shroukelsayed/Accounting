@@ -53,6 +53,7 @@
                 @else
                     <td style="text-align: center;">شيكات</td>
                 @endif
+                <td>عير مرخص</td>
                 <td>{{$receipt->id}}</td>
             </tr>
         @endforeach
@@ -112,6 +113,7 @@
                 @else
                     <td style="text-align: center;">شيكات</td>
                 @endif
+                <td>مرخص</td>
                 <td>{{$licenseReceipt->id}}</td>
             </tr>
         @endforeach

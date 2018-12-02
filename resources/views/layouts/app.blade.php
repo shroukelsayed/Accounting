@@ -115,19 +115,22 @@
                            <span class="caret"></span></a>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a href="{{ url('/all-receipts') }}">@lang('validation.donation_receipt')</a>
-                                </li>
-                                <li>
                                     <a href="{{ url('/receipts') }}">@lang('validation.add_donation_receipt')</a>
                                 </li>
                                 <li>
                                     <a href="{{ url('/license-receipts') }}">@lang('validation.add_donation_receipt_license')</a>
                                 </li>
                                 <li>
+                                    <a href="{{ url('/all-receipts') }}">@lang('validation.donation_receipt')</a>
+                                </li>
+                                <li>
                                     <a href="{{ url('/all-cash') }}">@lang('validation.all_cash')</a>
                                 </li>
-                                 <li>
-                                    <a href="{{ url('/cash-exchange-receipt') }}">@lang('validation.cash-exchange-receipt')</a>
+                                <li>
+                                    <a href="{{ url('/cash-exchange-receipt') }}">@lang('validation.add-cash-exchange-receipt')</a>
+                                </li>
+                                <li>
+                                    <a href="{{ url('/all-exchange') }}">@lang('validation.all_exchange')</a>
                                 </li>
                                 <li>
                                     <a href="{{ url('/account-sheet') }}">@lang('validation.account-sheet')</a>

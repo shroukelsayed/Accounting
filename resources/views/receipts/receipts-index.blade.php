@@ -86,6 +86,7 @@
                             <th class="text-center">النوع</th>
                             <th class="text-center">المبلغ</th>
                             <th class="text-center">نقاً / شيكات</th>                            
+                            <th class="text-center">مرخص</th>                            
                             <th class="text-center">رقم اﻹيصال</th>                            
                         </tr>
                     </thead>
@@ -128,6 +129,9 @@
                                     <option value="1">نقاً </option>
                                     <option value="0">شيكات</option>
                                 </select> 
+                            </td>
+                            <td>
+                                مرخص / غير مرخص
                             </td>
                             <td>
                                 <input class="form-control" placeholder="رقم اﻹيصال" type="search" dir="rtl" name="search" id="receipt_id" size="5">
